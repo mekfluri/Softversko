@@ -32,7 +32,6 @@ public class RegisterController : ControllerBase
 
         var salt = BCrypt.Net.BCrypt.GenerateSalt();
         var encryptedPassword = BCrypt.Net.BCrypt.HashPassword(registerInfo.Password, salt);
-        Console.WriteLine($"salt:{salt}\npassword:{registerInfo.Password}\nhash:{encryptedPassword}");
         Student student = new Student(
             registerInfo.Username,
             registerInfo.Email,

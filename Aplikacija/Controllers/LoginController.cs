@@ -30,7 +30,6 @@ public class LoginController : ControllerBase
         }
 
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(loginInfo.Password, student.Salt);
-        Console.WriteLine($"salt:{student.Salt}\npassword:{loginInfo.Password}\nhash:{passwordHash}\npassword from db:{student.Password}");
         if(passwordHash != student.Password){
             return BadRequest("Invalid credentials");
         }
