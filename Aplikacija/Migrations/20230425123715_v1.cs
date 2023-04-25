@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Aplikacija.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,11 +34,13 @@ namespace Aplikacija.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Modul = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Semestar = table.Column<int>(type: "int", nullable: false)
+                    Privilegije = table.Column<int>(type: "int", nullable: false),
+                    Salt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    modul = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    semestar = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,15 +94,13 @@ namespace Aplikacija.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Kalendari", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Kalendari_Student_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_Kalendari_Student_Id",
+                        column: x => x.Id,
                         principalTable: "Student",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -140,7 +140,8 @@ namespace Aplikacija.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TagId = table.Column<int>(type: "int", nullable: false),
-                    OcenaId = table.Column<int>(type: "int", nullable: false)
+                    OcenaId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -151,6 +152,11 @@ namespace Aplikacija.Migrations
                         principalTable: "Ocene",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Preference_Student_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Student",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Preference_Tagovi_TagId",
                         column: x => x.TagId,
@@ -185,11 +191,6 @@ namespace Aplikacija.Migrations
                 column: "KalendarId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Kalendari_StudentId",
-                table: "Kalendari",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Komentari_PredmetId",
                 table: "Komentari",
                 column: "PredmetId");
@@ -208,6 +209,11 @@ namespace Aplikacija.Migrations
                 name: "IX_Preference_OcenaId",
                 table: "Preference",
                 column: "OcenaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Preference_StudentId",
+                table: "Preference",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Preference_TagId",

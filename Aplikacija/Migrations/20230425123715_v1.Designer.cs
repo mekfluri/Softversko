@@ -12,7 +12,7 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    [Migration("20230424145948_v1")]
+    [Migration("20230425123715_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -53,17 +53,9 @@ namespace Aplikacija.Migrations
             modelBuilder.Entity("Models.Kalendar", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Kalendari");
                 });
@@ -169,12 +161,17 @@ namespace Aplikacija.Migrations
                     b.Property<int>("OcenaId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TagId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OcenaId");
+
+                    b.HasIndex("StudentId");
 
                     b.HasIndex("TagId");
 
@@ -192,17 +189,20 @@ namespace Aplikacija.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasAnnotation("Relational:JsonPropertyName", "email");
+                        .HasColumnName("email");
 
                     b.Property<string>("Modul")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasAnnotation("Relational:JsonPropertyName", "modul");
+                        .HasColumnName("modul");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasAnnotation("Relational:JsonPropertyName", "password");
+                        .HasColumnName("password");
+
+                    b.Property<int>("Privilegije")
+                        .HasColumnType("int");
 
                     b.Property<string>("Salt")
                         .IsRequired()
@@ -210,12 +210,12 @@ namespace Aplikacija.Migrations
 
                     b.Property<int>("Semestar")
                         .HasColumnType("int")
-                        .HasAnnotation("Relational:JsonPropertyName", "semestar");
+                        .HasColumnName("semestar");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasAnnotation("Relational:JsonPropertyName", "username");
+                        .HasColumnName("username");
 
                     b.HasKey("Id");
 
@@ -254,8 +254,8 @@ namespace Aplikacija.Migrations
             modelBuilder.Entity("Models.Kalendar", b =>
                 {
                     b.HasOne("Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
+                        .WithOne("Kalendar")
+                        .HasForeignKey("Models.Kalendar", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -271,7 +271,7 @@ namespace Aplikacija.Migrations
                         .IsRequired();
 
                     b.HasOne("Models.Student", "Student")
-                        .WithMany()
+                        .WithMany("Komentari")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -295,6 +295,10 @@ namespace Aplikacija.Migrations
                         .HasForeignKey("OcenaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Models.Student", null)
+                        .WithMany("Preference")
+                        .HasForeignKey("StudentId");
 
                     b.HasOne("Models.Tag", "Tag")
                         .WithMany()
@@ -324,6 +328,16 @@ namespace Aplikacija.Migrations
                     b.Navigation("Ocene");
 
                     b.Navigation("Tagovi");
+                });
+
+            modelBuilder.Entity("Models.Student", b =>
+                {
+                    b.Navigation("Kalendar")
+                        .IsRequired();
+
+                    b.Navigation("Komentari");
+
+                    b.Navigation("Preference");
                 });
 #pragma warning restore 612, 618
         }
