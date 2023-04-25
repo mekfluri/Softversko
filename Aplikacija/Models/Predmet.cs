@@ -10,7 +10,6 @@ public class Predmet {
     public int Modul { get; set; }
     [Required]
     public int Semestar { get; set; }
-    [Required]
     public List<Ocena> Ocene { get; set; }
     [Required]
     public List<Tag> Tagovi { get; set; }

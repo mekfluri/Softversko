@@ -1,7 +1,6 @@
 namespace Models;
 
 [Table("Student")]
-[PrimaryKey("Id")]
 public class Student : RegisterModel {
     [Key]
     public int Id { get; set; }

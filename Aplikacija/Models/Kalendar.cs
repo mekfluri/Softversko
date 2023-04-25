@@ -5,7 +5,7 @@ public class Kalendar {
     [Key]
     public int Id {get; set;}
     [Required]
-    public Student? Student { get; set; }
+    public Student Student { get; set; }
     public List<Datum>? MarkiraniDatumi { get; set; }
 
     public Kalendar() {

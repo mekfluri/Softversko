@@ -8,4 +8,11 @@ public class IzaberryMeDbContext : DbContext {
     public DbSet<Preference> Preference { get; set; }
     public DbSet<Tag> Tagovi { get; set; }
     public IzaberryMeDbContext(DbContextOptions<IzaberryMeDbContext> opts) : base(opts){}
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder){
+        modelBuilder.Entity<Student>()
+        .HasOne<Kalendar>((s) => s.Kalendar)
+        .WithOne(ad => ad.Student)
+        .HasForeignKey<Kalendar>(k => k.Id);
+    }
 }
