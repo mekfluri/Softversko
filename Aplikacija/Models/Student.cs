@@ -17,7 +17,7 @@ public class Student : RegisterModel {
     :base(username, email, password, modul, semestar){
         Preference = new List<Preference>();
         Komentari = new List<Komentar>();
-        Privilegije = Privilegije.PRIV_NONE;
+        Privilegije = Privilegije.STUDENT;
         Kalendar = new Kalendar();
         Salt = salt;
     }
