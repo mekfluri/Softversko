@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        .noteMaker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background:linear-gradient( #ffe187, #e89d58);
+  border-radius: 20px;
+  width: 50%;
+  height: 50%;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.noteMaker button {
+  align-items: center;
+  background-color: #e2496a;
+  border: 2px solid white;
+  border-radius: 20px;
+  color: white;
+  display: flex;
+  align-self: center;
+  font-size: 16px;
+  height: 60px;
+  max-width: 100%;
+  float: right;
+ 
+}
+.noteHolder{
+    display: flex;
+    justify-content: center;
+    height: 200%;
+}
+.noterounded {
+  background-image: url("/front/src/slike/sticky.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: max-content;
+  display: flex;
+  justify-content: center;
+  margin-top: 1%;
+}
+.textArea{
+    background-color: transparent;
+    border:none;
+    margin-top: 50%;
+    width: 60%;
+    height: 50%;
+}
+
+
+
+@media (min-width: 768px) {
+  .noteMaker button {
+    padding: 0 40px;
+  }
+}
+    </style>
+</head>
+<body>
+    <script>
+      
+  var noteMaker = document.createElement("div");
+  noteMaker.classList.add("noteMaker");
+  document.body.appendChild(noteMaker);
+
+  var content = document.createElement("div");
+
+  noteMaker.appendChild(content);
+  
+  var inputDiv=document.createElement("div");
+  inputDiv.className="noteHolder"
+  content.appendChild(inputDiv); 
+
+  var inputDivDesign=document.createElement("div");
+  inputDivDesign.className="noterounded";
+  inputDiv.appendChild(inputDivDesign);
+
+  var textArea = document.createElement("textarea");
+  textArea.className="textArea";
+  inputDivDesign.appendChild(textArea);
+
+  var button = document.createElement("button");
+  button.textContent = "Dodaj";
+  button.className = "btnDodaj";
+
+  content.appendChild(button);
+    </script>
+</body>
+</html>
