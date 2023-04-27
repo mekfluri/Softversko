@@ -10,4 +10,6 @@ public class Ocena {
     public int TezinaPredmeta { get; set; }
     public int PrakticnoZnanje { get; set; }
 
+    
+
 }

@@ -7,6 +7,8 @@ public class IzaberryMeDbContext : DbContext {
     public DbSet<Ocena> Ocene { get; set; }
     public DbSet<Preference> Preference { get; set; }
     public DbSet<Tag> Tagovi { get; set; }
+    public DbSet<Predmet> Predmeti { get; set; }
+    public DbSet<Datum> Datumi { get; set; }
     public IzaberryMeDbContext(DbContextOptions<IzaberryMeDbContext> opts) : base(opts){}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){
