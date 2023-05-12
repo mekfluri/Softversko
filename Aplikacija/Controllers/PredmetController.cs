@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aplikacija.Controllers;
 
 [ApiController]
-
-[Route("/predmet")]
+[Authorize]
+[Route("/predmeti")]
 public class PredmetController : ControllerBase{
 
     public IzaberryMeDbContext Context { get; set; }
@@ -14,7 +14,7 @@ public class PredmetController : ControllerBase{
         Context = context;
     }
 
-   [HttpPost("DodajPredmet")]
+   [HttpPost("dodajPredmet")]
    public async Task<ActionResult> dodajPredmet([FromBody] Predmet predmet)
    {
     try
@@ -25,24 +25,70 @@ public class PredmetController : ControllerBase{
     }
     catch(Exception e)
     {
-        return BadRequest(e.Message);
+        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+    }
+   }
+   [HttpPut("dodajOcenu/{predmetId}")]
+   public async Task<ActionResult> dodajOcenu(int predmetId, [FromBody]Ocena ocena) {
+    try {
+        var predmet = await Context.Predmeti.FindAsync(predmetId);
+        if(predmet == null) {
+            return NotFound("Predmet sa zadatim id-jem nije pronadjen");
+        }
+        Context.Ocene.Add(ocena);
+        await Context.SaveChangesAsync();
+        if(predmet.Ocene == null) {
+            predmet.Ocene = new List<Ocena>();
+        }
+        predmet.Ocene.Add(ocena);
+        Context.Predmeti.Update(predmet);
+        await Context.SaveChangesAsync();
+        return Ok(predmet);
+    }
+    catch(Exception ex){
+        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
     }
    }
 
-   [HttpGet("vratiPredmet")]
+   [HttpPut("dodajTag/{predmetId}/{tagName}")]
+   public async Task<ActionResult> dodajTag(int predmetId, string tagName){
+    try {
+        var predmet = await Context.Predmeti.FindAsync(predmetId);
+        if(predmet == null) {
+            return NotFound("Predmet sa zadatim id-jem nije pronadjen");
+        }
+        var tag = Context.Tagovi.FirstOrDefault((tag) => tag.Naziv == tagName);
+        if(tag == null) {
+            return NotFound("Tag nije pronadjen");
+        }
+        if(predmet.Tagovi == null){
+            predmet.Tagovi = new List<Tag>();
+            predmet.Tagovi.Add(tag);
+        }
+        Context.Predmeti.Update(predmet);
+        await Context.SaveChangesAsync();
+        return Ok(predmet);
+    }
+    catch(Exception ex){
+        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+    }
+   }
+
+   [AllowAnonymous]
+   [HttpGet]
    public async Task<ActionResult> vratiPredmet()
    {
-    try{
-        return Ok(await Context.Predmeti!.ToListAsync());
-    
-   }
+    Console.WriteLine($"auth header: {Request.Headers.Authorization}");
+    try {
+        return Ok(await Context.Predmeti!.Include(predmet => predmet.Ocene).Include(predmet => predmet.Tagovi).ToListAsync());
+    }
    catch(Exception e)
    {
-    return BadRequest(e.Message);
+    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
    }
    }
 
-   [HttpDelete("obrisiPredmet/{id}")]
+   [HttpDelete("obrisi/{id}")]
    public async Task<ActionResult> obrisiPredmet(int id)
    {
        
@@ -62,6 +108,7 @@ public class PredmetController : ControllerBase{
    }
 
   
+   [AllowAnonymous]
    [HttpGet("pretraziPoNazivu/{naziv}")]
    public async Task<ActionResult> PretraziPoNazivu(string naziv)
    {
@@ -74,13 +121,14 @@ public class PredmetController : ControllerBase{
         }
         else
         {
-           return BadRequest("Ne postoji predmet sa odredjenim nazivom");
+           return NotFound("Ne postoji predmet sa trazenim nazivom.");
         }
 
    }
 
+   [AllowAnonymous]
    [HttpGet("pretrazi/{modul}/{semestar}")]
-   public async Task<ActionResult> Pretrazi(int modul, int semestar)
+   public async Task<ActionResult> Pretrazi(string modul, int semestar)
    {
         var p = await Context.Predmeti.Where(s=> s.Modul == modul && s.Semestar == semestar).ToListAsync();
         
@@ -90,7 +138,7 @@ public class PredmetController : ControllerBase{
         }
         else
         {
-           return BadRequest("Ne postoje takvi predmeti");
+           return NotFound("Ne postoje takvi predmeti");
         }
    }
 
@@ -109,21 +157,14 @@ public class PredmetController : ControllerBase{
        }
        else
        {
-            return BadRequest("Ne postoji odrenjeni predmet");
+            return NotFound("Ne postoji odrenjeni predmet");
        }
-
-
-
-
     }
 
     [HttpPut("azurirajPredmet/{idpredmeta}")]
     public async Task<ActionResult> azurirajPredmet([FromBody] Predmet predmet,int  idpredmeta)
     {
         var stariPredmet = await Context.Predmeti!.FindAsync(idpredmeta);
-       
-        
-
         if(stariPredmet != null)
         {
 
@@ -135,14 +176,13 @@ public class PredmetController : ControllerBase{
             stariPredmet.ESPB = predmet.ESPB;
             stariPredmet.Ocene = predmet.Ocene;
             
-
             Context.Predmeti!.Update(stariPredmet);
             await Context.SaveChangesAsync();
             return Ok("promenili smo stadion" + stariPredmet);
         }
         else 
         {
-            return BadRequest("Ne postoji trazeni predmet");
+            return NotFound("Ne postoji trazeni predmet");
         }
        
 
@@ -162,7 +202,8 @@ public class PredmetController : ControllerBase{
         
     }
 
-    [HttpGet("vratiKomentare/{idpredmeta}")]
+    [AllowAnonymous]
+    [HttpGet("komentari/{idpredmeta}")]
     public async Task<ActionResult> vratiKomentare(int idpredmeta)
     {
         var komentari = await Context.Komentari.Include(p=>p.Predmet)
@@ -174,16 +215,4 @@ public class PredmetController : ControllerBase{
 
         return Ok(komentari);
     }
-
-
-
-
-
-    
-      
 }
-
-
-
-
-

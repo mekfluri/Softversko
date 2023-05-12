@@ -5,10 +5,10 @@ namespace Aplikacija.Controllers;
 [ApiController]
 [Authorize]
 [Route("/komentar")]
-public class KomentarContorller : ControllerBase{
+public class KomentarController : ControllerBase{
     public IzaberryMeDbContext Context { get; set; }
 
-    public KomentarContorller(IzaberryMeDbContext context)
+    public KomentarController(IzaberryMeDbContext context)
     {
         Context = context;
     }

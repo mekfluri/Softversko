@@ -46,6 +46,7 @@ public class TagController : ControllerBase
                 return BadRequest("Nepostojeci tag");
             }
             dbTag.Naziv = tag.Naziv;
+            dbContext.Update(dbTag);
             await dbContext.SaveChangesAsync();
         }
         catch(Exception ex){
@@ -61,6 +62,7 @@ public class TagController : ControllerBase
                 return BadRequest("Ne postoji tag sa zadatim identifikatorom");
             }
             dbContext.Tagovi.Remove(tag);
+            await dbContext.SaveChangesAsync();
             return Ok();
         }
         catch(Exception ex){

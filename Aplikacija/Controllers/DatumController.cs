@@ -4,11 +4,11 @@ namespace Aplikacija.Controllers;
 
 [ApiController]
 [Route("/datum")]
-public class DatumContorller : ControllerBase
+public class DatumController : ControllerBase
 {
       public IzaberryMeDbContext Context { get; set; }
 
-    public DatumContorller(IzaberryMeDbContext context)
+    public DatumController(IzaberryMeDbContext context)
     {
         Context = context;
     }

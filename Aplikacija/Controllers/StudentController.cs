@@ -5,11 +5,11 @@ namespace Aplikacija.Controllers;
 [ApiController]
 [Route("/student")]
 
-public class StudentContoroller : ControllerBase{
+public class StudentController : ControllerBase{
 
     public IzaberryMeDbContext Context { get; set; }
 
-    public StudentContoroller(IzaberryMeDbContext context)
+    public StudentController(IzaberryMeDbContext context)
     {
         Context = context;
     }
