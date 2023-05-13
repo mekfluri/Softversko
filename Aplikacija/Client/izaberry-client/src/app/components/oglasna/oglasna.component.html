@@ -1,0 +1,106 @@
+
+<body>
+  <div class="board">
+    <div class="toolbar">
+      <button class="btnDodaj" onclick="dodajNote()">Dodaj stiker</button>
+    </div>
+    <div class="drop">
+      
+    </div>
+  </div>
+
+  <script>
+    let i=0;
+   
+    var dropArea = document.querySelector('.drop');
+    dropArea.addEventListener("dragover", dragOver);
+    dropArea.addEventListener("dragenter", dragEnter);
+    dropArea.addEventListener("dragleave", dragLeave);
+    dropArea.addEventListener("drop", drop);
+
+    function dodajNote() {
+      var noteMaker = document.createElement("div");
+      noteMaker.classList.add("noteMaker");
+      document.body.appendChild(noteMaker);
+
+      var content = document.createElement("div");
+
+      noteMaker.appendChild(content);
+
+      var inputDiv = document.createElement("div");
+      inputDiv.className = "noteHolder"
+      content.appendChild(inputDiv);
+
+      var inputDivDesign = document.createElement("div");
+      inputDivDesign.className = "noterounded";
+      inputDivDesign.id=i++;
+      console.log(inputDivDesign.id);
+      inputDivDesign.draggable=true;
+      inputDivDesign.addEventListener("dragstart", dragStart);
+      inputDivDesign.addEventListener("dragend", dragEnd);
+      inputDiv.appendChild(inputDivDesign);
+
+
+      var textArea = document.createElement("textarea");
+      textArea.className = "textArea";
+      textArea.id="textArea";
+      textArea.cols="24";
+      textArea.rows="10"
+      inputDivDesign.appendChild(textArea);
+    }
+   
+    function dragStart(e) {
+      console.log("drag starts");
+      this.classList.add('dragging');
+      e.dataTransfer.setData("text/plain", e.target.id);
+      setTimeout(() => {
+        e.target.classList.add('hide');
+      }, 0);
+    }
+    
+    function dragEnd(e) {
+      this.classList.remove('dragging');
+    }
+    
+    function dragOver(e) {
+      e.preventDefault();
+      e.target.classList.add('drag-over');
+      e.dataTransfer.dropEffect = "move";
+    }
+    
+    function dragEnter(e) {
+      e.preventDefault();
+      e.target.classList.add('drag-over');
+    }
+    
+    function dragLeave(e) {
+      e.preventDefault();
+      e.target.classList.remove('drag-over');
+    }
+    
+ function drop(e) {
+  e.preventDefault();
+
+  e.target.classList.remove('drag-over');
+  var data = e.dataTransfer.getData("text/plain");
+  var note = document.getElementById(data);
+  note.classList.remove('hide');
+  let deleteSticky=document.createElement("button");
+     deleteSticky.className="deleteSticky";
+     deleteSticky.innerHTML="x";
+     deleteSticky.onclick=(ev)=>obrisiStiker(note);
+     note.appendChild(deleteSticky);
+
+  e.target.appendChild(note);
+  setTimeout(() => {
+        e.target.removeChild(note);//promeni da se brise posle dva dana ne posle dve sekunde
+      }, 50000);
+}
+function obrisiStiker(note){
+  note.parentNode.removeChild(note);
+}
+
+
+  </script>
+</body>
+
