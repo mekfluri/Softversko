@@ -4,11 +4,15 @@ import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MainComponent } from './components/main/main.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { OglasnaComponent } from './components/oglasna/oglasna.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignInComponent },
-  { path: "", component: MainComponent }
+  { path: "", component: MainComponent },
+  { path: "profile", component: UserProfileComponent },
+  { path: "oglasna", component: OglasnaComponent }
 ];
 
 @NgModule({
