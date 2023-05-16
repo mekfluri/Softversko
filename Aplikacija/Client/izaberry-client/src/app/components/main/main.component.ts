@@ -11,4 +11,10 @@ export class MainComponent {
   redirectToLogin() {
     this.router.navigateByUrl("login");
   }
+  redirectToOglasna() {
+    this.router.navigateByUrl("oglasna");
+  }
+  redirectToPredmeti() {
+    this.router.navigateByUrl("predmeti");
+  }
 }

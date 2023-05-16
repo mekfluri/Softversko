@@ -4,8 +4,8 @@
             <img src="../assets/logoFinal.png">
         </div>
         <div class="tool-right">
-            <label class="labelMenu">PREDMETI</label>
-            <label class="labelMenu">OGLASNA</label>
+            <label (click)="redirectToPredmeti()" class="labelMenu">PREDMETI</label>
+            <label (click)="redirectToOglasna()" class="labelMenu">OGLASNA</label>
             <button (click)="redirectToLogin()" class="btnLOGIN" routerLink="/login">LOGIN</button>
         </div>
 
