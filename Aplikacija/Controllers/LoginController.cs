@@ -34,7 +34,7 @@ public class LoginController : ControllerBase
             return BadRequest("Invalid credentials");
         }
 
-        string token = authService.GenerateJWT(loginInfo);
+        string token = authService.GenerateJWT(student);
         return Ok(token);
     }
 }

@@ -8,10 +8,12 @@ namespace Aplikacija.Controllers;
 public class StudentController : ControllerBase{
 
     public IzaberryMeDbContext Context { get; set; }
+    private AuthService authService { get; set; }
 
-    public StudentController(IzaberryMeDbContext context)
+    public StudentController(IzaberryMeDbContext context, AuthService authService)
     {
         Context = context;
+        this.authService = authService;
     }
 
     [HttpPost("DodajStudenta")]
@@ -40,6 +42,28 @@ public class StudentController : ControllerBase{
    {
     return BadRequest(e.Message);
    }
+   }
+   [HttpGet]
+   public async Task<ActionResult> vratiStudenta(){
+    try {
+      var token = Request.Headers["Authorization"].ToString().Substring(7);
+      var id = authService.GetUserId(token);
+      var student = await Context.Studenti.Where((student) => student.Id == id)
+        .Include((student) => student.Preference)
+        .FirstOrDefaultAsync();
+      if(student == null) {
+        return NotFound("Student ne postoji");
+      }
+      return Ok(new {
+        username = student.Username,
+        id = student.Id,
+        modul = student.Modul,
+        semestar = student.Semestar,
+        email = student.Email
+      });
+    }catch(Exception ex){
+      return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+    }
    }
 
   [HttpDelete("obrisiStudenta/{id}")]
