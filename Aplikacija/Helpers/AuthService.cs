@@ -6,7 +6,15 @@ public class AuthService {
     public AuthService(IConfiguration config){
         _config = config;
     }
-    public  string GenerateJWT(LoginModel userInfo){
+
+    public int GetUserId(string token) {
+        var handler = new JwtSecurityTokenHandler();
+        var jsonToken = handler.ReadJwtToken(token);
+        Console.WriteLine(jsonToken.Claims);
+        var id = jsonToken.Claims.First((claim) => claim.Type == "sub");
+        return int.Parse(id.Value);
+    }
+    public  string GenerateJWT(Student userInfo){
         var tokenHandler = new JwtSecurityTokenHandler();
         var expiration = DateTime.UtcNow.AddHours(_expirationHours);
         var key = _config["Jwt:Key"]!;
@@ -21,9 +29,10 @@ public class AuthService {
         return tokenHandler.WriteToken(token);
     }
 
-    private List<Claim> CreateClaims(LoginModel userInfo) {
+    private List<Claim> CreateClaims(Student userInfo) {
         var claims = new List<Claim>{
             new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
+            new Claim(JwtRegisteredClaimNames.Sub, userInfo.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Aud, _config["Jwt:Audience"]!),
             new Claim(JwtRegisteredClaimNames.Iss, _config["Jwt:Issuer"]!)
         };
