@@ -44,7 +44,7 @@ namespace Aplikacija.Migrations
 
                     b.HasIndex("KalendarId");
 
-                    b.ToTable("Datum");
+                    b.ToTable("Datumi");
                 });
 
             modelBuilder.Entity("Models.Kalendar", b =>
@@ -82,6 +82,23 @@ namespace Aplikacija.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("Komentari");
+                });
+
+            modelBuilder.Entity("Models.Modul", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Naziv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Moduli");
                 });
 
             modelBuilder.Entity("Models.Ocena", b =>
@@ -128,8 +145,9 @@ namespace Aplikacija.Migrations
                     b.Property<int>("ESPB")
                         .HasColumnType("int");
 
-                    b.Property<int>("Modul")
-                        .HasColumnType("int");
+                    b.Property<string>("Modul")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Naziv")
                         .IsRequired()
