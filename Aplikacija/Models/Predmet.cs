@@ -7,7 +7,7 @@ public class Predmet {
     [Required]
     public string Naziv { get; set; }
     [Required]
-    public int Modul { get; set; }
+    public string Modul { get; set; }
     [Required]
     public int Semestar { get; set; }
     public List<Ocena> Ocene { get; set; }
@@ -19,7 +19,7 @@ public class Predmet {
     public string Opis { get; set; }
 
     public Predmet() {}
-    public Predmet(string naziv, int modul, int semestar, List<Ocena> ocene, List<Tag> tagovi, int espb, string opis){
+    public Predmet(string naziv, string modul, int semestar, List<Ocena> ocene, List<Tag> tagovi, int espb, string opis){
         Naziv = naziv;
         Modul = modul;
         Semestar = semestar;
