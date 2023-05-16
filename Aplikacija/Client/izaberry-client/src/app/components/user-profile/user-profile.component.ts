@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { Student } from 'src/app/models/student.model';
 
 @Component({
   selector: 'app-user-profile',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent {
+  student: Student | null;
 
+  constructor(private router: Router){
+    this.student = this.router.getCurrentNavigation()?.extras.state! as Student;
+  }
 }
