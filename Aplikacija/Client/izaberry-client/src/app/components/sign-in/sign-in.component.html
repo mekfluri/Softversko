@@ -1,39 +1,42 @@
-<div class="toolbar">
-    <img src="../../../assets/logoFinal.png">
-</div>
+<body>
+    <div class="toolbar">
+        <img src="../../../assets/logoFinal.png">
+    </div>
+    <div class="error" *ngIf="hasError">
+        <pre>
+            Error: {{ errorMessage }}
+        </pre>
+    </div>
 
-<div class="meniDiv">
-    <div class="loginDiv">
-        <div class="loginDivYellow">
-            <div class="divLabel">
-                <input type="text" id="email" name="email" placeholder="Unesite email">
-            </div>
-            <div class="divLabel">
-                <input type="password" id="password" name="password" placeholder="Unesite šifru">
-            </div>
-            <div class="divLabel">
-                <input type="text" id="korisnickoIme" name="korisnickoIme" placeholder="Korisničko ime"
-                    style="width: 110%; border-radius: 20px; padding: 10px 0px 10px 10px;">
-            </div>
-            <div class="divLabel">
-                <select id="oblast" name="oblast"
-                    style="width: 110%; border-radius: 20px; padding: 10px 0px 10px 10px;">
-                    <option value="racunarstvo">Računarstvo i informatika</option>
-                    <option value="elektroenergetika">Elektroenergetika</option>
-                    <option value="elektronika">Elektronika</option>
-                    <option value="telekomunikacije">Telekomunikacije</option>
-                    <option value="upravljanje">Upravljanje sistemima</option>
-                </select>
-            </div>
-            <div class="divSem">
-                <input type="number" id="brojSemestara" name="brojSemestara"
-                    placeholder="Broj semestra koji trenutno slušate" min="1" max="8">
-            </div>
-            <div style="display:flex; justify-content: center;">
-                <button class="btnRegistrujSe">REGISTRUJ SE</button>
+    <div class="meniDiv">
+        <div class="loginDiv">
+            <div class="loginDivYellow">
+                <div class="divLabel">
+                    <input (keyup)="emailKeyUp($event)" type="email" id="email" name="email" placeholder="Unesite email" required>
+                </div>
+                <div class="divLabel">
+                    <input (keyup)="passwordKeyUp($event)" type="password" id="password" name="password" placeholder="Unesite šifru" required>
+                </div>
+                <div class="divLabel">
+                    <input (keyup)="usernameKeyUp($event)" type="text" id="korisnickoIme" name="korisnickoIme" placeholder="Korisničko ime"
+                        style="width: 110%; border-radius: 20px; padding: 10px 0px 10px 10px;" required>
+                </div>
+                <div class="divLabel">
+                    <select (change)="modulChange($event)" id="oblast" name="oblast"
+                        style="width: 110%; border-radius: 20px; padding: 10px 0px 10px 10px;" required>
+                        <option *ngFor="let modul of moduli" [value]="modul"> {{ modul }} </option>
+                    </select>
+                </div>
+                <div class="divSem">
+                    <input (input)="semestarChange($event)" type="number" id="brojSemestara" name="brojSemestara"
+                        placeholder="Broj semestra koji trenutno slušate" min="1" max="8" required>
+                </div>
+                <div style="display:flex; justify-content: center;">
+                    <button (click)="onRegisterClick()" class="btnRegistrujSe">REGISTRUJ SE</button>
+                </div>
+
             </div>
 
         </div>
-
     </div>
-</div>
+</body>
