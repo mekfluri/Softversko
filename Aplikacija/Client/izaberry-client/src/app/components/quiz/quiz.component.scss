@@ -1,0 +1,124 @@
+
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
+
+
+
+
+
+body {
+    background: linear-gradient(150deg, #fb7784, #29082b);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    overflow-y: scroll;
+}
+
+.scrollableContainer {
+    height: auto;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+   margin-left: 20%;
+}
+
+.subDiv {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+      justify-content: center;
+    width: 70%;
+ 
+    
+    margin-bottom: 20%;
+}
+
+.pitanjeDiv {
+    background-color: #fb7784;
+    width: 100%;
+    align-self: center;
+    height: 200%;
+    border-radius: 20px;
+}
+
+.odgovoriDiv {
+   
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-self: center;
+    
+    padding: 20px;
+    width: 100%;
+    height: 50%;
+}
+
+.odgovorDiv {
+    background-color: white;
+    width: 30%;
+    height: 150px;
+    color:#29082b;
+    display:flex;
+    justify-content: center;
+   
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.toolbar{
+    justify-content: space-between;
+    align-self: center;
+    margin-bottom: 10%;
+    width: 100%;
+   
+}
+select {
+    border-radius: 20px;
+    height: 50%;
+   margin-top: 5%;
+    background: linear-gradient(150deg, #fb7784, #29082b);
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    margin-left: 1%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+  }
+  
+  select option {
+    background-color: white;
+    color:  #29082b;
+    font-weight: bold;
+  }
+  
+  
+
+
+@media (max-width: 500px) {
+
+    .odgovorDiv {
+      
+        width: 200%;
+        height: 150px;
+      
+        align-self: center;
+       
+    }
+    .pitanjeDiv {
+ 
+        width: 200%;
+        align-self: center;
+        height: 10%;
+        border-radius: 20px;
+    }
+
+
+}
