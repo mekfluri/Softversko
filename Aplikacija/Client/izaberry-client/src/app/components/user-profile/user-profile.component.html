@@ -1,4 +1,4 @@
-<body>
+<div class="body">
     <div class="container" *ngIf="student">
         <div class="profile-header">
             <div class="profile-img">
@@ -30,15 +30,16 @@
                     </div>
                     <div class="profile-btn">
                         <button class="chatbtn" id="chatBtn"><i class="fa fa-comment"></i> Chat</button>
+                        <button (click)="logOut()" class="chatbtn" id="logoutBtn"><i class="fa fa-comment"></i> Log out</button>
                     </div>
                 </div>
             </div>
             <div class="right-side">
                 <div class="nav">
                     <ul>
-                        <li onclick="tabs(0)" class="user-literatura active">Literatura</li>
-                        <li onclick="tabs(1)" class="user-kalendar">Kalendar</li>
-                        <li onclick="tabs(2)" class="user-komentar"> Komentar</li>
+                        <li (click)="showLiteratura()" class="user-literatura active">Literatura</li>
+                        <li (click)="showCalendar()" class="user-kalendar">Kalendar</li>
+                        <li (click)="showKomentari()" class="user-komentar"> Komentar</li>
                     </ul>
                 </div>
                 <div class="profile-body">
@@ -85,4 +86,4 @@
             </div>
         </div>
     </div>
-</body>
+</div>
