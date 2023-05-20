@@ -6,8 +6,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { PredmetiComponent } from './components/predmeti/predmeti.component';
 import { MainComponent } from './components/main/main.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './helpers/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -15,14 +17,17 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     SignInComponent,
     UserProfileComponent,
-    MainComponent
+    MainComponent,
+    PredmetiComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
