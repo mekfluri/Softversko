@@ -1,4 +1,6 @@
 import { Ocena } from "./ocena.model";
+import { Tag } from "./tag.model";
+
 class Predmet {
     id: number;
     naziv: string;
@@ -19,3 +21,5 @@ class Predmet {
         this.opis = opis;
     }
 }
+
+export { Predmet }

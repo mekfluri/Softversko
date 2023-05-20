@@ -4,6 +4,7 @@ class Student {
     modul: string;
     semestar: number;
     email: string;
+    token: string | null;
 
     constructor(id: number, username: string, modul: string, semestar: number, email: string){
         this.id = id;
@@ -11,6 +12,7 @@ class Student {
         this.modul = modul;
         this.semestar = semestar;
         this.email = email;
+        this.token = null;
     }
 }
 
