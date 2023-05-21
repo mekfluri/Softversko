@@ -4,6 +4,7 @@ import { Predmet } from '../models/predmet.model';
 import { environment } from 'src/environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { Modul } from '../models/modul.model';
+import { Komentar } from '../models/komentar.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,21 @@ export class PredmetiService {
     let predmeti$ = this.http.get<Predmet[]>(`${environment.backend}/predmeti/${module}`);
     let predmeti = await firstValueFrom(predmeti$);
     return predmeti;
+  }
+
+  async getById(id: number): Promise<Predmet> {
+    let predmet$ = this.http.get<Predmet>(`${environment.backend}/predmeti/vrati/${id}`);
+    return await firstValueFrom(predmet$);
+  }
+
+  async addComment(userId: number, predmetId: number, text: string){
+    let komentarRequest = {
+      studentId: userId,
+      predmetId,
+      text
+    };
+    let resp$ = this.http.post<Komentar>(`${environment.backend}/komentar/DodajKomentar`, komentarRequest);
+    let resp = await firstValueFrom(resp$);
+    return resp;
   }
 }
