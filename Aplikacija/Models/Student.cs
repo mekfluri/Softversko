@@ -6,6 +6,7 @@ public class Student : RegisterModel {
     public int Id { get; set; }
 
     public List<Preference> Preference { get; set; }
+    [JsonIgnore]
     public List<Komentar> Komentari { get; set; }
     public Privilegije Privilegije { get; set; }
     public Kalendar Kalendar { get; set; }
@@ -13,7 +14,7 @@ public class Student : RegisterModel {
 
     public Student() {}
 
-    public Student(string username, string email, string password, string salt, string modul, int semestar) 
+    public Student(string username, string email, string password, string salt, Modul modul, int semestar) 
     :base(username, email, password, modul, semestar){
         Preference = new List<Preference>();
         Komentari = new List<Komentar>();
