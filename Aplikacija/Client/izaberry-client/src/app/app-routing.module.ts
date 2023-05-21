@@ -7,6 +7,8 @@ import { MainComponent } from './components/main/main.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { OglasnaComponent } from './components/oglasna/oglasna.component';
 import { PredmetiComponent } from './components/predmeti/predmeti.component';
+import { PredmetPreviewComponent } from './components/predmet-preview/predmet-preview.component';
+import { QuizComponent } from './components/quiz/quiz.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: "profile", component: UserProfileComponent },
   { path: "oglasna", component: OglasnaComponent },
   { path: "predmeti", component: PredmetiComponent },
+  { path: "predmet", component: PredmetPreviewComponent },
+  { path: "kviz", component: QuizComponent },
 ];
 
 @NgModule({
