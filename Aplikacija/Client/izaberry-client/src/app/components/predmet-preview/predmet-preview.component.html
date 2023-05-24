@@ -16,6 +16,9 @@
     <div class="ocene-container">
 
     </div>
+    <div class="oglasna">
+        <button (click)="gotoOglasna()">Oglasna tabla</button>
+    </div>
     <div class="add-comment-container" *ngIf="isLoggedIn">
         <input (keyup)="komentarKeyUp($event)" type="text" placeholder="Unesite komentar">
         <button (click)="dodajKomentar()" value="Komentarisi">Dodaj komentar</button>
