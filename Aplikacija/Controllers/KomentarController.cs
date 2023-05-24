@@ -14,6 +14,22 @@ public class KomentarController : ControllerBase{
     }
 
     [AllowAnonymous]
+    [HttpGet("byStudent/{id}")]
+    public async Task<ActionResult> byStudent(int id){
+        try {
+            var student = Context.Studenti.Where(s => s.Id == id).First();
+            if(student == null){
+                return BadRequest();
+            }
+            var komentari = await Context.Komentari.Where(k => k.Student.Id == id).FirstAsync();
+            return Ok(komentari);
+        }
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
+    [AllowAnonymous]
     [HttpPost("DodajKomentar")]
     public async Task<ActionResult> dodajKomentar([FromBody] KomentarRequest komentarRequest)
     {
@@ -32,7 +48,10 @@ public class KomentarController : ControllerBase{
         Context.Predmeti.Update(predmet);
         Context.Komentari.Add(komentar);
         await Context.SaveChangesAsync();
-        return Ok(komentar);
+        return Ok(new {
+            id = komentar.Id,
+            text = komentar.Text
+        });
     }
     catch(Exception e)
     {
