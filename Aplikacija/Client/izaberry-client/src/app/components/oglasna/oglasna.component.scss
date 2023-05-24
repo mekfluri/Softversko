@@ -1,23 +1,21 @@
-
 @import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
 
-body {
+.body {
   background-image: url("../../../assets/board.jpg");
   background-repeat: no-repeat;
   font-family: "Poppins", sans-serif;
-  color: white
+  color: white;
+  height: 100vh;
 }
-.deleteSticky
-{
 
-    background-color: transparent;
-    color: black;
-    width: 10%;
-    height: 10%;
-    margin-top:20%;
+.deleteSticky {
 
-  
+  background-color: transparent;
+  color: black;
+  width: 10%;
+  height: 10%;
+  margin-top: 20%;
 }
 
 .board {
@@ -27,26 +25,20 @@ body {
   border-bottom: 10px solid #ffe187;
   padding: 60px;
   height: 100%;
-  display:flex;
+  display: flex;
   flex-direction: row;
 }
-.drop-area{
-  border:#ccc dashed 2px;
-  padding:20px 10px;
+
+.drop-area {
+  border: #ccc dashed 2px;
+  padding: 20px 10px;
   box-sizing: border-box;
   margin-top: 15px;
-
 }
-.drop
-{
+
+.drop {
   width: 100%;
-
   margin-top: 5%;
- 
-}
-
-html, body {
-  height: 100%;
 }
 
 .board {
@@ -92,33 +84,33 @@ html, body {
   touch-action: manipulation;
 }
 
-  .btnDodaj:after {
-    background-color: #11111140;
-    border-radius: 20px;
-    content: "";
-    display: block;
-    height: 48px;
-    left: 0;
-    width: 100%;
-    position: absolute;
-    top: -2px;
-    transform: translate(8px, 8px);
-    transition: transform .2s ease-out;
-    z-index: -1;
-  }
+.btnDodaj:after {
+  background-color: #11111140;
+  border-radius: 20px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
 
-  .btnDodaj:hover:after {
-    transform: translate(0, 0);
-  }
+.btnDodaj:hover:after {
+  transform: translate(0, 0);
+}
 
-  .btnDodaj:active {
-    background-color: #e2496a;
-    outline: 0;
-  }
+.btnDodaj:active {
+  background-color: #e2496a;
+  outline: 0;
+}
 
-  .btnDodaj:hover {
-    outline: 0;
-  }
+.btnDodaj:hover {
+  outline: 0;
+}
 
 @media (min-width: 768px) {
   .btnDodaj {
@@ -141,24 +133,23 @@ html, body {
 }
 
 
-  .noteMaker button {
-    align-items: center;
-    background-color: #e2496a;
-    border: 2px solid white;
-    border-radius: 20px;
-    color: white;
-    display: flex;
-    align-self: center;
-    font-size: 16px;
-    height: 60px;
-    max-width: 100%;
-    float: right;
-  }
+.noteMaker button {
+  align-items: center;
+  background-color: #e2496a;
+  border: 2px solid white;
+  border-radius: 20px;
+  color: white;
+  display: flex;
+  align-self: center;
+  font-size: 16px;
+  height: 60px;
+  max-width: 100%;
+  float: right;
+}
 
 .noteHolder {
   display: flex;
   justify-content: center;
-  height: 200%;
 }
 
 .noterounded {
@@ -172,7 +163,8 @@ html, body {
   justify-content: center;
   margin-top: 1%;
 }
-.drop{
+
+.drop {
   display: flex;
   justify-content: row;
   flex-wrap: wrap;
@@ -182,9 +174,9 @@ html, body {
 .drag-over {
   border: dashed 3px red;
 }
-.hide
-{
-  display:none;
+
+.hide {
+  display: none;
 }
 
 .textArea {
@@ -194,9 +186,6 @@ html, body {
   width: 50%;
   height: 50%;
 }
-
-
-
 
 @media (min-width: 768px) {
   .noteMaker button {
