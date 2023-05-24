@@ -22,7 +22,7 @@ export class UserService {
   }
 
   async getUserComments(): Promise<Komentar[] | null> {
-    let komentari$ = this.http.get<Komentar[]>(`${environment.backend}/komentari/${this.user?.id}`);
+    let komentari$ = this.http.get<Komentar[]>(`${environment.backend}/komentar/byStudent/${this.user?.id}`);
     let komentari = await firstValueFrom(komentari$) ?? null;
     return komentari;
   }
