@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { FormsModule } from '@angular/forms';
 
+
+import { KalendarComponent } from './components/kalendar/kalendar.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -17,6 +21,8 @@ import { OglasnaComponent } from './components/oglasna/oglasna.component';
 import { LoadingInterceptor } from './helpers/loader-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,13 +34,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PredmetPreviewComponent,
     QuizComponent,
     OglasnaComponent,
+    KalendarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    DragDropModule
+    DragDropModule, 
+    FullCalendarModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
