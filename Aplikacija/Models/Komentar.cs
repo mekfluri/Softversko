@@ -7,6 +7,7 @@ public class Komentar {
     [Required]
     public Student Student { get; set; }
     [Required]
+    [JsonIgnore]
     public Predmet Predmet { get; set; }
     [Required]
     public string Text { get; set; }

@@ -46,7 +46,11 @@ public class StudentController : ControllerBase{
    [HttpGet]
    public async Task<ActionResult> vratiStudenta(){
     try {
-      var token = Request.Headers["Authorization"].ToString().Substring(7);
+      var authHeader = Request.Headers["Authorization"].ToString();
+      if(string.IsNullOrEmpty(authHeader)){
+        return BadRequest("No token provided");
+      }
+      var token = authHeader.Substring(7);
       var id = authService.GetUserId(token);
       var student = await Context.Studenti.Where((student) => student.Id == id)
         .Include((student) => student.Preference)

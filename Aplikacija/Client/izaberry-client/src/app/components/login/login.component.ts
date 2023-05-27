@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModel } from 'src/app/models/login.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,13 +9,18 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
   constructor(private router: Router, private authService: AuthService, private userService: UserService) {
     this.email = "";
     this.password = "";
+  }
+  async ngOnInit(): Promise<void> {
+    if(localStorage.getItem("authToken") != null) {
+      this.router.navigateByUrl("profile");
+    }
   }
 
   redirectToSignup() {

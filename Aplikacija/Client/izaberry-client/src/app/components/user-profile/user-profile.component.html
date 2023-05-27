@@ -1,4 +1,4 @@
-<body>
+<div class="body">
     <div class="container" *ngIf="student">
         <div class="profile-header">
             <div class="profile-img">
@@ -30,59 +30,25 @@
                     </div>
                     <div class="profile-btn">
                         <button class="chatbtn" id="chatBtn"><i class="fa fa-comment"></i> Chat</button>
+                        <button (click)="logOut()" class="chatbtn" id="logoutBtn"><i class="fa fa-comment"></i> Log
+                            out</button>
                     </div>
                 </div>
             </div>
             <div class="right-side">
                 <div class="nav">
                     <ul>
-                        <li onclick="tabs(0)" class="user-literatura active">Literatura</li>
-                        <li onclick="tabs(1)" class="user-kalendar">Kalendar</li>
-                        <li onclick="tabs(2)" class="user-komentar"> Komentar</li>
+                        <li (click)="showLiteratura()" class="user-literatura active">Literatura</li>
+                        <li (click)="showCalendar()" class="user-kalendar">Kalendar</li>
+                        <li (click)="showKomentari()" class="user-komentar"> Komentar</li>
                     </ul>
                 </div>
-                <div class="profile-body">
-                    <div class="profile-posts tab">
-                        <h1>Your Post</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa quia sunt itaque ut libero
-                            cupiditate ullam qui velit laborum placeat doloribus, non tempore nisi ratione error rem
-                            minima
-                            ducimus. Accusamus adipisci quasi at itaque repellat sed
-                            magni eius magnam repellendus. Quidem inventore repudiandae sunt odit. Aliquid facilis
-                            fugiat
-                            earum ex officia eveniet, nisi, similique ad ullam repudiandae molestias aspernatur qui
-                            autem,
-                            nam? Cupiditate ut quasi iste, eos perspiciatis maiores
-                            molestiae.</p>
-                    </div>
-                    <div class="profile-reviews tab">
-                        <h1>User reviews</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam pariatur officia, aperiam
-                            quidem quasi, tenetur molestiae. Architecto mollitia laborum possimus iste esse. Perferendis
-                            tempora consectetur, quae qui nihil voluptas. Maiores debitis
-                            repellendus excepturi quisquam temporibus quam nobis voluptatem, reiciendis distinctio
-                            deserunt
-                            vitae! Maxime provident, distinctio animi commodi nemo, eveniet fugit porro quos nesciunt
-                            quidem
-                            a, corporis nisi dolorum minus sit eaque error
-                            sequi ullam. Quidem ut fugiat, praesentium velit aliquam!</p>
-                    </div>
-                    <div class="profile-settings tab">
-                        <div class="account-setting">
-                            <h1>Acount Setting</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit omnis eaque,
-                                expedita
-                                nostrum, facere libero provident laudantium. Quis, hic doloribus! Laboriosam nemo
-                                tempora
-                                praesentium. Culpa quo velit omnis, debitis maxime, sequi
-                                animi dolores commodi odio placeat, magnam, cupiditate facilis impedit veniam? Soluta
-                                aliquam excepturi illum natus adipisci ipsum quo, voluptatem, nemo, commodi, molestiae
-                                doloribus magni et. Cum, saepe enim quam voluptatum vel debitis
-                                nihil, recusandae, omnis officiis tenetur, ullam rerum.</p>
-                        </div>
+                <div class="komentar-container">
+                    <div *ngFor="let komentar of komentari" class="komentar">
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
+</div>

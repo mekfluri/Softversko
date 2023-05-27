@@ -12,13 +12,26 @@ namespace Aplikacija.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Moduli",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Moduli", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Predmeti",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Modul = table.Column<int>(type: "int", nullable: false),
+                    ModulId = table.Column<int>(type: "int", nullable: true),
                     Semestar = table.Column<int>(type: "int", nullable: false),
                     ESPB = table.Column<int>(type: "int", nullable: false),
                     Opis = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -26,6 +39,11 @@ namespace Aplikacija.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Predmeti", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Predmeti_Moduli_ModulId",
+                        column: x => x.ModulId,
+                        principalTable: "Moduli",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -39,12 +57,18 @@ namespace Aplikacija.Migrations
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    modul = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModulId = table.Column<int>(type: "int", nullable: true),
                     semestar = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Student", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Student_Moduli_ModulId",
+                        column: x => x.ModulId,
+                        principalTable: "Moduli",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,7 +190,7 @@ namespace Aplikacija.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Datum",
+                name: "Datumi",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -177,17 +201,17 @@ namespace Aplikacija.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Datum", x => x.Id);
+                    table.PrimaryKey("PK_Datumi", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Datum_Kalendari_KalendarId",
+                        name: "FK_Datumi_Kalendari_KalendarId",
                         column: x => x.KalendarId,
                         principalTable: "Kalendari",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Datum_KalendarId",
-                table: "Datum",
+                name: "IX_Datumi_KalendarId",
+                table: "Datumi",
                 column: "KalendarId");
 
             migrationBuilder.CreateIndex(
@@ -206,6 +230,11 @@ namespace Aplikacija.Migrations
                 column: "PredmetId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Predmeti_ModulId",
+                table: "Predmeti",
+                column: "ModulId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Preference_OcenaId",
                 table: "Preference",
                 column: "OcenaId");
@@ -221,6 +250,11 @@ namespace Aplikacija.Migrations
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Student_ModulId",
+                table: "Student",
+                column: "ModulId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tagovi_PredmetId",
                 table: "Tagovi",
                 column: "PredmetId");
@@ -230,7 +264,7 @@ namespace Aplikacija.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Datum");
+                name: "Datumi");
 
             migrationBuilder.DropTable(
                 name: "Komentari");
@@ -252,6 +286,9 @@ namespace Aplikacija.Migrations
 
             migrationBuilder.DropTable(
                 name: "Predmeti");
+
+            migrationBuilder.DropTable(
+                name: "Moduli");
         }
     }
 }

@@ -12,8 +12,8 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    [Migration("20230505135839_v3")]
-    partial class v3
+    [Migration("20230520182706_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,6 +87,23 @@ namespace Aplikacija.Migrations
                     b.ToTable("Komentari");
                 });
 
+            modelBuilder.Entity("Models.Modul", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Naziv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Moduli");
+                });
+
             modelBuilder.Entity("Models.Ocena", b =>
                 {
                     b.Property<int>("Id")
@@ -131,9 +148,8 @@ namespace Aplikacija.Migrations
                     b.Property<int>("ESPB")
                         .HasColumnType("int");
 
-                    b.Property<string>("Modul")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ModulId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Naziv")
                         .IsRequired()
@@ -147,6 +163,8 @@ namespace Aplikacija.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ModulId");
 
                     b.ToTable("Predmeti");
                 });
@@ -192,10 +210,8 @@ namespace Aplikacija.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("email");
 
-                    b.Property<string>("Modul")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("modul");
+                    b.Property<int?>("ModulId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -219,6 +235,8 @@ namespace Aplikacija.Migrations
                         .HasColumnName("username");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ModulId");
 
                     b.ToTable("Student");
                 });
@@ -289,6 +307,15 @@ namespace Aplikacija.Migrations
                         .HasForeignKey("PredmetId");
                 });
 
+            modelBuilder.Entity("Models.Predmet", b =>
+                {
+                    b.HasOne("Models.Modul", "Modul")
+                        .WithMany()
+                        .HasForeignKey("ModulId");
+
+                    b.Navigation("Modul");
+                });
+
             modelBuilder.Entity("Models.Preference", b =>
                 {
                     b.HasOne("Models.Ocena", "Ocena")
@@ -310,6 +337,16 @@ namespace Aplikacija.Migrations
                     b.Navigation("Ocena");
 
                     b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("Models.Student", b =>
+                {
+                    b.HasOne("Models.Modul", "Modul")
+                        .WithMany()
+                        .HasForeignKey("ModulId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Modul");
                 });
 
             modelBuilder.Entity("Models.Tag", b =>

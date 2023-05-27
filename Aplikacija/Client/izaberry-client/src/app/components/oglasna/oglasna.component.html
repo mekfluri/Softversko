@@ -1,9 +1,21 @@
-<body>
+<div class="body">
   <div class="board">
     <div class="toolbar">
       <button class="btnDodaj" (click)="dodajNote()">Dodaj stiker</button>
     </div>
-    <div class="drop" (dragover)="dragOver()" (dragentter)="dragEnter()" (dragleave)="dragLeave()">
+    <div class="drop" (drop)="drop($event)" (dragover)="dragOver($event)" (dragentter)="dragEnter($event)" (dragleave)="dragLeave($event)">
+
+      <div class="noteMaker">
+        <div class="note-container">
+          <div *ngFor="let note of notes" class="noteHolder">
+            <div cdkDrag class="noterounded" (dragend)="dragEnd($event)" (dragstart)="dragStart($event)">
+              <textarea [id]="note.id" class="textArea" (input)="textAreaInput($event)">
+                {{note.text}}
+              </textarea>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -101,4 +113,4 @@
 
 
   </script>
-</body>
+</div>

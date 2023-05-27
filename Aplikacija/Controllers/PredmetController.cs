@@ -28,6 +28,24 @@ public class PredmetController : ControllerBase{
         return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
     }
    }
+
+   [AllowAnonymous]
+   [HttpGet("vrati/{id}")]
+   public async Task<ActionResult> getPredmet(int id){
+    try{
+        var predmet = await Context.Predmeti.Where(predmet => predmet.Id == id)
+        .Include(predmet => predmet.Modul)
+        .Include(predmet => predmet.Ocene)
+        .Include(predmet => predmet.Tagovi)
+        .Include(predmet => predmet.Komentari)
+        .ThenInclude(k => k.Student)
+        .FirstAsync();
+        return Ok(predmet);
+    }
+    catch(Exception ex){
+        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+    }
+   }
    [HttpPut("dodajOcenu/{predmetId}")]
    public async Task<ActionResult> dodajOcenu(int predmetId, [FromBody]Ocena ocena) {
     try {
@@ -78,7 +96,6 @@ public class PredmetController : ControllerBase{
    [HttpGet]
    public async Task<ActionResult> vratiPredmet()
    {
-    Console.WriteLine($"auth header: {Request.Headers.Authorization}");
     try {
         return Ok(await Context.Predmeti!.Include(predmet => predmet.Ocene).Include(predmet => predmet.Tagovi).ToListAsync());
     }
@@ -127,10 +144,43 @@ public class PredmetController : ControllerBase{
    }
 
    [AllowAnonymous]
+   [HttpPut("dodajModul/{predmetId}/{modulId}")]
+   public async Task<ActionResult> dodajModul(int predmetId, int modulId){
+    try{
+        var modul = Context.Moduli.Where(modul => modul.Id == modulId).First();
+        var predmet = Context.Predmeti.Where(predmet => predmet.Id == predmetId).First();
+        predmet.Modul = modul;
+        Context.Update(predmet);
+        await Context.SaveChangesAsync();
+        return Ok(predmet);
+    }
+    catch(Exception ex){
+        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+    }
+   }
+
+   [AllowAnonymous]
+   [HttpGet("{modul}")]
+   public async Task<ActionResult> getByModule(string modul){
+    try {
+        var predmeti = await Context.Predmeti.Where(
+            (predmet) => predmet.Modul.Naziv == modul
+        )
+        .Include((predmet) => predmet.Ocene)
+        .Include((predmet) => predmet.Tagovi)
+        .ToListAsync();
+        return Ok(predmeti);
+    }
+    catch(Exception ex){
+        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+    }
+   }
+
+   [AllowAnonymous]
    [HttpGet("pretrazi/{modul}/{semestar}")]
    public async Task<ActionResult> Pretrazi(string modul, int semestar)
    {
-        var p = await Context.Predmeti.Where(s=> s.Modul == modul && s.Semestar == semestar).ToListAsync();
+        var p = await Context.Predmeti.Where(s=> s.Modul.Naziv == modul && s.Semestar == semestar).ToListAsync();
         
         if(p != null)
         {
@@ -201,6 +251,7 @@ public class PredmetController : ControllerBase{
          return Ok(ocene); 
         
     }
+
 
     [AllowAnonymous]
     [HttpGet("komentari/{idpredmeta}")]

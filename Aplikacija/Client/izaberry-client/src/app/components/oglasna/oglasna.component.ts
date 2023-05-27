@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Note } from 'src/app/models/note.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-oglasna',
@@ -7,56 +10,75 @@ import { Component } from '@angular/core';
 })
 export class OglasnaComponent {
   i: number = 0;
+  notes: Note[] = new Array<Note>;
 
-  dragOver() {
+  constructor(private http: HttpClient, private userService: UserService) {
+    this.notes.push(new Note(undefined, undefined, undefined, "note iz fejk baze broj 1"));
+    this.notes.push(new Note(undefined, undefined, undefined, "note iz fejk baze broj 2"));
+  }
+
+  dragOver(event: Event) {
+    console.log("dragOver");
+    event.preventDefault();
+    (event.target as HTMLElement).classList.add('drag-over');
+    (event as DragEvent).dataTransfer!.dropEffect = "move";
+  }
+
+  dragEnter(event: Event) {
+    console.log("dragEnter");
+    event.preventDefault();
+    (event.target as HTMLElement).classList.add('drag-over');
+  }
+
+  dragLeave(event: Event) {
+    console.log("dragLevae");
+    event.preventDefault();
+    (event.target as HTMLElement).classList.remove('drag-over');
+  }
+
+  dragStart(event: Event) {
+    console.log("dragStart");
+    (event.target as HTMLElement).classList.add("dragging");
+  }
+
+  dragEnd(event: Event) {
+    console.log("dragEnd");
+    (event.target as HTMLElement).classList.remove("dragging");
+  }
+
+  drop(event: Event) {
+    console.log("drop");
+    let eventTarget = event.target as HTMLElement;
+    event.preventDefault();
+
+    eventTarget.classList.remove('drag-over');
+    var data = (event as DragEvent).dataTransfer!.getData("text/plain");
+    var note: HTMLElement | null = document.getElementById(data);
+    note!.classList.remove('hide');
+    let deleteSticky = document.createElement("button");
+    deleteSticky.className = "deleteSticky";
+    deleteSticky.innerHTML = "x";
+    deleteSticky.onclick = (ev) => this.obrisiStiker();
+    note!.appendChild(deleteSticky);
+
+    eventTarget.appendChild(note!);
+    setTimeout(() => {
+      eventTarget.removeChild(note!);//promeni da se brise posle dva dana ne posle dve sekunde
+    }, 50000);
 
   }
 
-  dragEnter() {
+  obrisiStiker() {
 
-  }
-
-  dragLeave() {
-
-  }
-
-  dragStart(){}
-
-  dragEnd(){}
-
-  drop(e: Event) {
-    e.preventDefault();
   }
 
   dodajNote() {
+    let newNote: Note = new Note(this.notes.length);
+    this.notes.push(newNote);
+  }
 
-    var noteMaker = document.createElement("div");
-    noteMaker.classList.add("noteMaker");
-    document.body.appendChild(noteMaker);
-
-    var content = document.createElement("div");
-
-    noteMaker.appendChild(content);
-
-    var inputDiv = document.createElement("div");
-    inputDiv.className = "noteHolder"
-    content.appendChild(inputDiv);
-
-    var inputDivDesign = document.createElement("div");
-    inputDivDesign.className = "noterounded";
-    inputDivDesign.id = `${this.i++}`;
-    console.log(inputDivDesign.id);
-    inputDivDesign.draggable = true;
-    inputDivDesign.addEventListener("dragstart", this.dragStart);
-    inputDivDesign.addEventListener("dragend", this.dragEnd);
-    inputDiv.appendChild(inputDivDesign);
-
-
-    var textArea = document.createElement("textarea");
-    textArea.className = "textArea";
-    textArea.id = "textArea";
-    textArea.cols = 24;
-    textArea.rows = 10;
-    inputDivDesign.appendChild(textArea);
+  textAreaInput(event: Event){
+    let target = event.target as HTMLTextAreaElement;
+    this.notes[parseInt(target.id)].text = target.value;
   }
 }

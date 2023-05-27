@@ -145,9 +145,8 @@ namespace Aplikacija.Migrations
                     b.Property<int>("ESPB")
                         .HasColumnType("int");
 
-                    b.Property<string>("Modul")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ModulId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Naziv")
                         .IsRequired()
@@ -161,6 +160,8 @@ namespace Aplikacija.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ModulId");
 
                     b.ToTable("Predmeti");
                 });
@@ -206,10 +207,8 @@ namespace Aplikacija.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("email");
 
-                    b.Property<string>("Modul")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("modul");
+                    b.Property<int?>("ModulId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -233,6 +232,8 @@ namespace Aplikacija.Migrations
                         .HasColumnName("username");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ModulId");
 
                     b.ToTable("Student");
                 });
@@ -280,7 +281,7 @@ namespace Aplikacija.Migrations
             modelBuilder.Entity("Models.Komentar", b =>
                 {
                     b.HasOne("Models.Predmet", "Predmet")
-                        .WithMany()
+                        .WithMany("Komentari")
                         .HasForeignKey("PredmetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -301,6 +302,15 @@ namespace Aplikacija.Migrations
                     b.HasOne("Models.Predmet", null)
                         .WithMany("Ocene")
                         .HasForeignKey("PredmetId");
+                });
+
+            modelBuilder.Entity("Models.Predmet", b =>
+                {
+                    b.HasOne("Models.Modul", "Modul")
+                        .WithMany()
+                        .HasForeignKey("ModulId");
+
+                    b.Navigation("Modul");
                 });
 
             modelBuilder.Entity("Models.Preference", b =>
@@ -326,6 +336,15 @@ namespace Aplikacija.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("Models.Student", b =>
+                {
+                    b.HasOne("Models.Modul", "Modul")
+                        .WithMany()
+                        .HasForeignKey("ModulId");
+
+                    b.Navigation("Modul");
+                });
+
             modelBuilder.Entity("Models.Tag", b =>
                 {
                     b.HasOne("Models.Predmet", null)
@@ -340,6 +359,8 @@ namespace Aplikacija.Migrations
 
             modelBuilder.Entity("Models.Predmet", b =>
                 {
+                    b.Navigation("Komentari");
+
                     b.Navigation("Ocene");
 
                     b.Navigation("Tagovi");

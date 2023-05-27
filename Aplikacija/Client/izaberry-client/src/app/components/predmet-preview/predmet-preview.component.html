@@ -1,0 +1,32 @@
+<div class="body" *ngIf="predmet">
+    <h1>{{predmet.naziv}}</h1>
+    <h2>{{predmet.modul.naziv}}</h2>
+    <div class="ocene-container" *ngIf="predmet.ocene">
+        <div class="ocena" *ngFor="let ocena of predmet.ocene">
+            <p>Dostupnost materijala: {{ocena.dostupnostMaterijala}}</p>
+            <p>Angazovanje profesora: {{ocena.angazovanjeProfesora}}</p>
+            <p>Laboratorijske vezbe: {{ocena.laboratorijskeVezbe}}</p>
+            <p>Tezina predmeta: {{ocena.tezinaPredmeta}}</p>
+            <p>Prakticno znanje: {{ocena.prakticnoZnanje}}</p>
+        </div>
+    </div>
+    <p>Semestar: {{predmet.semestar}}</p>
+    <p>ESPB: {{predmet.espb}}</p>
+    <p>Opis: {{predmet.opis}}</p>
+    <div class="ocene-container">
+
+    </div>
+    <div class="oglasna">
+        <button (click)="gotoOglasna()">Oglasna tabla</button>
+    </div>
+    <div class="add-comment-container" *ngIf="isLoggedIn">
+        <input (keyup)="komentarKeyUp($event)" type="text" placeholder="Unesite komentar">
+        <button (click)="dodajKomentar()" value="Komentarisi">Dodaj komentar</button>
+    </div>
+    <div class="komentari-container" *ngIf="predmet.komentari">
+        <div class="komentar" *ngFor="let komentar of predmet.komentari">
+            <span>{{komentar.student.username}}|</span>
+            <p>{{komentar.text}}</p>
+        </div>
+    </div>
+</div>

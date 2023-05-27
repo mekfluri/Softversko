@@ -5,12 +5,14 @@ import { environment } from 'src/environments/environment';
 import { Token } from '@angular/compiler';
 import { firstValueFrom } from 'rxjs';
 import { SignInModel } from '../models/sign-in.model';
+import { UserService } from './user.service';
+import { Student } from '../models/student.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userService: UserService) {
   }
 
   async login(credentials: LoginModel): Promise<string> {
