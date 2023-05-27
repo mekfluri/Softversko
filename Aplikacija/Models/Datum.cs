@@ -5,6 +5,9 @@ public class Datum {
     public int Id { get; set; }
     public string Poruka { get; set; }
     public DateTime OznacenDatum { get; set; }
+    [JsonIgnore]
+    public Kalendar kalendar { get; set; }
+
 
     public Datum() {}
 }
