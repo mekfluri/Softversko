@@ -6,13 +6,14 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MainComponent } from './components/main/main.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { OglasnaComponent } from './components/oglasna/oglasna.component';
-
+import {QuizComponent} from './components/quiz/quiz.component';
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignInComponent },
   { path: "", component: MainComponent },
   { path: "profile", component: UserProfileComponent },
-  { path: "oglasna", component: OglasnaComponent }
+  { path: "oglasna", component: OglasnaComponent },
+  { path: "kviz", component: QuizComponent }
 ];
 
 @NgModule({
