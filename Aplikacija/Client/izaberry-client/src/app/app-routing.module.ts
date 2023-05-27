@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
@@ -9,6 +10,7 @@ import { OglasnaComponent } from './components/oglasna/oglasna.component';
 import { PredmetiComponent } from './components/predmeti/predmeti.component';
 import { PredmetPreviewComponent } from './components/predmet-preview/predmet-preview.component';
 import { QuizComponent } from './components/quiz/quiz.component';
+import { KalendarComponent } from './components/kalendar/kalendar.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -19,6 +21,7 @@ const routes: Routes = [
   { path: "predmeti", component: PredmetiComponent },
   { path: "predmet", component: PredmetPreviewComponent },
   { path: "kviz", component: QuizComponent },
+  { path:"kalendar", component:KalendarComponent},
 ];
 
 @NgModule({
