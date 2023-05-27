@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models;
 
@@ -11,9 +12,11 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    partial class IzaberryMeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230527154258_v4")]
+    partial class v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,28 +129,6 @@ namespace Aplikacija.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Moduli");
-                });
-
-            modelBuilder.Entity("Models.Note", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Note");
                 });
 
             modelBuilder.Entity("Models.Ocena", b =>
@@ -379,17 +360,6 @@ namespace Aplikacija.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Models.Note", b =>
-                {
-                    b.HasOne("Models.Student", "Student")
-                        .WithMany("Notes")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("Models.Ocena", b =>
                 {
                     b.HasOne("Models.Predmet", null)
@@ -482,8 +452,6 @@ namespace Aplikacija.Migrations
                     b.Navigation("Komentari");
 
                     b.Navigation("Literatura");
-
-                    b.Navigation("Notes");
 
                     b.Navigation("Preference");
                 });
