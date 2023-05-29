@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: "oglasna", component: OglasnaComponent },
   { path: "predmeti", component: PredmetiComponent },
   { path: "predmet", component: PredmetPreviewComponent },
-  { path: "kviz", component: QuizComponent }
+  { path: "kviz", component: QuizComponent },
   { path:"kalendar", component:KalendarComponent},
 ];
 
