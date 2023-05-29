@@ -83,6 +83,33 @@ input:focus {
 }
 
 .toolbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+
+    justify-content: center;
+    z-index: 1;
+    margin-top: 1%;
+}
+.labelMenu:hover {
+    text-decoration: underline;
+}
+.labelMenu
+{
+    color: white;
+    text-decoration: dotted;
+    font-size: 100%;
+    margin-top: 4%;
+    padding:inherit;
+}
+
+.zaglavlje{
     position: absolute;
     top: 0;
     left: 0;
@@ -92,8 +119,19 @@ input:focus {
     align-items: center;
     color: white;
     font-weight: 600;
+
+    justify-content: end;
+    padding: 0 1em; 
+    z-index: 2;
+}
+.tool-right {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    gap: 50%;
+    margin-right: 12%;
+
+
+  
 
 }
 
