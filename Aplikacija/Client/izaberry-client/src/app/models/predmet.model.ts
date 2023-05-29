@@ -13,16 +13,16 @@ class Predmet {
     tagovi: Tag[];
     espb: number;
     opis: string;
-    constructor(id: number, naziv:string, modul: Modul, semestar: number, ocene: Ocena[], tagovi: Tag[], espb: number, opis: string, komentari: Komentar[]){
-        this.id = id;
-        this.naziv = naziv;
-        this.modul = modul;
-        this.semestar = semestar;
-        this.ocene = ocene;
-        this.tagovi = tagovi;
-        this.espb = espb;
-        this.opis = opis;
-        this.komentari = komentari;
+    constructor(id?: number, naziv?:string, modul?: Modul, semestar?: number, ocene?: Ocena[], tagovi?: Tag[], espb?: number, opis?: string, komentari?: Komentar[]){
+        this.id = id || 0;
+        this.naziv = naziv || "";
+        this.modul = modul || new Modul(0, "");
+        this.semestar = semestar || 1;
+        this.ocene = ocene || [];
+        this.tagovi = tagovi || [];
+        this.espb = espb || 0;
+        this.opis = opis || "";
+        this.komentari = komentari|| [];
     }
 
     srednjaOcena(): Ocena {
