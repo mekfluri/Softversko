@@ -92,10 +92,10 @@ namespace Aplikacija.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("MentorId")
+                    b.Property<int?>("MentorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int?>("StudentIDId")
                         .HasColumnType("int");
 
                     b.Property<string>("filePath")
@@ -106,7 +106,7 @@ namespace Aplikacija.Migrations
 
                     b.HasIndex("MentorId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentIDId");
 
                     b.ToTable("Literatura");
                 });
@@ -364,19 +364,15 @@ namespace Aplikacija.Migrations
                 {
                     b.HasOne("Models.Mentor", "Mentor")
                         .WithMany()
-                        .HasForeignKey("MentorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MentorId");
 
-                    b.HasOne("Models.Student", "Student")
+                    b.HasOne("Models.Student", "StudentID")
                         .WithMany("Literatura")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudentIDId");
 
                     b.Navigation("Mentor");
 
-                    b.Navigation("Student");
+                    b.Navigation("StudentID");
                 });
 
             modelBuilder.Entity("Models.Note", b =>
