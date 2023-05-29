@@ -15,11 +15,14 @@ public class KalendarController : ControllerBase
     }
 
      
-    [HttpPost("dodajKalendar")]
-    public async Task<ActionResult> dodajKomentar([FromBody] Kalendar kalendar)
+     [HttpPost("dodajKalendar/{idstudenta}")]
+    public async Task<ActionResult> dodajKomentar(int idstudenta)
     {
          try
         {
+          var kalendar = new Kalendar();
+          var st = await Context.Studenti.FindAsync(idstudenta);
+          kalendar.Student = st!;
           Context.Kalendari.Add(kalendar);
           await Context.SaveChangesAsync();
           return Ok("Dodali smo kalendar sa id-jem"+kalendar.Id);
@@ -53,14 +56,14 @@ public class KalendarController : ControllerBase
        var kal = await Context.Kalendari.Include(p=>p.Student)
                                 .Where(p=>p.Student.Id == idstudenta)
                                 .Include(p=>p.MarkiraniDatumi)
-                                .Select(p=>new{
-                                    p.Id,
-                                    p.MarkiraniDatumi
-                                }).ToListAsync();
+                                
+                               
+                                .ToListAsync();
 
        return Ok(kal);
                                 
    }
+
 
 
 }

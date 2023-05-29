@@ -1,2 +1,54 @@
-  public StanBasic(int sPRAT, bool lIFT, int nekretninaID, int kucnibroj, string ime_ulice, int povrsina, int broj_kupatila,
-       int broj_terasa, int broj_spavacih_soba, bool internet, bool TV_PRIKLJUCAK, string TIP,int kvartID, bool fkuca, bool fstan)
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { FormsModule } from '@angular/forms';
+
+
+import { KalendarComponent } from './components/kalendar/kalendar.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { PredmetiComponent } from './components/predmeti/predmeti.component';
+import { MainComponent } from './components/main/main.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './helpers/auth-interceptor';
+import { PredmetPreviewComponent } from './components/predmet-preview/predmet-preview.component';
+import { QuizComponent } from './components/quiz/quiz.component';
+import { OglasnaComponent } from './components/oglasna/oglasna.component';
+import { LoadingInterceptor } from './helpers/loader-interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SignInComponent,
+    UserProfileComponent,
+    MainComponent,
+    PredmetiComponent,
+    PredmetPreviewComponent,
+    QuizComponent,
+    OglasnaComponent,
+    KalendarComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    DragDropModule, 
+    FullCalendarModule,
+    FormsModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

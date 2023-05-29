@@ -5,6 +5,7 @@ public class Kalendar {
     [Key]
     public int Id {get; set;}
     [Required]
+     [JsonIgnore]
     public Student Student { get; set; }
     public List<Datum>? MarkiraniDatumi { get; set; }
 

@@ -35,7 +35,7 @@ public class StudentController : ControllerBase{
    public async Task<ActionResult> vratiStudente()
    {
     try{
-        return Ok(await Context.Studenti!.ToListAsync());
+        return Ok(await Context.Studenti!.Include(p=> p.Kalendar).ToListAsync());
     
    }
    catch(Exception e)
