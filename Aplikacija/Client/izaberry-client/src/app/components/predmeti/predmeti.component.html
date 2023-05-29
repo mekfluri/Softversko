@@ -1,9 +1,25 @@
 <div class="body">
+  <div class="toolbar">
+    <div class="tool-left">
+        <img src="../assets/logoFinal.png">
+    </div>
+    <div class="tool-right">
+        <label (click)="redirectToPredmeti()" class="labelMenu">HOME</label>
+        <label (click)="redirectToOglasna()" class="labelMenu">OGLASNA</label>
+        <button (click)="redirectToLogin()" class="btnLOGIN" routerLink="/login">LOGIN</button>
+    </div>
+
+</div>
+  
+  <div class="prikaz">
+  
   <div class="module-container" *ngIf="moduli">
     <div (click)="modulClick($event)" class="module" *ngFor="let modul of moduli">
       {{modul}}
     </div>
   </div>
+  
+ 
   <div class="search-container">
     <input type="text" name="naziv" placeholder="Naziv predmeta za pretragu">
     <select name="tag">
@@ -26,4 +42,5 @@
       {{predmet.naziv}}
     </div>
   </div>
-</div>
+  </div>
+  </div>
