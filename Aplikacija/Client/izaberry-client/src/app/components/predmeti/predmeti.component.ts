@@ -44,5 +44,17 @@ export class PredmetiComponent implements OnInit{
         predmetId
       }
     });
+
+
+  }
+
+  redirectToLogin() {
+    this.router.navigateByUrl("login");
+  }
+  redirectToOglasna() {
+    this.router.navigateByUrl("oglasna");
+  }
+  redirectToPredmeti() {
+    this.router.navigateByUrl("");
   }
 }
