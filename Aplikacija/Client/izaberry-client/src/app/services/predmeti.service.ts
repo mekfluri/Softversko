@@ -40,4 +40,12 @@ export class PredmetiService {
     let resp = await firstValueFrom(resp$);
     return resp;
   }
+
+  async create(predmet: Predmet){
+    /*
+    let resp$ = this.http.post(`${environment.backend}/predmeti`, predmet);
+    let resp = await firstValueFrom(resp$);
+    */
+   console.log(predmet);
+  }
 }
