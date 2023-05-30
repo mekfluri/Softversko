@@ -1,47 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MainComponent } from './components/main/main.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { OglasnaComponent } from './components/oglasna/oglasna.component';
+<<<<<<< HEAD
+import {QuizComponent} from './components/quiz/quiz.component';
+=======
 import { PredmetiComponent } from './components/predmeti/predmeti.component';
 import { PredmetPreviewComponent } from './components/predmet-preview/predmet-preview.component';
 import { QuizComponent } from './components/quiz/quiz.component';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
-import { TagOperationsComponent } from './components/tag-operations/tag-operations.component';
-import { PredmetOperationsComponent } from './components/predmet-operations/predmet-operations.component';
-import { ErrorComponent } from './components/error/error.component';
-import { KalendarComponent } from './components/kalendar/kalendar.component';
 
+>>>>>>> 78a4362327407cae56a35853836049d8dc07d05d
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignInComponent },
   { path: "", component: MainComponent },
   { path: "profile", component: UserProfileComponent },
   { path: "oglasna", component: OglasnaComponent },
+<<<<<<< HEAD
+  { path: "kviz", component: QuizComponent }
+=======
   { path: "predmeti", component: PredmetiComponent },
   { path: "predmet", component: PredmetPreviewComponent },
   { path: "kviz", component: QuizComponent },
-  { path: "admin/login", component: AdminLoginComponent },
-  { path: "admin",
-    component: AdminPanelComponent,
-    children: [
-      {
-        path: 'predmeti',
-        component: PredmetOperationsComponent
-      },
-      {
-        path: "tagovi",
-        component: TagOperationsComponent
-      },
-    ]
-  },
-  { path: "error", component: ErrorComponent},
-  { path:"kalendar", component:KalendarComponent},
+>>>>>>> 78a4362327407cae56a35853836049d8dc07d05d
 ];
 
 @NgModule({

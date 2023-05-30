@@ -49,4 +49,12 @@ export class LoginComponent implements OnInit {
   passwordKeyUp(event: KeyboardEvent) {
     this.password = (event.target as HTMLInputElement).value;
   }
+
+ 
+  redirectToOglasna() {
+    this.router.navigateByUrl("oglasna");
+  }
+  redirectToHome() {
+    this.router.navigateByUrl("");
+  }
 }

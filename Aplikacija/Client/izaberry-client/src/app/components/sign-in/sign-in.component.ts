@@ -68,4 +68,11 @@ export class SignInComponent implements OnInit {
   semestarChange(event: Event) {
     this.registerInfo.semestar = parseInt(this.getInput(event));
   }
+
+  redirectToOglasna() {
+    this.router.navigateByUrl("oglasna");
+  }
+  redirectToHome() {
+    this.router.navigateByUrl("");
+  }
 }

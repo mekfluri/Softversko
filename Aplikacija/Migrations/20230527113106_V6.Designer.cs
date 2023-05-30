@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models;
 
@@ -11,9 +12,11 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    partial class IzaberryMeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230527113106_V6")]
+    partial class V6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,33 +87,6 @@ namespace Aplikacija.Migrations
                     b.ToTable("Komentari");
                 });
 
-            modelBuilder.Entity("Models.Literatura", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("MentorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StudentIDId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("filePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MentorId");
-
-                    b.HasIndex("StudentIDId");
-
-                    b.ToTable("Literatura");
-                });
-
             modelBuilder.Entity("Models.Modul", b =>
                 {
                     b.Property<int>("Id")
@@ -126,28 +102,6 @@ namespace Aplikacija.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Moduli");
-                });
-
-            modelBuilder.Entity("Models.Note", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Note");
                 });
 
             modelBuilder.Entity("Models.Ocena", b =>
@@ -194,9 +148,6 @@ namespace Aplikacija.Migrations
                     b.Property<int>("ESPB")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MentorId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ModulId")
                         .HasColumnType("int");
 
@@ -212,8 +163,6 @@ namespace Aplikacija.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MentorId");
 
                     b.HasIndex("ModulId");
 
@@ -290,8 +239,6 @@ namespace Aplikacija.Migrations
                     b.HasIndex("ModulId");
 
                     b.ToTable("Student");
-
-                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Models.Tag", b =>
@@ -314,13 +261,6 @@ namespace Aplikacija.Migrations
                     b.HasIndex("PredmetId");
 
                     b.ToTable("Tagovi");
-                });
-
-            modelBuilder.Entity("Models.Mentor", b =>
-                {
-                    b.HasBaseType("Models.Student");
-
-                    b.ToTable("Mentor");
                 });
 
             modelBuilder.Entity("Models.Datum", b =>
@@ -364,32 +304,6 @@ namespace Aplikacija.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Models.Literatura", b =>
-                {
-                    b.HasOne("Models.Mentor", "Mentor")
-                        .WithMany()
-                        .HasForeignKey("MentorId");
-
-                    b.HasOne("Models.Student", "StudentID")
-                        .WithMany("Literatura")
-                        .HasForeignKey("StudentIDId");
-
-                    b.Navigation("Mentor");
-
-                    b.Navigation("StudentID");
-                });
-
-            modelBuilder.Entity("Models.Note", b =>
-                {
-                    b.HasOne("Models.Student", "Student")
-                        .WithMany("Notes")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("Models.Ocena", b =>
                 {
                     b.HasOne("Models.Predmet", null)
@@ -399,15 +313,9 @@ namespace Aplikacija.Migrations
 
             modelBuilder.Entity("Models.Predmet", b =>
                 {
-                    b.HasOne("Models.Mentor", "Mentor")
-                        .WithMany("Predmeti")
-                        .HasForeignKey("MentorId");
-
                     b.HasOne("Models.Modul", "Modul")
                         .WithMany()
                         .HasForeignKey("ModulId");
-
-                    b.Navigation("Mentor");
 
                     b.Navigation("Modul");
                 });
@@ -451,15 +359,6 @@ namespace Aplikacija.Migrations
                         .HasForeignKey("PredmetId");
                 });
 
-            modelBuilder.Entity("Models.Mentor", b =>
-                {
-                    b.HasOne("Models.Student", null)
-                        .WithOne()
-                        .HasForeignKey("Models.Mentor", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Models.Kalendar", b =>
                 {
                     b.Navigation("MarkiraniDatumi");
@@ -481,16 +380,7 @@ namespace Aplikacija.Migrations
 
                     b.Navigation("Komentari");
 
-                    b.Navigation("Literatura");
-
-                    b.Navigation("Notes");
-
                     b.Navigation("Preference");
-                });
-
-            modelBuilder.Entity("Models.Mentor", b =>
-                {
-                    b.Navigation("Predmeti");
                 });
 #pragma warning restore 612, 618
         }

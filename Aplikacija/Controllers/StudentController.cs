@@ -112,6 +112,7 @@ public class StudentController : ControllerBase{
         stariStudent.Privilegije = student.Privilegije;
         stariStudent.Salt = student.Salt;
         stariStudent.Semestar = student.Semestar;
+        stariStudent.Literatura=student.Literatura;
 
         Context.Studenti.Update(stariStudent);
         await Context.SaveChangesAsync();

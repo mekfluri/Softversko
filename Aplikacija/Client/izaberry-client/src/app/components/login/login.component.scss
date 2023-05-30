@@ -7,7 +7,10 @@
     flex-direction: column;
     height: 100vh;
     font-family: "Poppins", sans-serif;
-    color: white
+    color: white;
+    overflow: hidden;
+
+  
 }
 
 @media (min-width: 500px) {
@@ -38,7 +41,11 @@
 
 }
 
+.labelMenu:hover {
+    text-decoration: underline;
+}
 .loginDiv {
+    margin-bottom: auto;
     display: flex;
     justify-content: center;
     background-color: white;
@@ -114,6 +121,22 @@ input:focus {
 }
 
 .toolbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+
+    justify-content: center;
+    z-index: 1;
+    margin-top: 1%;
+}
+
+.zaglavlje{
     position: absolute;
     top: 0;
     left: 0;
@@ -123,21 +146,41 @@ input:focus {
     align-items: center;
     color: white;
     font-weight: 600;
-    display: flex;
-    justify-content: center;
 
+    justify-content: end;
+    padding: 0 1em; 
+    z-index: 2;
 }
-
 .toolbar img {
     margin: 0 16px;
     width: 10%;
     margin-top: 10%;
 
 
+
+}
+.labelMenu
+{
+    color: white;
+    text-decoration: dotted;
+    font-size: 100%;
+    margin-top: 4%;
+    padding:inherit;
 }
 
 .meniDiv {
     display: flex;
     justify-content: center;
     height: 100%;
+}
+
+.tool-right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 50%;
+    margin-right: 12%;
+
+
+  
+
 }
