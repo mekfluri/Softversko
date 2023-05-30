@@ -95,7 +95,7 @@ namespace Aplikacija.Migrations
                     b.Property<int?>("MentorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentIDId")
+                    b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
                     b.Property<string>("filePath")
@@ -106,7 +106,7 @@ namespace Aplikacija.Migrations
 
                     b.HasIndex("MentorId");
 
-                    b.HasIndex("StudentIDId");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Literatura");
                 });
@@ -323,6 +323,13 @@ namespace Aplikacija.Migrations
                     b.ToTable("Mentor");
                 });
 
+            modelBuilder.Entity("Models.Admin", b =>
+                {
+                    b.HasBaseType("Models.Mentor");
+
+                    b.ToTable("Administrator");
+                });
+
             modelBuilder.Entity("Models.Datum", b =>
                 {
                     b.HasOne("Models.Kalendar", "kalendar")
@@ -370,13 +377,13 @@ namespace Aplikacija.Migrations
                         .WithMany()
                         .HasForeignKey("MentorId");
 
-                    b.HasOne("Models.Student", "StudentID")
+                    b.HasOne("Models.Student", "Student")
                         .WithMany("Literatura")
-                        .HasForeignKey("StudentIDId");
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Mentor");
 
-                    b.Navigation("StudentID");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Models.Note", b =>
@@ -456,6 +463,15 @@ namespace Aplikacija.Migrations
                     b.HasOne("Models.Student", null)
                         .WithOne()
                         .HasForeignKey("Models.Mentor", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Models.Admin", b =>
+                {
+                    b.HasOne("Models.Mentor", null)
+                        .WithOne()
+                        .HasForeignKey("Models.Admin", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

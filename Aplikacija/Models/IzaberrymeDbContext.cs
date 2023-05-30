@@ -14,6 +14,8 @@ public class IzaberryMeDbContext : DbContext
     public DbSet<Literatura> Literature { get; set; }
     public DbSet<Mentor> Mentori { get; set; }
     public DbSet<Note> Notes { get; set; }
+
+    public DbSet<Admin> Administratori { get; set; }
     public IzaberryMeDbContext(DbContextOptions<IzaberryMeDbContext> opts) : base(opts) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,14 +24,6 @@ public class IzaberryMeDbContext : DbContext
         .HasOne<Kalendar>((s) => s.Kalendar)
         .WithOne(ad => ad.Student)
         .HasForeignKey<Kalendar>(k => k.Id);
-
-
-
-
-
-
-
-
     }
 
 }

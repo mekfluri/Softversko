@@ -12,8 +12,8 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    [Migration("20230527161429_v")]
-    partial class v
+    [Migration("20230530144251_noveMigracije")]
+    partial class noveMigracije
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,6 @@ namespace Aplikacija.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("KalendarId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("OznacenDatum")
                         .HasColumnType("datetime2");
 
@@ -43,9 +40,12 @@ namespace Aplikacija.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("kalendarId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("KalendarId");
+                    b.HasIndex("kalendarId");
 
                     b.ToTable("Datumi");
                 });
@@ -95,10 +95,10 @@ namespace Aplikacija.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("MentorId")
+                    b.Property<int?>("MentorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
                     b.Property<string>("filePath")
@@ -326,11 +326,22 @@ namespace Aplikacija.Migrations
                     b.ToTable("Mentor");
                 });
 
+            modelBuilder.Entity("Models.Admin", b =>
+                {
+                    b.HasBaseType("Models.Mentor");
+
+                    b.ToTable("Administrator");
+                });
+
             modelBuilder.Entity("Models.Datum", b =>
                 {
-                    b.HasOne("Models.Kalendar", null)
+                    b.HasOne("Models.Kalendar", "kalendar")
                         .WithMany("MarkiraniDatumi")
-                        .HasForeignKey("KalendarId");
+                        .HasForeignKey("kalendarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("kalendar");
                 });
 
             modelBuilder.Entity("Models.Kalendar", b =>
@@ -367,15 +378,11 @@ namespace Aplikacija.Migrations
                 {
                     b.HasOne("Models.Mentor", "Mentor")
                         .WithMany()
-                        .HasForeignKey("MentorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MentorId");
 
                     b.HasOne("Models.Student", "Student")
                         .WithMany("Literatura")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Mentor");
 
@@ -459,6 +466,15 @@ namespace Aplikacija.Migrations
                     b.HasOne("Models.Student", null)
                         .WithOne()
                         .HasForeignKey("Models.Mentor", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Models.Admin", b =>
+                {
+                    b.HasOne("Models.Mentor", null)
+                        .WithOne()
+                        .HasForeignKey("Models.Admin", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

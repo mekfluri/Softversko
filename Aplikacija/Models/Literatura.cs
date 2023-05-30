@@ -6,13 +6,9 @@ namespace Models
         [Key]
         public int Id { get; set; }
     
-        
+        public Student? Student { get; set; }
 
-        [Required]
-        public Student Student { get; set; }
-
-        [Required]
-        public Mentor Mentor { get; set; }
+        public Mentor? Mentor { get; set; }
 
         [Required]
         public string filePath { get; set; }
