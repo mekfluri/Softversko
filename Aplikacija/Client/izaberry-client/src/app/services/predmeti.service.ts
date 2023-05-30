@@ -20,7 +20,7 @@ export class PredmetiService {
   }
 
   async getByModule(module: string): Promise<Predmet[]> {
-    let predmeti$ = this.http.get<Predmet[]>(`${environment.backend}/predmeti/${module}`);
+    let predmeti$ = this.http.get<Predmet[]>(`${environment.backend}/predmeti/poModulu/${module}`);
     let predmeti = await firstValueFrom(predmeti$);
     return predmeti;
   }
