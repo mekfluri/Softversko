@@ -35,7 +35,10 @@ public class StudentController : ControllerBase{
    public async Task<ActionResult> vratiStudente()
    {
     try{
-        return Ok(await Context.Studenti!.ToListAsync());
+        return Ok(await Context.Studenti!
+        .Include(s => s.Kalendar)
+        .Include(s => s.Modul)
+        .ToListAsync());
     
    }
    catch(Exception e)
@@ -54,6 +57,7 @@ public class StudentController : ControllerBase{
       var id = authService.GetUserId(token);
       var student = await Context.Studenti.Where((student) => student.Id == id)
         .Include((student) => student.Preference)
+        .Include((student) => student.Modul)
         .FirstOrDefaultAsync();
       if(student == null) {
         return NotFound("Student ne postoji");
@@ -63,7 +67,8 @@ public class StudentController : ControllerBase{
         id = student.Id,
         modul = student.Modul,
         semestar = student.Semestar,
-        email = student.Email
+        email = student.Email,
+        perm = student.Privilegije.ToString()
       });
     }catch(Exception ex){
       return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
