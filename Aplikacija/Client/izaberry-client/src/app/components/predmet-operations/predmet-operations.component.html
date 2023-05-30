@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="predmet-op predmet-insertion">
+        <h1>Dodavanje novog predmeta</h1>
+        <input (keyup)="nazivKeyUp($event)" type="text" placeholder="Naziv predmeta">
+        <select (change)="modulChange($event)" name="moduli">
+            <option *ngFor="let modul of moduli">
+                {{modul}}
+            </option>
+        </select>
+        <select (change)="semestarChange($event)" name="semestri">
+            <option *ngFor="let semestar of semestri">
+                {{semestar}}
+            </option>
+        </select>
+        <input (keyup)="espbKeyUp($event)" type="number" placeholder="ESPB" min="3" max="8">
+        <input (keyup)="opisKeyUp($event)" type="text" placeholder="Opis">
+        <select (change)="tagChange($event)" name="tagovi" multiple>
+            <option *ngFor="let tag of tagovi">
+                {{tag.naziv}}
+            </option>
+        </select>
+        <button (click)="dodajPredmet()">Dodaj predmet</button>
+    </div>
+</div>

@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModel } from 'src/app/models/login.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class AdminLoginComponent {
+
   email: string;
   password: string;
 
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
     this.password = "";
   }
   async ngOnInit(): Promise<void> {
-    if(localStorage.getItem("authToken") != null) {
+    if (localStorage.getItem("authToken") != null) {
       this.router.navigateByUrl("profile");
     }
   }
@@ -30,16 +31,14 @@ export class LoginComponent implements OnInit {
   async loginRequest() {
     try {
       let loginCredentials = new LoginModel(this.email, this.password);
-      let token = await this.authService.login(loginCredentials);
+      let token = await this.authService.login(loginCredentials, true);
       localStorage.setItem("authToken", token);
       let user = await this.userService.getUserByToken(token);
-      console.log(user);
-      //redirect na profil
       this.router.navigate(["profile"], {
         state: user!
       });
     }
-    catch(err: any) {
+    catch (err: any) {
       alert((err as Error).message);
     }
   }

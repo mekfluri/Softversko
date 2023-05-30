@@ -9,6 +9,11 @@ import { OglasnaComponent } from './components/oglasna/oglasna.component';
 import { PredmetiComponent } from './components/predmeti/predmeti.component';
 import { PredmetPreviewComponent } from './components/predmet-preview/predmet-preview.component';
 import { QuizComponent } from './components/quiz/quiz.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { TagOperationsComponent } from './components/tag-operations/tag-operations.component';
+import { PredmetOperationsComponent } from './components/predmet-operations/predmet-operations.component';
+import { ErrorComponent } from './components/error/error.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -19,6 +24,21 @@ const routes: Routes = [
   { path: "predmeti", component: PredmetiComponent },
   { path: "predmet", component: PredmetPreviewComponent },
   { path: "kviz", component: QuizComponent },
+  { path: "admin/login", component: AdminLoginComponent },
+  { path: "admin",
+    component: AdminPanelComponent,
+    children: [
+      {
+        path: 'predmeti',
+        component: PredmetOperationsComponent
+      },
+      {
+        path: "tagovi",
+        component: TagOperationsComponent
+      },
+    ]
+  },
+  { path: "error", component: ErrorComponent}
 ];
 
 @NgModule({

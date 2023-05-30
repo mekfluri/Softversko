@@ -1,0 +1,30 @@
+<div class="body">
+    <div class="toolbar">
+        <img src="../../../assets/logoFinal.png">
+    </div>
+
+    <div class="meniDiv">
+        <div class="loginDiv">
+            <div class="loginDivYellow">
+                <div class="divLabel">
+                    <input (keyup)="emailKeyUp($event)" type="text" id="email" name="email" placeholder="Unesite email"
+                        #email>
+                </div>
+
+                <div class="divLabel">
+                    <input (keyup)="passwordKeyUp($event)" type="password" id="password" name="password"
+                        placeholder="Unesite šifru" #password>
+                </div>
+
+                <div style="display:flex; justify-content: center;">
+                    <button (click)="loginRequest()" class="btnPrijaviSe">PRIJAVI SE</button>
+                </div>
+
+                <div class="btnRegistrujSe" style="display:flex; justify-content: center;  margin-left: 5%;">
+                    <label (click)="redirectToSignup()" style="color:#29082b">Registruj se</label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

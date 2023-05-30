@@ -15,10 +15,10 @@ export class AppComponent implements AfterViewInit{
   ngAfterViewInit(): void {
     this.loaderService.progress().subscribe((status: boolean) => {
       if(status){
-        this.renderer.addClass(document.body, 'cssload-speeding-wheel');
+        this.renderer.addClass(document.body, 'cursor-loader');
       }
       else {
-        this.renderer.removeClass(document.body, 'cssload-speeding-wheel');
+        this.renderer.removeClass(document.body, 'cursor-loader');
       }
     });
   }

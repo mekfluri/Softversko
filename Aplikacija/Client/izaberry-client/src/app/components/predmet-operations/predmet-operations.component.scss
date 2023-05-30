@@ -1,0 +1,16 @@
+.predmet-insertion {
+    display:flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.predmet-op {
+    padding: 20px;
+    border-bottom: 1px solid black;
+}
