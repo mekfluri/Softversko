@@ -3,11 +3,31 @@
 
 .body {
   background-image: url("../../../assets/board.jpg");
-  background-repeat: no-repeat;
+ // background-repeat: no-repeat;
   font-family: "Poppins", sans-serif;
   color: white;
-  height: 100vh;
+  height: 98%;
+
+  //margin:0;
+  overflow:auto;
+  border-top: 10px solid #ffe187;
+  border-left: 10px solid #ffe187;
+  border-right: 10px solid #ffe187;
+  border-bottom: 10px solid #ffe187;
+
+
+
 }
+
+/*html{
+  overflow: hidden;
+  background-image: url("../../../assets/board.jpg")
+}
+
+app-oglasna{
+  background-image: url("../../../assets/board.jpg");
+  overflow: hidden;
+}*/
 
 .deleteSticky {
 
@@ -19,14 +39,19 @@
 }
 
 .board {
-  border-top: 10px solid #ffe187;
-  border-left: 10px solid #ffe187;
-  border-right: 10px solid #ffe187;
-  border-bottom: 10px solid #ffe187;
-  padding: 60px;
+ // background-image: url("../../../assets/board.jpg");
+  //border-top: 10px solid #ffe187;
+  //border-left: 10px solid #ffe187;
+ // border-right: 10px solid #ffe187;
+  //border-bottom: 10px solid #ffe187;
+  //padding: 60px;
   height: 100%;
+  width: 88%;
   display: flex;
   flex-direction: row;
+ // overflow: hidden;
+
+
 }
 
 .drop-area {
@@ -36,13 +61,18 @@
   margin-top: 15px;
 }
 
-.drop {
-  width: 100%;
-  margin-top: 5%;
-}
+
+  .drop {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+
 
 .board {
-  min-height: 100%;
+ // min-height: 100%;
+  height: 100%;
 }
 
 .toolbar {
@@ -74,7 +104,7 @@
   height: 60%;
   justify-content: center;
   line-height: 24px;
-  max-width: 100%;
+  max-width: 88%;
   padding: 0 25px;
   position: relative;
   text-align: center;
@@ -82,6 +112,13 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+}
+.note-container{
+  height: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+
 }
 
 .btnDodaj:after {
@@ -148,10 +185,9 @@
 }
 
 .noteHolder {
-  display: flex;
-  justify-content: center;
-}
+  flex: 0 0 250px;
 
+}
 .noterounded {
   background-image: url("../../../assets/sticky.png");
   background-repeat: no-repeat;
@@ -161,15 +197,14 @@
   height: 250px;
   display: flex;
   justify-content: center;
-  margin-top: 1%;
 }
+
 
 .drop {
   display: flex;
-  justify-content: row;
   flex-wrap: wrap;
-  gap: 10%;
-}
+  gap: 10px;
+} 
 
 .drag-over {
   border: dashed 3px red;
@@ -190,5 +225,11 @@
 @media (min-width: 768px) {
   .noteMaker button {
     padding: 0 40px;
+  }
+
+  @media (min-width: 768px) {
+    .note-container {
+      justify-content: flex-start;
+    }
   }
 }
