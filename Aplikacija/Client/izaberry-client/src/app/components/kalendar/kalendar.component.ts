@@ -62,7 +62,7 @@ export class KalendarComponent implements OnInit {
 
   ngOnInit() {
    
-      this.http.get<any>('http://localhost:5006/kalendar/vartiKalendar/1')
+      this.http.get<any>('http://localhost:5006/kalendar/vartiKalendar')
          .subscribe(
           p => {
             console.log(p);
@@ -110,7 +110,7 @@ addEventToDatabase() {
   
 
 
-   this.http.post("http://localhost:5006/datum/dodajdatum/"+ this.newEvent.title+"/"+this.newEvent.date+"/1", this.newEvent)
+   this.http.post("http://localhost:5006/datum/dodajdatum/"+ this.newEvent.title+"/"+this.newEvent.date, this.newEvent)
      .subscribe(
        response => {
          console.log('Događaj spremljen u bazu:', response);

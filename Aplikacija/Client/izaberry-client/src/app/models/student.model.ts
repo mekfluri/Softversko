@@ -1,13 +1,15 @@
+import { Modul } from "./modul.model";
+
 class Student {
     id: number;
     username: string;
-    modul: string;
+    modul: Modul;
     semestar: number;
     email: string;
     token: string | null;
     perm: string | null;
 
-    constructor(id: number, username: string, modul: string, semestar: number, email: string, perm?: string){
+    constructor(id: number, username: string, modul: Modul, semestar: number, email: string, perm?: string){
         this.id = id;
         this.username = username;
         this.modul = modul;

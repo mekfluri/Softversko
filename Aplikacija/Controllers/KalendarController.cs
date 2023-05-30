@@ -9,10 +9,13 @@ public class KalendarController : ControllerBase
 {
     public IzaberryMeDbContext Context { get; set; }
 
-    public KalendarController(IzaberryMeDbContext context)
+    private AuthService authService { get; set; }
+
+    public KalendarController(IzaberryMeDbContext context, AuthService authService)
     {
         Context = context;
-    }
+        this.authService = authService;
+    } 
 
      
      [HttpPost("dodajKalendar/{idstudenta}")]
@@ -50,17 +53,30 @@ public class KalendarController : ControllerBase
        }
    }
  
-   [HttpGet("vartiKalendar/{idstudenta}")]
-   public async Task<ActionResult> vratiKalendar(int idstudenta)
+   [HttpGet("vartiKalendar")]
+   public async Task<ActionResult> vratiKalendar()
    {
-       var kal = await Context.Kalendari.Include(p=>p.Student)
-                                .Where(p=>p.Student.Id == idstudenta)
+      try{
+        var authHeader = Request.Headers["Authorization"].ToString();
+        if(string.IsNullOrEmpty(authHeader)){
+              return BadRequest("No token provided");
+        }
+        var token = authHeader.Substring(7);
+        var id = authService.GetUserId(token);
+        var kal = await Context.Kalendari.Include(p=>p.Student)
+                                .Where(p=>p.Student.Id == id)
                                 .Include(p=>p.MarkiraniDatumi)
                                 
                                
                                 .ToListAsync();
 
-       return Ok(kal);
+         return Ok(kal);
+       }
+      catch(Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    
                                 
    }
 

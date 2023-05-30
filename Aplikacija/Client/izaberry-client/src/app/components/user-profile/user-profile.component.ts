@@ -21,11 +21,12 @@ export class UserProfileComponent implements OnInit{
     let token = localStorage.getItem("authToken");
     if(token) {
       this.student = await this.userService.getUserByToken(token);
+      console.log(this.student);
     }
   }
 
   showCalendar() {
-
+     this.router.navigateByUrl("kalendar");
   }
 
   showLiteratura() {
@@ -40,6 +41,14 @@ export class UserProfileComponent implements OnInit{
 
   logOut() {
     localStorage.removeItem("authToken");
+    this.router.navigateByUrl("");
+  }
+
+   
+  redirectToOglasna() {
+    this.router.navigateByUrl("oglasna");
+  }
+  redirectToHome() {
     this.router.navigateByUrl("");
   }
 }

@@ -7,20 +7,30 @@ namespace Aplikacija.Controllers;
 public class DatumController : ControllerBase
 {
       public IzaberryMeDbContext Context { get; set; }
+      
+       private AuthService authService { get; set; }
 
-    public DatumController(IzaberryMeDbContext context)
+    public DatumController(IzaberryMeDbContext context,AuthService authService)
     {
         Context = context;
+        this.authService = authService;
     }
    
-    [HttpPost("dodajdatum/{poruka}/{oznacenDatum}/{idkalendara}")]
-   public async Task<ActionResult> dodajDatum(string poruka,DateTime oznacenDatum, int idkalendara)
+    [HttpPost("dodajdatum/{poruka}/{oznacenDatum}")]
+   public async Task<ActionResult> dodajDatum(string poruka,DateTime oznacenDatum)
     {
 
          try
         {
+          var authHeader = Request.Headers["Authorization"].ToString();
+          if(string.IsNullOrEmpty(authHeader)){
+            return BadRequest("No token provided");
+          }
+          var token = authHeader.Substring(7);
+          var id = authService.GetUserId(token);
 
-         var k = await Context.Kalendari.FindAsync(idkalendara);
+
+          var k = await Context.Kalendari.Where(p=> p.Student.Id == id).FirstAsync();
 
          if(k != null)
          {

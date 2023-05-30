@@ -1,4 +1,9 @@
 <div class="body">
+    <div class="zaglavlje">
+        <label (click)="redirectToHome()" class="labelMenu">HOME</label>
+                <label (click)="redirectToOglasna()" class="labelMenu">OGLASNA</label>
+       </div>
+
     <div class="container" *ngIf="student">
         <div class="profile-header">
             <div class="profile-img">
@@ -7,7 +12,7 @@
             <div class="profile-nav-info">
                 <h3 class="user-name" *ngIf="student && student.username">{{ student.username }}</h3>
                 <div class="address">
-                    <p id="smer" class="smer" *ngIf="student.modul">{{ student.modul }}</p>
+                    <p id="smer" class="smer" *ngIf="student.modul">{{ student.modul.naziv }}</p>
                 </div>
 
             </div>
