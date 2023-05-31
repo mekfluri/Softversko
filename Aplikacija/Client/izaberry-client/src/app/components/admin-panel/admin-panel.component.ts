@@ -21,10 +21,12 @@ export class AdminPanelComponent implements OnInit {
     if(this.userService.user == null) {
       this.userService.user = await this.userService.getUserByToken(token);
     }
-    /*
     if(this.userService.user!.perm != "ADMIN") {
-      this.router.navigateByUrl("unauthorized");
+      let err = new Error();
+      err.message = "Nemate privilegije da vidite ovu stranicu";
+      this.router.navigate(["error"], {
+        state: err
+      })
     }
-    */
   }
 }

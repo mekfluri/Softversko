@@ -22,8 +22,8 @@ export class KalendarComponent implements OnInit {
  //pozovemo iz bazu podatke 
  // i prikazemo ih 
   events: any = [
-    //{ title: 'Present', date: '2023-05-01' , color: '#0000FF'},
-    //{ title: 'Absent', date: '2023-05-01' , color: '#0000FF'},
+    { title: 'Present', date: '2023-05-01' , color: '#0000FF'},
+    { title: 'Absent', date: '2023-05-02' , color: '#0000FF'},
   ];
  
   calendarOptions: CalendarOptions = {
