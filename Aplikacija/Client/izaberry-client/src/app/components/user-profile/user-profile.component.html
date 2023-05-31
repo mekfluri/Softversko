@@ -39,14 +39,12 @@
                 <div class="nav">
                     <ul>
                         <li (click)="showLiteratura()" class="user-literatura active">Literatura</li>
-                        <li (click)="showCalendar()" class="user-kalendar">Kalendar</li>
+                        <li routerLink="kalendar" (click)="showCalendar()" class="user-kalendar">Kalendar</li>
                         <li (click)="showKomentari()" class="user-komentar"> Komentar</li>
                     </ul>
                 </div>
-                <div class="komentar-container">
-                    <div *ngFor="let komentar of komentari" class="komentar">
-
-                    </div>
+                <div class="router-container">
+                    <router-outlet></router-outlet>
                 </div>
             </div>
         </div>
