@@ -24,6 +24,7 @@ public class IzaberryMeDbContext : DbContext
         .HasOne<Kalendar>((s) => s.Kalendar)
         .WithOne(ad => ad.Student)
         .HasForeignKey<Kalendar>(k => k.Id);
+        base.OnModelCreating(modelBuilder);
     }
 
 }
