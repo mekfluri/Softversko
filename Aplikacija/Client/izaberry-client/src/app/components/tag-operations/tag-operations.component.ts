@@ -12,6 +12,7 @@ import { getSafePropertyAccessString } from '@angular/compiler';
 export class TagOperationsComponent implements OnInit{
 
   tagovi: Tag[] | null = null;
+  currentTag: Tag = new Tag(0, "");
 
   constructor(private tagService: TagService) {}
 
@@ -19,8 +20,26 @@ export class TagOperationsComponent implements OnInit{
     this.tagovi = await this.tagService.getAllTags();
   }
 
+  async createTag() {
+    let response = await this.tagService.createTag(this.currentTag);
+    console.log(response);
+  }
+
+  async deleteTag() {
+    let response = await this.tagService.deleteTag(this.currentTag);
+    console.log(response);
+  }
+
   cleanTags() {
     this.tagovi = null;
+  }
+
+  tagKeyUp(event: Event) {
+    this.currentTag.naziv = (event.target as HTMLInputElement).value;
+  }
+
+  idKeyUp(event: Event){
+    this.currentTag.id = parseInt((event.target as HTMLInputElement).value);
   }
 
   async ngOnInit(): Promise<void> {

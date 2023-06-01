@@ -1,10 +1,10 @@
 <div class="operations-container">
     <div class="tag-op tag-insertion">
-        <input type="text" placeholder="Naziv novog taga">
-        <button>Dodaj tag</button>
+        <input (keyup)="tagKeyUp($event)" type="text" placeholder="Naziv novog taga">
+        <button (click)="createTag()">Dodaj tag</button>
     </div>
     <div class="tag-op tag-deletion">
-        <input type="text" placeholder="Naziv taga za brisanje">
+        <input (keyup)="idKeyUp($event)" type="number" placeholder="Id taga za brisanje">
         <button>Obrisi tag</button>
     </div>
     <div class="tag-op tag-preview">
