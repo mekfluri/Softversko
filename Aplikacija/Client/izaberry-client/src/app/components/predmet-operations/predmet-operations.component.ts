@@ -12,25 +12,32 @@ import { TagService } from 'src/app/services/tag.service';
   styleUrls: ['./predmet-operations.component.scss']
 })
 export class PredmetOperationsComponent implements OnInit{
+
   predmeti: Predmet[] | null = null;
   predmet: Predmet;
   selectedPredmet: Predmet | undefined = undefined;
+  predmetToChange: Predmet | null;
+  showPredmeti: boolean = false;
+
   tagovi: Tag[] | null = null;
   moduli: string[] | null = null;
   semestri: Array<number> = Array(8).fill(0).map((val, idx) => idx+ 1);
 
   constructor(private predmetService: PredmetiService, private tagService: TagService, private modulService: ModuleService){
     this.predmet = new Predmet();
+    this.predmetToChange = null;
   }
 
   async ngOnInit(): Promise<void> {
     this.tagovi = await this.tagService.getAllTags();
     this.moduli = await this.modulService.getModuleNames();
+    this.predmeti = await this.predmetService.getAll();
   }
 
   async getPredmeti() {
     this.predmeti = await this.predmetService.getAll();
     this.selectedPredmet = this.predmeti![0];
+    this.showPredmeti = true;
   }
 
   nazivKeyUp(event: Event){
@@ -60,14 +67,24 @@ export class PredmetOperationsComponent implements OnInit{
     this.predmet.tagovi.push(new Tag(0, target.options[target.selectedIndex].value));
   }
 
+  idChange(event: Event){ 
+    let sId = (event.target as HTMLInputElement).value;
+    try {
+      const id = parseInt(sId);
+      this.predmetToChange = this.predmeti?.find(p => p.id == id)!;
+    }
+    catch(err: any) {
+      console.error(err);
+    }
+  }
+
   async dodajPredmet(){
     console.log(this.predmet);
     console.log(await this.predmetService.create(this.predmet as PredmetDto));
   }
 
   cleanPredmeti() {
-    this.predmeti = null;
-    this.selectedPredmet = undefined;
+    this.showPredmeti = false;
   }
 
   predmetChange(event: Event) {
