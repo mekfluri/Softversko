@@ -29,4 +29,9 @@ export class AdminPanelComponent implements OnInit {
       })
     }
   }
+
+  logOut() {
+    localStorage.removeItem("authToken");
+    this.router.navigateByUrl("");
+  }
 }
