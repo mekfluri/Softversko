@@ -33,7 +33,7 @@ public class AuthService {
         var claims = new List<Claim>{
             new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
             new Claim(JwtRegisteredClaimNames.Sub, userInfo.Id.ToString()),
-            new Claim("perm", userInfo.Privilegije.ToString()),
+            new Claim("perm", ((long)userInfo.Privilegije).ToString(), ClaimValueTypes.Integer64),
             new Claim(JwtRegisteredClaimNames.Aud, _config["Jwt:Audience"]!),
             new Claim(JwtRegisteredClaimNames.Iss, _config["Jwt:Issuer"]!),
             new Claim(JwtRegisteredClaimNames.Iat, EpochTime.GetIntDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64)

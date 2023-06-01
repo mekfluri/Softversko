@@ -19,7 +19,7 @@ public class Student : RegisterModel
     public Privilegije Privilegije { get; set; }
     public Kalendar Kalendar { get; set; }
     public string Salt { get; set; }
-    public string Bio{get;set;}
+    public string? Bio{get;set;}
 
     public Student() { }
 

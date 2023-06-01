@@ -68,7 +68,7 @@ public class StudentController : ControllerBase{
         modul = student.Modul,
         semestar = student.Semestar,
         email = student.Email,
-        perm = student.Privilegije.ToString()
+        perm = student.Privilegije
       });
     }catch(Exception ex){
       return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);

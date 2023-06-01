@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Privilegije } from 'src/app/models/permission.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -21,7 +22,7 @@ export class AdminPanelComponent implements OnInit {
     if(this.userService.user == null) {
       this.userService.user = await this.userService.getUserByToken(token);
     }
-    if(this.userService.user!.perm != "ADMIN") {
+    if(this.userService.user!.perm < Privilegije.ADMIN) {
       let err = new Error();
       err.message = "Nemate privilegije da vidite ovu stranicu";
       this.router.navigate(["error"], {
