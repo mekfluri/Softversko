@@ -23,7 +23,7 @@ public class PredmetController : ControllerBase
             var modul = await Context.Moduli.Where(m => m.Naziv == predmetDto.Modul.Naziv).FirstOrDefaultAsync();
             if (modul == null)
             {
-                return BadRequest("Nepostojeci modul");
+                return NotFound("Nepostojeci modul");
             }
             var tagovi = new List<Tag>();
             if (predmetDto.Tagovi != null)
@@ -32,9 +32,9 @@ public class PredmetController : ControllerBase
                 {
                     var dbTag = Context.Tagovi.Where(t => t.Naziv == tag.Naziv).FirstOrDefault();
                     if(dbTag == null){
-                        return BadRequest("Nepostojeci tag!");
+                        return NotFound("Nepostojeci tag!");
                     }
-                    tagovi.Append(dbTag);
+                    tagovi.Add(dbTag);
                 }
             }
 
@@ -43,18 +43,12 @@ public class PredmetController : ControllerBase
                 modul,
                 predmetDto.Semestar,
                 null,
-                null,
+                tagovi,
                 predmetDto.ESPB,
                 predmetDto.Opis
             );
 
             Context.Predmeti!.Add(predmet);
-            await Context.SaveChangesAsync();
-            predmet.Tagovi = new List<Tag>();
-            foreach(Tag tag in tagovi) {
-                predmet.Tagovi.Append(tag);
-            }
-            Context.Predmeti.Update(predmet);
             await Context.SaveChangesAsync();
             return Ok("Dodali smo predmet sa id-jem" + predmet.Id);
         }
