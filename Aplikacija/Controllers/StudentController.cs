@@ -124,6 +124,27 @@ public class StudentController : ControllerBase{
      }
 
   }
+  [HttpPut("azurirajStudentovuBiografiju/{idstudenta}/{bio}")]
+   public async Task<ActionResult> azurirajStudentovuBiografiju(int idstudenta,string bio)
+  {
+     var stariStudent = await Context.Studenti.FindAsync(idstudenta);
+
+     if(stariStudent != null)
+     {
+        stariStudent.Bio = bio;
+      
+
+        Context.Studenti.Update(stariStudent);
+        await Context.SaveChangesAsync();
+        return Ok(stariStudent);
+     }
+     else
+     {
+      return BadRequest("ne postoji takav student");
+     }
+
+  }
+
 
   
 

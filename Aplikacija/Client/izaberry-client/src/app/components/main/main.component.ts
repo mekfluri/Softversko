@@ -14,7 +14,18 @@ export class MainComponent {
   redirectToOglasna() {
     this.router.navigateByUrl("oglasna");
   }
+  redirectToProfil() {
+    this.router.navigateByUrl("profile");
+  }
+  redirectToQuiz()
+  {
+    this.router.navigateByUrl("kviz");
+  }
   redirectToPredmeti() {
     this.router.navigateByUrl("predmeti");
   }
+  isLoggedIn(): boolean {
+    return localStorage.getItem("authToken") !== null;
+  }
+  
 }

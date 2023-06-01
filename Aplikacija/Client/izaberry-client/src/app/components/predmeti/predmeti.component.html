@@ -1,3 +1,6 @@
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
 <div class="body">
   <div class="toolbar">
     <div class="tool-left">
@@ -6,7 +9,10 @@
     <div class="tool-right">
       <label (click)="redirectToPredmeti()" class="labelMenu">HOME</label>
       <label (click)="redirectToOglasna()" class="labelMenu">OGLASNA</label>
-      <button (click)="redirectToLogin()" class="btnLOGIN" routerLink="/login">LOGIN</button>
+      <button (click)="redirectToLogin()" class="btnLOGIN" routerLink="/login" *ngIf="!isLoggedIn()">LOGIN</button>
+      <label (click)="redirectToProfil()" class="lblPROFIL" routerLink="/login" *ngIf="isLoggedIn()">  <span class="material-symbols-outlined">
+          account_circle
+          </span>PROFIL</label>
     </div>
 
   </div>

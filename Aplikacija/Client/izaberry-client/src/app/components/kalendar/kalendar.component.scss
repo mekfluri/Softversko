@@ -1,0 +1,26 @@
+.dugme {
+    background-color: #e2496a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.3);
+}
+
+.unesidatum input {
+    border-radius: 20px;
+    margin-left: 3%;
+    width: 23.3%;
+}
+
+.unesitekst input {
+    border-radius: 20px;
+    margin-left: 2%;
+}
+
+@media (min-width: 500px) {
+ .body{
+    background-color: #e2496a;
+ }
+}

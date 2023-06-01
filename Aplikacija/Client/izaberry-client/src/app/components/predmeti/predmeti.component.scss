@@ -13,7 +13,21 @@
     flex-wrap: wrap;
 }
 
+.lblPROFIL
+{
+   
+     color: white;
+     background-color: transparent;
+     border: none;
+    padding: 10px 50px;
+    width: auto;
+    font-size: 90%;
+   display: flex;
+   flex-direction: row;
+   gap: 10%;
+ 
 
+}
 
 .module {
     display: flex;

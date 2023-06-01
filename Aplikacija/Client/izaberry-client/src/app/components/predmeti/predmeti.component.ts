@@ -36,6 +36,12 @@ export class PredmetiComponent implements OnInit{
     let modul = (event.target as HTMLDivElement).innerText;
     this.predmeti = await this.predmetiService.getByModule(modul);
   }
+  isLoggedIn(): boolean {
+    return localStorage.getItem("authToken") !== null;
+  }
+  redirectToProfil() {
+    this.router.navigateByUrl("profile");
+  }
 
   predmetClick(event: Event){
     let predmetId = parseInt((event.target as HTMLDivElement).id);
