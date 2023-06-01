@@ -16,4 +16,19 @@ export class ModuleService {
     let moduli = await firstValueFrom(module$);
     return moduli.map((modul: Modul) => modul.naziv);
   }
+
+  async getModules(): Promise<Modul[]> {
+    let module$ = this.http.get<Modul[]>(`${environment.backend}/moduli`);
+    return firstValueFrom(module$);
+  }
+
+  async createModule(module: Modul) {
+    let response$ = this.http.post(`${environment.backend}/moduli/${module.naziv}`, {});
+    return firstValueFrom(response$);
+  }
+
+  async deleteModule(module: Modul) {
+    let response$ = this.http.delete(`${environment.backend}/moduli/${module.id}`);
+    return firstValueFrom(response$);
+  }
 }
