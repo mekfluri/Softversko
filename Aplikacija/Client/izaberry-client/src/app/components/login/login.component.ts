@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
       let token = await this.authService.login(loginCredentials);
       localStorage.setItem("authToken", token);
       let user = await this.userService.getUserByToken(token);
-      console.log(user);
       //redirect na profil
       this.router.navigate(["profile"], {
         state: user!
