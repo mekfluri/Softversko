@@ -8,8 +8,9 @@ class Student {
     email: string;
     token: string | null;
     perm: string | null;
+    bio: string;
 
-    constructor(id: number, username: string, modul: Modul, semestar: number, email: string, perm?: string){
+    constructor(id: number, username: string, modul: Modul, semestar: number, email: string, perm?: string,   bio: string = ""){
         this.id = id;
         this.username = username;
         this.modul = modul;
@@ -17,6 +18,7 @@ class Student {
         this.email = email;
         this.token = null;
         this.perm = perm ?? null;
+        this.bio = bio;
     }
 }
 
