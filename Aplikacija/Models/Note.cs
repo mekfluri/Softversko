@@ -13,7 +13,8 @@ namespace Models
 
         [Required]
         public string Text { get; set; }
-
+          
+        public bool doneVisible {get;set;}
        
 
        
@@ -27,6 +28,7 @@ namespace Models
             this.Id=id;
             this.Student=student;
             this.Text=Text;
+            doneVisible=true;
          
         }
 

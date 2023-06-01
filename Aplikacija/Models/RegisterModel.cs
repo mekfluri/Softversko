@@ -3,13 +3,13 @@ using System.Net.Mail;
 namespace Models;
 
 public class RegisterModel : LoginModel {
-    [Required]
+
     [Column("username")]
     public string Username { get; set; }
 
     [Column("modul")]
     public Modul? Modul { get; set; }
-    [Required]
+
     [Column("semestar")]
     public int Semestar { get; set; }
 
