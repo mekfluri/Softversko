@@ -15,14 +15,22 @@ public class NotaController : ControllerBase
     }
 
 
-    [HttpPost("dodajNotes")]
-    public async Task<ActionResult> dodajNotes([FromBody] Note note)
+    [HttpPost("dodajNotes/{tekst}/{studentId}")]
+    public async Task<ActionResult> dodajNotes(string tekst, int studentId)
     {
+        Note note = new Note();
+        note.Text = tekst;
+        Student s = Context.Studenti.Where(s => s.Id == studentId)
+           .FirstOrDefault();
+        if (s == null)
+            return BadRequest("Ne postoji student sa ovima id-em.");
+        note.Student = s;
+        note.doneVisible=false;
         try
         {
             Context.Notes.Add(note);
             await Context.SaveChangesAsync();
-            return Ok("Dodali smo note sa id-jem" + note.Id);
+            return Ok(note.Id);
         }
         catch (Exception e)
         {
@@ -52,7 +60,6 @@ public class NotaController : ControllerBase
     {
         var kal = await Context.Notes.Include(p => p.Student)
                                  .Where(p => p.Student.Id == idstudenta)
-                                 .Include(p => p.Text)
                                  .Select(p => new
                                  {
                                      p.Id,
@@ -62,6 +69,14 @@ public class NotaController : ControllerBase
         return Ok(kal);
 
     }
+    [HttpGet("vartiSveNotes")]
+    public async Task<ActionResult> vratiSveNotes()
+    {
+        var notes = await Context.Notes.Include(s => s.Student).ToListAsync();
+
+        return Ok(notes);
+    }
+
 
 
 }
