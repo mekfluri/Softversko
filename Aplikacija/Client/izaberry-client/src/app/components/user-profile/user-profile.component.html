@@ -1,7 +1,7 @@
 <div class="body">
     <div class="zaglavlje">
-        <label (click)="redirectToHome()" class="labelMenu">HOME</label>
-                <label (click)="redirectToOglasna()" class="labelMenu">OGLASNA</label>
+        <label (click)="redirectToHome()" class="labelMenu" style="color: #e2496a;">HOME</label>
+                <label (click)="redirectToOglasna()" class="labelMenu" style="color: #e2496a;">OGLASNA</label>
        </div>
 
     <div class="container" *ngIf="student">
@@ -30,8 +30,14 @@
                     <p class="user-mail"><i class="fa fa-envelope" *ngIf="student.email"></i>{{ student.email }}</p>
                     <div class="user-bio">
                         <h3>Biografija</h3>
-                        <p class="bio">
-                            Ja sam Živković Slobodan, polu čovek, polu poljoprivrednik! </p>
+                        <p>{{ student.bio }}</p>
+                        <div *ngIf="editingBio">
+                            <textarea [(ngModel)]="student.bio"></textarea>
+                   
+                            <button class="editbtn" (click)="saveBio()">Save</button>
+                            <button class="editbtn" (click)="cancelEditBio()">Cancel</button>
+                        </div>
+                        <button class="editbtn" *ngIf="!editingBio" (click)="editBio()">Edit</button>
                     </div>
                     <div class="profile-btn">
                         <button class="chatbtn" id="chatBtn"><i class="fa fa-comment"></i> Chat</button>
