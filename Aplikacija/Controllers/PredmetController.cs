@@ -16,11 +16,45 @@ public class PredmetController : ControllerBase
     }
 
     [HttpPost("dodajPredmet")]
-    public async Task<ActionResult> dodajPredmet([FromBody] Predmet predmet)
+    public async Task<ActionResult> dodajPredmet([FromBody] PredmetDto predmetDto)
     {
         try
         {
+            var modul = await Context.Moduli.Where(m => m.Naziv == predmetDto.Modul.Naziv).FirstOrDefaultAsync();
+            if (modul == null)
+            {
+                return BadRequest("Nepostojeci modul");
+            }
+            var tagovi = new List<Tag>();
+            if (predmetDto.Tagovi != null)
+            {
+                foreach (Tag tag in predmetDto.Tagovi)
+                {
+                    var dbTag = Context.Tagovi.Where(t => t.Naziv == tag.Naziv).FirstOrDefault();
+                    if(dbTag == null){
+                        return BadRequest("Nepostojeci tag!");
+                    }
+                    tagovi.Append(dbTag);
+                }
+            }
+
+            var predmet = new Predmet(
+                predmetDto.Naziv,
+                modul,
+                predmetDto.Semestar,
+                null,
+                null,
+                predmetDto.ESPB,
+                predmetDto.Opis
+            );
+
             Context.Predmeti!.Add(predmet);
+            await Context.SaveChangesAsync();
+            predmet.Tagovi = new List<Tag>();
+            foreach(Tag tag in tagovi) {
+                predmet.Tagovi.Append(tag);
+            }
+            Context.Predmeti.Update(predmet);
             await Context.SaveChangesAsync();
             return Ok("Dodali smo predmet sa id-jem" + predmet.Id);
         }
@@ -113,7 +147,7 @@ public class PredmetController : ControllerBase
     {
         try
         {
-            return Ok(await Context.Predmeti!.Include(predmet => predmet.Ocene).Include(predmet => predmet.Tagovi).ToListAsync());
+            return Ok(await Context.Predmeti!.Include(predmet => predmet.Ocene).Include(predmet => predmet.Tagovi).Include(p => p.Modul).ToListAsync());
         }
         catch (Exception e)
         {
