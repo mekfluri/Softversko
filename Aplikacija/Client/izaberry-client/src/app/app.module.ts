@@ -26,6 +26,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { TagOperationsComponent } from './components/tag-operations/tag-operations.component';
 import { PredmetOperationsComponent } from './components/predmet-operations/predmet-operations.component';
 import { ErrorComponent } from './components/error/error.component';
+import { ModulOperationsComponent } from './components/modul-operations/modul-operations.component';
 
 
 
@@ -45,7 +46,8 @@ import { ErrorComponent } from './components/error/error.component';
     TagOperationsComponent,
     PredmetOperationsComponent,
     ErrorComponent,
-    KalendarComponent
+    KalendarComponent,
+    ModulOperationsComponent
   ],
   imports: [
     BrowserModule,

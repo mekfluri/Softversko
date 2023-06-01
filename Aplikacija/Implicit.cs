@@ -18,3 +18,4 @@ global using System.ComponentModel.DataAnnotations.Schema;
 
 global using Models;
 global using Helpers;
+global using Dtos;

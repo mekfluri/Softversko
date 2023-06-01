@@ -21,4 +21,29 @@
         </select>
         <button (click)="dodajPredmet()">Dodaj predmet</button>
     </div>
+    <div class="predmet-op predmet-deletion">
+        <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id predmeta za brisanje">
+        <button (click)="deletePredmet()">Obrisi predmet</button>
+    </div>
+    <div class="predmet-op predmet-preview">
+        <h1>Lista predmeta</h1>
+        <button (click)="getPredmeti()">Prikazi sve predmete</button>
+        <button (click)="cleanPredmeti()">Obrisi listu</button>
+        <select (change)="predmetChange($event)" *ngIf="predmeti">
+            <option *ngFor="let predmet of predmeti">
+                {{predmet.naziv}}
+            </option>
+        </select>
+        <div *ngIf="selectedPredmet">
+            <p>ID: {{selectedPredmet.id}}</p>
+            <p>Naziv: {{selectedPredmet.naziv}}</p>
+            <p>ESPB: {{selectedPredmet.espb}}</p>
+            <p>Semestar: {{selectedPredmet.semestar}}</p>
+            <ul *ngIf="selectedPredmet.tagovi">
+                <li *ngFor="let tag of selectedPredmet.tagovi">
+                    {{tag.naziv}}
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>

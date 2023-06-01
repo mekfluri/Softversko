@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Predmet } from '../models/predmet.model';
+import { Predmet, PredmetDto } from '../models/predmet.model';
 import { environment } from 'src/environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { Modul } from '../models/modul.model';
@@ -41,11 +41,19 @@ export class PredmetiService {
     return resp;
   }
 
-  async create(predmet: Predmet){
-    /*
-    let resp$ = this.http.post(`${environment.backend}/predmeti`, predmet);
+  async create(predmet: PredmetDto){
+    console.log(predmet);
+    let resp$ = this.http.post(`${environment.backend}/predmeti/dodajPredmet`, predmet, {
+      responseType: "text"
+    });
     let resp = await firstValueFrom(resp$);
-    */
-   console.log(predmet);
+    console.log(resp);
+  }
+
+  async delete(predmetId: number) {
+    let resp$ = this.http.delete(`${environment.backend}/predmeti/obrisi/${predmetId}`, {
+      responseType: "text"
+    });
+    return firstValueFrom(resp$);
   }
 }

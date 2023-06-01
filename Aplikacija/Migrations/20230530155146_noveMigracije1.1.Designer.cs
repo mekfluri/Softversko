@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models;
 
@@ -11,9 +12,11 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    partial class IzaberryMeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230530155146_noveMigracije1.1")]
+    partial class noveMigracije11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,9 +146,6 @@ namespace Aplikacija.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("doneVisible")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
@@ -259,10 +259,6 @@ namespace Aplikacija.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Bio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -313,24 +309,14 @@ namespace Aplikacija.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PredmetId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("PredmetId");
+
                     b.ToTable("Tagovi");
-                });
-
-            modelBuilder.Entity("PredmetTag", b =>
-                {
-                    b.Property<int>("PredmetiId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagoviId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PredmetiId", "TagoviId");
-
-                    b.HasIndex("TagoviId");
-
-                    b.ToTable("PredmetTag");
                 });
 
             modelBuilder.Entity("Models.Mentor", b =>
@@ -423,13 +409,15 @@ namespace Aplikacija.Migrations
 
             modelBuilder.Entity("Models.Predmet", b =>
                 {
-                    b.HasOne("Models.Mentor", null)
+                    b.HasOne("Models.Mentor", "Mentor")
                         .WithMany("Predmeti")
                         .HasForeignKey("MentorId");
 
                     b.HasOne("Models.Modul", "Modul")
                         .WithMany()
                         .HasForeignKey("ModulId");
+
+                    b.Navigation("Mentor");
 
                     b.Navigation("Modul");
                 });
@@ -466,19 +454,11 @@ namespace Aplikacija.Migrations
                     b.Navigation("Modul");
                 });
 
-            modelBuilder.Entity("PredmetTag", b =>
+            modelBuilder.Entity("Models.Tag", b =>
                 {
                     b.HasOne("Models.Predmet", null)
-                        .WithMany()
-                        .HasForeignKey("PredmetiId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagoviId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Tagovi")
+                        .HasForeignKey("PredmetId");
                 });
 
             modelBuilder.Entity("Models.Mentor", b =>
@@ -509,6 +489,8 @@ namespace Aplikacija.Migrations
                     b.Navigation("Komentari");
 
                     b.Navigation("Ocene");
+
+                    b.Navigation("Tagovi");
                 });
 
             modelBuilder.Entity("Models.Student", b =>

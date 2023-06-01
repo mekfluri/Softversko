@@ -3,25 +3,33 @@ import { Modul } from "./modul.model";
 import { Ocena } from "./ocena.model";
 import { Tag } from "./tag.model";
 
-class Predmet {
-    id: number;
+
+class PredmetDto {
     naziv: string;
     modul: Modul;
     semestar: number;
-    ocene: Ocena[];
-    komentari: Komentar[];
-    tagovi: Tag[];
     espb: number;
     opis: string;
-    constructor(id?: number, naziv?:string, modul?: Modul, semestar?: number, ocene?: Ocena[], tagovi?: Tag[], espb?: number, opis?: string, komentari?: Komentar[]){
-        this.id = id || 0;
+    tagovi: Tag[];
+
+    constructor(naziv?: string, modul?: Modul, semestar?: number, espb?: number, opis?: string, tagovi?: Tag[]){
         this.naziv = naziv || "";
         this.modul = modul || new Modul(0, "");
-        this.semestar = semestar || 1;
-        this.ocene = ocene || [];
-        this.tagovi = tagovi || [];
+        this.semestar = semestar || 0;
         this.espb = espb || 0;
         this.opis = opis || "";
+        this.tagovi = tagovi || [];
+    }
+}
+
+class Predmet extends PredmetDto {
+    id: number;
+    ocene: Ocena[];
+    komentari: Komentar[];
+    constructor(id?: number, naziv?:string, modul?: Modul, semestar?: number, ocene?: Ocena[], tagovi?: Tag[], espb?: number, opis?: string, komentari?: Komentar[]){
+        super(naziv, modul, semestar, espb, opis, tagovi);
+        this.id = id || 0;
+        this.ocene = ocene || [];
         this.komentari = komentari|| [];
     }
 
@@ -56,4 +64,4 @@ class Predmet {
     }
 }
 
-export { Predmet }
+export { Predmet, PredmetDto }

@@ -15,13 +15,30 @@ public class ModulController : ControllerBase
         this.dbContext = dbContext;
     }
 
-    [HttpGet("{naziv}")]
+    [HttpPost("{naziv}")]
     public async Task<ActionResult> dodajModul(string naziv){
         try {
             var modul = new Modul(naziv);
             dbContext.Moduli.Add(modul);
             await dbContext.SaveChangesAsync();
             return Ok(modul);
+        }
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
+//TODO: brisanje ne radi
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> deleteModule(int id) {
+        try {
+            var modul = await dbContext.Moduli.Where(m => m.Id == id).FirstOrDefaultAsync();
+            if(modul == null) {
+                return BadRequest($"Modul sa zadatim id ({id}) ne postoji!");
+            }
+            dbContext.Moduli.Remove(modul);
+            await dbContext.SaveChangesAsync();
+            return Ok("Uspesno obrisan modul!");
         }
         catch(Exception ex){
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);

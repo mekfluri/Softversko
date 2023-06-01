@@ -6,15 +6,15 @@ public class Student : RegisterModel
     [Key]
     public int Id { get; set; }
 
-    public List<Preference> Preference { get; set; }
+    public List<Preference>? Preference { get; set; }
     [JsonIgnore]
-    public List<Komentar> Komentari { get; set; }
+    public List<Komentar>? Komentari { get; set; }
 
     [JsonIgnore]
-    public List<Literatura> Literatura { get; set; }
+    public List<Literatura>? Literatura { get; set; }
 
     [JsonIgnore]
-    public List<Note> Notes { get; set; }
+    public List<Note>? Notes { get; set; }
 
     public Privilegije Privilegije { get; set; }
     public Kalendar Kalendar { get; set; }

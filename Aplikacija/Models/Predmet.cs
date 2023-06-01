@@ -8,20 +8,18 @@ public class Predmet {
     public string Naziv { get; set; }
 
     public Modul? Modul { get; set; }
-     public Mentor? Mentor { get; set; }
-
+    [Required]
     public int Semestar { get; set; }
-    public List<Ocena> Ocene { get; set; }
-
-    public List<Tag> Tagovi { get; set; }
-    public List<Komentar> Komentari { get; set; }
-
+    public List<Ocena>? Ocene { get; set; }
+    public List<Tag>? Tagovi { get; set; }
+    public List<Komentar>? Komentari { get; set; }
+    [Required]
     public int ESPB { get; set; }
 
     public string Opis { get; set; }
 
     public Predmet() {}
-    public Predmet(string naziv, Modul modul, int semestar, List<Ocena> ocene, List<Tag> tagovi, int espb, string opis,Mentor mentor){
+    public Predmet(string naziv, Modul modul, int semestar, List<Ocena>? ocene, List<Tag>? tagovi, int espb, string opis){
         Naziv = naziv;
         Modul = modul;
         Semestar = semestar;
@@ -29,7 +27,6 @@ public class Predmet {
         Tagovi = tagovi;
         ESPB = espb;
         Opis = opis;
-        Mentor=mentor;
     }
 
 }

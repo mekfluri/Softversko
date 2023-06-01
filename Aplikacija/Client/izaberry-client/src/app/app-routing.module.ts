@@ -16,6 +16,7 @@ import { TagOperationsComponent } from './components/tag-operations/tag-operatio
 import { PredmetOperationsComponent } from './components/predmet-operations/predmet-operations.component';
 import { ErrorComponent } from './components/error/error.component';
 import { KalendarComponent } from './components/kalendar/kalendar.component';
+import { ModulOperationsComponent } from './components/modul-operations/modul-operations.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -45,6 +46,10 @@ const routes: Routes = [
         path: "tagovi",
         component: TagOperationsComponent
       },
+      {
+        path: "moduli",
+        component: ModulOperationsComponent
+      }
     ]
   },
   { path: "error", component: ErrorComponent },

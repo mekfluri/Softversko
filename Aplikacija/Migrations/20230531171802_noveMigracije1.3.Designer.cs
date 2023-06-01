@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models;
 
@@ -11,9 +12,11 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    partial class IzaberryMeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230531171802_noveMigracije1.3")]
+    partial class noveMigracije13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,9 +146,6 @@ namespace Aplikacija.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("doneVisible")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
@@ -258,10 +258,6 @@ namespace Aplikacija.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Bio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
