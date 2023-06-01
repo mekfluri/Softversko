@@ -21,13 +21,20 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignInComponent },
   { path: "", component: MainComponent },
-  { path: "profile", component: UserProfileComponent },
+  {
+    path: "profile", component: UserProfileComponent, children: [
+      {
+        path: "kalendar", component: KalendarComponent
+      }
+    ]
+  },
   { path: "oglasna", component: OglasnaComponent },
   { path: "predmeti", component: PredmetiComponent },
   { path: "predmet", component: PredmetPreviewComponent },
   { path: "kviz", component: QuizComponent },
   { path: "admin/login", component: AdminLoginComponent },
-  { path: "admin",
+  {
+    path: "admin",
     component: AdminPanelComponent,
     children: [
       {
@@ -40,8 +47,8 @@ const routes: Routes = [
       },
     ]
   },
-  { path: "error", component: ErrorComponent},
-  { path:"kalendar", component:KalendarComponent},
+  { path: "error", component: ErrorComponent },
+  { path: "kalendar", component: KalendarComponent },
 ];
 
 @NgModule({

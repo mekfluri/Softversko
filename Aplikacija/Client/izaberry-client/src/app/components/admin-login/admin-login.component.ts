@@ -13,6 +13,7 @@ export class AdminLoginComponent {
 
   email: string;
   password: string;
+  error: Error | null = null;
 
   constructor(private router: Router, private authService: AuthService, private userService: UserService) {
     this.email = "";
@@ -20,7 +21,7 @@ export class AdminLoginComponent {
   }
   async ngOnInit(): Promise<void> {
     if (localStorage.getItem("authToken") != null) {
-      this.router.navigateByUrl("profile");
+      this.router.navigateByUrl("admin");
     }
   }
 
@@ -34,12 +35,12 @@ export class AdminLoginComponent {
       let token = await this.authService.login(loginCredentials, true);
       localStorage.setItem("authToken", token);
       let user = await this.userService.getUserByToken(token);
-      this.router.navigate(["profile"], {
+      this.router.navigate(["admin"], {
         state: user!
       });
     }
     catch (err: any) {
-      alert((err as Error).message);
+      this.error = err as Error;
     }
   }
   emailKeyUp(event: KeyboardEvent) {
