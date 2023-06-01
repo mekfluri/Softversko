@@ -5,7 +5,7 @@
     </div>
     <div class="tag-op tag-deletion">
         <input (keyup)="idKeyUp($event)" type="number" placeholder="Id taga za brisanje">
-        <button>Obrisi tag</button>
+        <button (click)="deleteTag()">Obrisi tag</button>
     </div>
     <div class="tag-op tag-preview">
         <button (click)="getTags()">Izlistaj tagove</button>
