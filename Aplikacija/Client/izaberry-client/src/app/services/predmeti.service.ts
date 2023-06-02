@@ -56,4 +56,9 @@ export class PredmetiService {
     });
     return firstValueFrom(resp$);
   }
+
+  async vratiLiteraturuPredmeta(idpredmeta: number): Promise<any[]> {
+    let literature$ = this.http.get<any[]>(`${environment.backend}/literatura/vartiLiteraturuPredmeta/${idpredmeta}`);
+    return await firstValueFrom(literature$);
+  }
 }

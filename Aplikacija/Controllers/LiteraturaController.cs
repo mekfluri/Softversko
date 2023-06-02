@@ -14,53 +14,66 @@ public class LiteraturaController : ControllerBase
         Context = context;
     }
 
-     
-    [HttpPost("dodajLiteraturu")]
-    public async Task<ActionResult> dodajLiteraturu([FromBody] Literatura literatura)
+
+    [HttpPost("dodajLiteraturu/{studentID}/{predmetID}")]
+    public async Task<ActionResult> dodajLiteraturu(string filePath, int studentID, int predmetID)
     {
-         try
-        {
-          Context.Literature.Add(literatura);
-          await Context.SaveChangesAsync();
-          return Ok("Dodali smo literatura sa id-jem"+literatura.Id);
-        }
-        catch(Exception e)
-        {
-          return BadRequest(e.Message);
-        }
-   }
+        Literatura literatura = new Literatura();
+        Student student = await Context.Studenti.Where(x => x.Id == studentID).FirstOrDefaultAsync();
+        Predmet predmet = await Context.Predmeti.Where(x => x.Id == predmetID).FirstOrDefaultAsync();
+        if (student == null || predmet == null)
+            return BadRequest("");
+        literatura.filePath = filePath;
+        literatura.Student = student;
+        literatura.Predmet = predmet;
 
-   [HttpDelete("obrisiLiteraturu/{idliteratura}")]
-   public async Task<ActionResult> obrisiKalendar(int idliteratura)
-   {
-       var k = await Context.Kalendari.FindAsync(idliteratura);
-       
-       if(k != null)
-       {
-         Context.Kalendari.Remove(k);
-         await Context.SaveChangesAsync();
-         return Ok("Obrisali smo literatura sa rednim brojem" + idliteratura);
-       }
-       else 
-       {
-        return BadRequest("Ne postoji takva literatura");
-       }
-   }
- 
-   [HttpGet("vartiLiteraturu/{idstudenta}")]
-   public async Task<ActionResult> vratiLiteraturu(int idstudenta)
-   {
-       var kal = await Context.Literature.Include(p=>p.Student)
-                                .Where(p=>p.Student.Id == idstudenta)
-                                .Include(p=>p.filePath)
-                                .Select(p=>new{
-                                    p.Id,
-                                    p.filePath
-                                }).ToListAsync();
 
-       return Ok(kal);
-                                
-   }
+        try
+        {
+            Context.Literature.Add(literatura);
+            await Context.SaveChangesAsync();
+            return Ok("Dodali smo literatura sa id-jem" + literatura.Id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpDelete("obrisiLiteraturu/{idliteratura}")]
+    public async Task<ActionResult> obrisiKalendar(int idliteratura)
+    {
+        var k = await Context.Kalendari.FindAsync(idliteratura);
+
+        if (k != null)
+        {
+            Context.Kalendari.Remove(k);
+            await Context.SaveChangesAsync();
+            return Ok("Obrisali smo literatura sa rednim brojem" + idliteratura);
+        }
+        else
+        {
+            return BadRequest("Ne postoji takva literatura");
+        }
+    }
+
+    [HttpGet("vartiLiteraturu/{idstudenta}")]
+    public async Task<ActionResult> vratiLiteraturu(int idstudenta)
+    {
+       var kal=await Context.Literature.Where(x=>x.Student.Id==idstudenta).Include(x=>x.Student).ToListAsync();
+
+        return Ok(kal);
+
+    }
+    
+    [HttpGet("vartiLiteraturuPredmeta/{idpredmeta}")]
+    public async Task<ActionResult> vratiLiteraturuPredmeta(int idpredmeta)
+    {
+       var kal=await Context.Literature.Where(x=>x.Predmet!.Id==idpredmeta).ToListAsync();
+
+        return Ok(kal);
+
+    }
 
 
 }

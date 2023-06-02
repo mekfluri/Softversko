@@ -1,4 +1,9 @@
+
 <div class="body" *ngIf="predmet">
+    <div class="oglasna">
+        <button class="oglasnabtn"(click)="gotoOglasna()">Oglasna tabla</button>
+        <button class="oglasnabtn" (click)="gotoLiteratura()">Literatura predmeta</button>
+    </div>
     <h1>{{predmet.naziv}}</h1>
     <h2>{{predmet.modul.naziv}}</h2>
     <div class="ocene-container" *ngIf="predmet.ocene">
@@ -16,12 +21,10 @@
     <div class="ocene-container">
 
     </div>
-    <div class="oglasna">
-        <button (click)="gotoOglasna()">Oglasna tabla</button>
-    </div>
+ 
     <div class="add-comment-container" *ngIf="isLoggedIn">
         <input (keyup)="komentarKeyUp($event)" type="text" placeholder="Unesite komentar">
-        <button (click)="dodajKomentar()" value="Komentarisi">Dodaj komentar</button>
+        <button class="Dodajbutton" (click)="dodajKomentar()" value="Komentarisi">Dodaj komentar</button>
     </div>
     <div class="komentari-container" *ngIf="predmet.komentari">
         <div class="komentar" *ngFor="let komentar of predmet.komentari">

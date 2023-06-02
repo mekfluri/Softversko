@@ -11,3 +11,67 @@
     justify-content: center;
     align-items: center;
 }
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
+
+.body {
+    background: linear-gradient(150deg, #fb7784, #29082b);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    overflow: hidden;
+
+  
+}
+.oglasnabtn{
+    background-color: transparent;
+    color: white;
+    font-weight: bolder;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 5%;
+
+}
+.oglasnabtn:hover {
+    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+input {
+    width: 50%;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 0px 10px 10px;
+    align-self: center;
+}
+
+input::placeholder {
+    color: #29082b;
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px #29082b;
+}
+.Dodajbutton{
+    background-color: #e2496a;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 5%;
+    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.3);
+}
+
+.oglasna{
+    display: flex;
+   justify-content: end;
+}
