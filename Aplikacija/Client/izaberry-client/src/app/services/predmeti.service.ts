@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Predmet, PredmetDto } from '../models/predmet.model';
+import { Zahtev } from '../models/zahtev.model';
 import { environment } from 'src/environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { Modul } from '../models/modul.model';
 import { Komentar } from '../models/komentar.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,11 @@ export class PredmetiService {
     let predmeti$ = this.http.get<Predmet[]>(`${environment.backend}/predmeti`);
     let predmeti = await firstValueFrom(predmeti$);
     return predmeti;
+  }
+  async vratiZahteve(): Promise<Zahtev[] | null> {
+    let zahtevi$ = this.http.get<any[]>(`${environment.backend}/zahtevi/vratiZahteve`);
+    let zahtevi = await firstValueFrom(zahtevi$);
+    return zahtevi;
   }
 
   async getByModule(module: string): Promise<Predmet[]> {

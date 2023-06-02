@@ -119,7 +119,9 @@ input:focus {
 .btnRegistrujSe:hover label {
     text-decoration: underline;
 }
-
+button{
+    cursor: pointer;
+  }
 .toolbar {
     position: relative;
     top: 0;

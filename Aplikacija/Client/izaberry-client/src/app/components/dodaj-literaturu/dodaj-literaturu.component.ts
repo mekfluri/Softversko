@@ -16,16 +16,23 @@ export class DodajLiteraturuComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private predmetiService: PredmetiService
+    private predmetiService: PredmetiService,
+    private userService: UserService
   ) { }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    if (this.userService.user == null) {
+      const token = localStorage.getItem("authToken");
+      this.userService.getUserByToken(token!);
+    
+    }
+    console.log(this.userService.user);
     const state = this.route.snapshot.paramMap.get('predmetId');
     if (state) {
       this.predmetId = parseInt(state, 10);
       console.log(this.predmetId);
-      
+
     } else {
-   
+
     }
   }
   redirectToLogin() {
@@ -45,6 +52,9 @@ export class DodajLiteraturuComponent implements OnInit {
   }
   redirectToPredmeti() {
     this.router.navigateByUrl('predmeti');
+  }
+  redirectToZahtevi(){
+    this.router.navigateByUrl('zahtevi');
   }
 
   isLoggedIn(): boolean {
