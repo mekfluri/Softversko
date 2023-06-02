@@ -5,7 +5,7 @@
 namespace Aplikacija.Migrations
 {
     /// <inheritdoc />
-    public partial class v3 : Migration
+    public partial class Av2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

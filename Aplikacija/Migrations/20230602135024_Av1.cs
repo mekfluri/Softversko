@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Aplikacija.Migrations
 {
     /// <inheritdoc />
-    public partial class noveMigracije : Migration
+    public partial class Av1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,6 +25,19 @@ namespace Aplikacija.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tagovi",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tagovi", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Student",
                 columns: table => new
                 {
@@ -32,6 +45,7 @@ namespace Aplikacija.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Privilegije = table.Column<int>(type: "int", nullable: false),
                     Salt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     username = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -89,7 +103,8 @@ namespace Aplikacija.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(type: "int", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    doneVisible = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,31 +156,6 @@ namespace Aplikacija.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Literatura",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId = table.Column<int>(type: "int", nullable: true),
-                    MentorId = table.Column<int>(type: "int", nullable: true),
-                    filePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Literatura", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Literatura_Mentor_MentorId",
-                        column: x => x.MentorId,
-                        principalTable: "Mentor",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Literatura_Student_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Student",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Predmeti",
                 columns: table => new
                 {
@@ -173,10 +163,10 @@ namespace Aplikacija.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModulId = table.Column<int>(type: "int", nullable: true),
-                    MentorId = table.Column<int>(type: "int", nullable: true),
                     Semestar = table.Column<int>(type: "int", nullable: false),
                     ESPB = table.Column<int>(type: "int", nullable: false),
-                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MentorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -221,6 +211,37 @@ namespace Aplikacija.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Literatura",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<int>(type: "int", nullable: true),
+                    MentorId = table.Column<int>(type: "int", nullable: true),
+                    filePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PredmetId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Literatura", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Literatura_Mentor_MentorId",
+                        column: x => x.MentorId,
+                        principalTable: "Mentor",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Literatura_Predmeti_PredmetId",
+                        column: x => x.PredmetId,
+                        principalTable: "Predmeti",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Literatura_Student_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Student",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ocene",
                 columns: table => new
                 {
@@ -244,22 +265,52 @@ namespace Aplikacija.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tagovi",
+                name: "PredmetTag",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PredmetId = table.Column<int>(type: "int", nullable: true)
+                    PredmetiId = table.Column<int>(type: "int", nullable: false),
+                    TagoviId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tagovi", x => x.Id);
+                    table.PrimaryKey("PK_PredmetTag", x => new { x.PredmetiId, x.TagoviId });
                     table.ForeignKey(
-                        name: "FK_Tagovi_Predmeti_PredmetId",
-                        column: x => x.PredmetId,
+                        name: "FK_PredmetTag_Predmeti_PredmetiId",
+                        column: x => x.PredmetiId,
                         principalTable: "Predmeti",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PredmetTag_Tagovi_TagoviId",
+                        column: x => x.TagoviId,
+                        principalTable: "Tagovi",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Zahtev",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    MentorId = table.Column<int>(type: "int", nullable: false),
+                    Odobren = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Zahtev", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Zahtev_Literatura_Id",
+                        column: x => x.Id,
+                        principalTable: "Literatura",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Zahtev_Mentor_MentorId",
+                        column: x => x.MentorId,
+                        principalTable: "Mentor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -315,6 +366,11 @@ namespace Aplikacija.Migrations
                 column: "MentorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Literatura_PredmetId",
+                table: "Literatura",
+                column: "PredmetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Literatura_StudentId",
                 table: "Literatura",
                 column: "StudentId");
@@ -340,6 +396,11 @@ namespace Aplikacija.Migrations
                 column: "ModulId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PredmetTag_TagoviId",
+                table: "PredmetTag",
+                column: "TagoviId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Preference_OcenaId",
                 table: "Preference",
                 column: "OcenaId");
@@ -360,9 +421,9 @@ namespace Aplikacija.Migrations
                 column: "ModulId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tagovi_PredmetId",
-                table: "Tagovi",
-                column: "PredmetId");
+                name: "IX_Zahtev_MentorId",
+                table: "Zahtev",
+                column: "MentorId");
         }
 
         /// <inheritdoc />
@@ -378,13 +439,16 @@ namespace Aplikacija.Migrations
                 name: "Komentari");
 
             migrationBuilder.DropTable(
-                name: "Literatura");
-
-            migrationBuilder.DropTable(
                 name: "Note");
 
             migrationBuilder.DropTable(
+                name: "PredmetTag");
+
+            migrationBuilder.DropTable(
                 name: "Preference");
+
+            migrationBuilder.DropTable(
+                name: "Zahtev");
 
             migrationBuilder.DropTable(
                 name: "Kalendari");
@@ -394,6 +458,9 @@ namespace Aplikacija.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tagovi");
+
+            migrationBuilder.DropTable(
+                name: "Literatura");
 
             migrationBuilder.DropTable(
                 name: "Predmeti");
