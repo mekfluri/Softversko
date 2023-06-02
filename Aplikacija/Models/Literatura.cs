@@ -14,18 +14,21 @@ namespace Models
         public string filePath { get; set; }
 
         public Predmet? Predmet { get; set; }
+        [JsonIgnore]
+        public Zahtev? Zahtev{get;set;}
 
         public Literatura()
         {
 
         }
-        public Literatura(int id, Student student, Mentor mentor, string filePath, Predmet predmet)
+        public Literatura(int id, Student student, Mentor mentor, string filePath, Predmet predmet,Zahtev Zahtev)
         {
             this.Id = id;
             this.Student = student;
             this.Mentor = mentor;
             this.filePath = filePath;
             this.Predmet = predmet;
+            this.Zahtev=Zahtev;
         }
 
 
