@@ -3,6 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from "@angular/c
 import { Observable } from "rxjs";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Router } from "@angular/router";
+import { Privilegije } from "../models/permission.model";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -14,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
             if (jwtHelper.isTokenExpired(token)) {
                 const decoded = jwtHelper.decodeToken(token);
                 localStorage.removeItem("authToken");
-                if(decoded.perm == "ADMIN") {
+                if(decoded.perm == Privilegije.ADMIN) {
                     this.router.navigateByUrl("admin/login");
                 }
                 else {
