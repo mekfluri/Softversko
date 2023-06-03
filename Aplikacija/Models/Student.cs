@@ -16,10 +16,13 @@ public class Student : RegisterModel
     [JsonIgnore]
     public List<Note>? Notes { get; set; }
 
+    [JsonIgnore]
+   
+
     public Privilegije Privilegije { get; set; }
     public Kalendar Kalendar { get; set; }
     public string Salt { get; set; }
-    public string? Bio{get;set;}
+    public string? Bio { get; set; }
 
     public Student() { }
 
@@ -31,8 +34,9 @@ public class Student : RegisterModel
         Privilegije = Privilegije.STUDENT;
         Literatura = new List<Literatura>();
         Notes = new List<Note>();
+       
         Kalendar = new Kalendar();
         Salt = salt;
-        this.Bio=null;
+        this.Bio = null;
     }
 }

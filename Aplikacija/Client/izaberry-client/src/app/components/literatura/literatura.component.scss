@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
+body {
+    background: linear-gradient(150deg, #fb7784, #29082b);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+
+    overflow: hidden;
+}
+
+.toolbar {
+  background-color: #333;
+  padding: 10px;
+  display: flex;
+  justify-content: end;
+  color:white;
+  padding: 10px 50px;
+}
+.labelMenu{
+    
+    color: white;
+    background-color: transparent;
+    border: none;
+   padding: 10px 50px;
+   width: auto;
+   font-size: 90%;
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+
+}
+.lblPROFIL
+{
+   
+     color: white;
+     background-color: transparent;
+     border: none;
+    padding: 10px 50px;
+    width: auto;
+    font-size: 90%;
+   display: flex;
+   flex-direction: row;
+   gap: 10%;
+ 
+
+}
+
+.toolbar button {
+  background-color: #555;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 8px 16px;
+  margin-right: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+#literatura {
+    font-size: 24px;
+    font-weight: bolder;
+    background: linear-gradient(to bottom, #ffe187, #e89d58);
+    padding: 10px;
+    color:#29082b ;
+    display: flex;
+    justify-content: center;
+    font-style: italic;
+
+  }
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.content {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.left-content {
+  flex-basis: 48%;
+}
+.your-document-div-class {
+    background-color: transparent;
+     border: none;
+    width: auto;
+    font-size: 90%;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+   gap: 10%;
+   
+  }
+
+  
+ .downloadbutton{
+    width: 100%;
+    display: flex;
+    justify-self: end;
+    margin-left: 200px;
+    font-size: large;
+ }
+
+  
+
+.right-content {
+  flex-basis: 48%;
+  display: flex;
+  flex-direction: column;
+}  button{
+  cursor: pointer;
+}

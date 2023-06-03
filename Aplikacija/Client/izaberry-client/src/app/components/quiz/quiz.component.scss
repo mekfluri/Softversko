@@ -16,7 +16,9 @@ body {
     color: white;
     overflow-y: scroll;
 }
-
+button{
+    cursor: pointer;
+  }
 .scrollableContainer {
     height: auto;
     max-height: 80vh;

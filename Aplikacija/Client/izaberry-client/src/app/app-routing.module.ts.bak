@@ -6,6 +6,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { MainComponent } from './components/main/main.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { OglasnaComponent } from './components/oglasna/oglasna.component';
+import { LiteraturaComponent } from './components/literatura/literatura.component';
 <<<<<<< HEAD
 import {QuizComponent} from './components/quiz/quiz.component';
 =======
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: "", component: MainComponent },
   { path: "profile", component: UserProfileComponent },
   { path: "oglasna", component: OglasnaComponent },
+    { path: "literatura", component: LiteraturaComponent },
 <<<<<<< HEAD
   { path: "kviz", component: QuizComponent }
 =======

@@ -53,7 +53,9 @@ body {
     float: left;
 
 }
-
+button{
+    cursor: pointer;
+  }
 .prikaz {
     display: flex;
     flex-direction: row;

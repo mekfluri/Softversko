@@ -45,5 +45,13 @@ export class PredmetPreviewComponent implements OnInit {
   gotoOglasna() {
     this.router.navigate(["/oglasna"]);
   }
+  gotoLiteratura() {
+  
+    const p = this.predmetId;
+  
+    this.router.navigate(['/literatura', p], { state: { predmetId: this.predmetId } });
+  }
+  
+  
 
 }
