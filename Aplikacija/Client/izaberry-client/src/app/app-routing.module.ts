@@ -16,12 +16,17 @@ import { TagOperationsComponent } from './components/tag-operations/tag-operatio
 import { PredmetOperationsComponent } from './components/predmet-operations/predmet-operations.component';
 import { ErrorComponent } from './components/error/error.component';
 import { KalendarComponent } from './components/kalendar/kalendar.component';
+import { LiteraturaComponent } from './components/literatura/literatura.component';
 import { ModulOperationsComponent } from './components/modul-operations/modul-operations.component';
+import { DodajLiteraturuComponent } from './components/dodaj-literaturu/dodaj-literaturu.component';
+import { ZahteviComponent } from './components/zahtevi/zahtevi.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignInComponent },
   { path: "", component: MainComponent },
+  { path: "zahtevi", component: ZahteviComponent },
+  { path: "dodajLiteraturu/:predmetId", component: DodajLiteraturuComponent },
   {
     path: "profile", component: UserProfileComponent, children: [
       {
@@ -30,6 +35,11 @@ const routes: Routes = [
     ]
   },
   { path: "oglasna", component: OglasnaComponent },
+  {
+    path: 'literatura/:predmetId',
+    component: LiteraturaComponent
+  }
+  ,
   { path: "predmeti", component: PredmetiComponent },
   { path: "predmet", component: PredmetPreviewComponent },
   { path: "kviz", component: QuizComponent },

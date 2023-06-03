@@ -13,6 +13,7 @@ public class Predmet {
     public List<Ocena>? Ocene { get; set; }
     public List<Tag>? Tagovi { get; set; }
     public List<Komentar>? Komentari { get; set; }
+    public List<Literatura>? Literature{get;set;}
     [Required]
     public int ESPB { get; set; }
 
@@ -27,6 +28,7 @@ public class Predmet {
         Tagovi = tagovi;
         ESPB = espb;
         Opis = opis;
+        Literature=new List<Literatura>();
     }
 
 }

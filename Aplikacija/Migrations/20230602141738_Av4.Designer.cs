@@ -12,8 +12,8 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    [Migration("20230601193829_noveMigracije2")]
-    partial class noveMigracije2
+    [Migration("20230602141738_Av4")]
+    partial class Av4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,6 +98,9 @@ namespace Aplikacija.Migrations
                     b.Property<int?>("MentorId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PredmetId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
@@ -108,6 +111,8 @@ namespace Aplikacija.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MentorId");
+
+                    b.HasIndex("PredmetId");
 
                     b.HasIndex("StudentId");
 
@@ -320,6 +325,24 @@ namespace Aplikacija.Migrations
                     b.ToTable("Tagovi");
                 });
 
+            modelBuilder.Entity("Models.Zahtev", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MentorId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Odobren")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MentorId");
+
+                    b.ToTable("Zahtev");
+                });
+
             modelBuilder.Entity("PredmetTag", b =>
                 {
                     b.Property<int>("PredmetiId")
@@ -396,11 +419,17 @@ namespace Aplikacija.Migrations
                         .WithMany()
                         .HasForeignKey("MentorId");
 
+                    b.HasOne("Models.Predmet", "Predmet")
+                        .WithMany("Literature")
+                        .HasForeignKey("PredmetId");
+
                     b.HasOne("Models.Student", "Student")
                         .WithMany("Literatura")
                         .HasForeignKey("StudentId");
 
                     b.Navigation("Mentor");
+
+                    b.Navigation("Predmet");
 
                     b.Navigation("Student");
                 });
@@ -468,6 +497,23 @@ namespace Aplikacija.Migrations
                     b.Navigation("Modul");
                 });
 
+            modelBuilder.Entity("Models.Zahtev", b =>
+                {
+                    b.HasOne("Models.Literatura", "Literatura")
+                        .WithOne("Zahtev")
+                        .HasForeignKey("Models.Zahtev", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Mentor", "Mentor")
+                        .WithMany("Zahtevi")
+                        .HasForeignKey("MentorId");
+
+                    b.Navigation("Literatura");
+
+                    b.Navigation("Mentor");
+                });
+
             modelBuilder.Entity("PredmetTag", b =>
                 {
                     b.HasOne("Models.Predmet", null)
@@ -506,9 +552,16 @@ namespace Aplikacija.Migrations
                     b.Navigation("MarkiraniDatumi");
                 });
 
+            modelBuilder.Entity("Models.Literatura", b =>
+                {
+                    b.Navigation("Zahtev");
+                });
+
             modelBuilder.Entity("Models.Predmet", b =>
                 {
                     b.Navigation("Komentari");
+
+                    b.Navigation("Literature");
 
                     b.Navigation("Ocene");
                 });
@@ -530,6 +583,8 @@ namespace Aplikacija.Migrations
             modelBuilder.Entity("Models.Mentor", b =>
                 {
                     b.Navigation("Predmeti");
+
+                    b.Navigation("Zahtevi");
                 });
 #pragma warning restore 612, 618
         }

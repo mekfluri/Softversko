@@ -1,0 +1,39 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  </head>
+  <body>
+    <div class="toolbar">
+      <label (click)="redirectToHome()" class="labelMenu">HOME</label>
+      <label (click)="redirectToOglasna()" class="labelMenu">OGLASNA</label>
+      <button (click)="redirectToLogin()" class="btnLOGIN" routerLink="/login" *ngIf="!isLoggedIn()">LOGIN</button>
+      <label (click)="redirectToProfil()" class="lblPROFIL" routerLink="/login" *ngIf="isLoggedIn()">
+        <span class="material-symbols-outlined">
+          account_circle
+        </span>PROFIL
+      </label>
+      <label (click)="redirectToDodaj()" class="lblPROFIL" routerLink="/login" *ngIf="isLoggedIn()">
+        <span class="material-symbols-outlined">
+          add
+        </span>DODAJ
+      </label>
+    </div>
+  
+    <div id="literatura">LITERATURA</div>
+  
+    <div class="container">
+        <div class="content left-content">
+          <h2>SLIKE</h2>
+          <div *ngFor="let item of slikeDivs" [ngClass]="'your-image-div-class'">
+        
+          </div>
+        </div>
+        <div class="content right-content">
+          <h2>DOKUMENTI</h2>
+          <div *ngFor="let item of dokumentDivs" [ngClass]="'your-document-div-class'">
+       
+          </div>
+        </div>
+      </div>
+      
+  </body>
+  

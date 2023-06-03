@@ -73,4 +73,7 @@ export class UserProfileComponent implements OnInit {
   redirectToHome() {
     this.router.navigateByUrl("");
   }
+  redirectToPredmeti() {
+    this.router.navigateByUrl("predmeti");
+  }
 }
