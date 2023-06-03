@@ -1,0 +1,44 @@
+<div class="operations-container">
+    <div class="komentar komentar-list">
+        <input  (keyup)="idKeyUp($event)" type="number" placeholder="Id studneta">
+        <button  (click)="komentariStudenta()">Izlistaj komentare studenta</button>
+    </div>
+
+    <div class="komentar komentar-list">
+        <input  (keyup)="idKeyUpPredmeta($event)" type="number" placeholder="Id predmeta">
+        <button  (click)="komentariPredmeta()">Izlistaj komentare predmeta</button>
+
+    </div>
+   
+     <div class="komentar-op komentar-insertion">
+        <input (keyup)="idChange($event)" type="text" placeholder="ID komanetara za azuriranje">
+        <div *ngIf="komentarToChange" class="change-container">
+            <input (keyup)="textKeyUp($event)" type="text" placeholder="Novi komentar"
+                [value]="komentarToChange ? komentarToChange.text : ''">
+            <label>Novi komentar</label>
+           
+        </div>
+       
+        <button (click)="UpdateKomentar()">Azuriraj</button>
+        
+
+    </div>
+    <div class="komentar-op komentar-deletion">
+        <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id komentara za brisanje">
+        <button (click)="deleteKomentar()">Obrisi komentar</button>
+    </div>
+    <div class="komentar-op komentar-preview">
+        <button (click)="getKomentari()">Izlistaj komentare</button>
+        <button (click)="cleanList()">Ocisti listu</button>
+       
+        
+        
+        <div *ngIf="komentariArray" class="komentari-container">
+            <div *ngFor="let kom of komentariArray">
+                <p>{{kom.id}} | {{kom.text}} </p>
+            </div>
+        </div>
+      
+    </div>
+
+</div>
