@@ -1,6 +1,17 @@
 <div class="body">
+    <div class="toolbar">
+        <div class="tool-left">
+            <img src="../assets/logoFinal.png">
+        </div>
+        <div class="tool-right">
+        <button class="izloguj" (click)="logOut()">logOut</button>
+       </div>
+
+    </div>
+      
+   
     <div class="panel-options">
-        <button (click)="logOut()">Izloguj se</button>
+       
         <div routerLink="predmeti" class="panel-option">
             Predmeti
         </div>
@@ -10,10 +21,10 @@
         <div class="panel-option">
             Mentori
         </div>
-        <div class="panel-option">
+        <div routerLink="literatura" class="panel-option">
             Literatura
         </div>
-        <div class="panel-option">
+        <div routerLink="komentari" class="panel-option">
             Komentari
         </div>
         <div routerLink="tagovi" class="panel-option">
