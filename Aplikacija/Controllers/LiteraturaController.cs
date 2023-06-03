@@ -62,5 +62,21 @@ public class LiteraturaController : ControllerBase
                                 
    }
 
+    [AllowAnonymous]
+    [HttpGet("byStudentLit/{id}")]
+    public async Task<ActionResult> byStudentLit(int id){
+        try {
+            var student = Context.Studenti.Where(s => s.Id == id).First();
+            if(student == null){
+                return BadRequest();
+            }
+            var literatura = await Context.Literature.Where(k => k.Student!.Id == id).ToListAsync();
+            return Ok(literatura);
+        }
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
 
 }

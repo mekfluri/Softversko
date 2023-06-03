@@ -27,6 +27,8 @@ import { TagOperationsComponent } from './components/tag-operations/tag-operatio
 import { PredmetOperationsComponent } from './components/predmet-operations/predmet-operations.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ModulOperationsComponent } from './components/modul-operations/modul-operations.component';
+import { KomentariComponent } from './components/komentari/komentari.component';
+import { LiteraturaOperationsComponent } from './components/literatura-operations/literatura-operations.component';
 
 
 
@@ -47,7 +49,9 @@ import { ModulOperationsComponent } from './components/modul-operations/modul-op
     PredmetOperationsComponent,
     ErrorComponent,
     KalendarComponent,
-    ModulOperationsComponent
+    ModulOperationsComponent,
+    KomentariComponent,
+    LiteraturaOperationsComponent
   ],
   imports: [
     BrowserModule,
