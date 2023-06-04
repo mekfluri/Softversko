@@ -18,18 +18,27 @@ export class AuthService {
     this.jwtService = new JwtHelperService();
   }
 
-  decodeToken(token: string) {
+  currentUserId(): number {
+    let token = localStorage.getItem("authToken");
+    if (token) {
+      let decoded = this.decodeToken(token);
+      return decoded.id;
+    }
+    else return -1;
+  }
+
+  decodeToken(token: string): any {
     let decoded = this.jwtService.decodeToken(token);
     console.log(decoded);
   }
 
   async login(credentials: LoginModel, admin?: boolean): Promise<string> {
     let headers = new HttpHeaders()
-    .set("Content-Type","application/json")
-    .set("Accept", "text/plain");
+      .set("Content-Type", "application/json")
+      .set("Accept", "text/plain");
 
     let url = environment.backend;
-    if(admin) {
+    if (admin) {
       url += "/admin";
     }
 
@@ -41,12 +50,12 @@ export class AuthService {
     try {
       result = await firstValueFrom(token$);
     }
-    catch(err: any){
+    catch (err: any) {
       throw new Error(err.error);
     }
     return result;
   }
-  async register(credentials: SignInModel): Promise<string>{
+  async register(credentials: SignInModel): Promise<string> {
     let headers = new HttpHeaders().set("Content-Type", "application/json");
     let register$ = this.http.post(`${environment.backend}/registracija`, credentials, {
       headers,
@@ -56,7 +65,7 @@ export class AuthService {
     try {
       token = await firstValueFrom(register$);
     }
-    catch(err: any){
+    catch (err: any) {
       throw new Error(err.error);
     }
     return token;
