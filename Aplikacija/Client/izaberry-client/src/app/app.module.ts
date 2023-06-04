@@ -30,6 +30,8 @@ import { ModulOperationsComponent } from './components/modul-operations/modul-op
 import { LiteraturaComponent } from './components/literatura/literatura.component';
 import { DodajLiteraturuComponent } from './components/dodaj-literaturu/dodaj-literaturu.component';
 import { ZahteviComponent } from './components/zahtevi/zahtevi.component';
+import { KomentariComponent } from './components/komentari/komentari.component';
+import { LiteraturaOperationsComponent } from './components/literatura-operations/literatura-operations.component';
 
 
 
@@ -53,7 +55,9 @@ import { ZahteviComponent } from './components/zahtevi/zahtevi.component';
     ModulOperationsComponent,
     LiteraturaComponent,
     DodajLiteraturuComponent,
-    ZahteviComponent
+    ZahteviComponent,
+    KomentariComponent,
+    LiteraturaOperationsComponent
   ],
   imports: [
     BrowserModule,

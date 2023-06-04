@@ -20,6 +20,8 @@ import { LiteraturaComponent } from './components/literatura/literatura.componen
 import { ModulOperationsComponent } from './components/modul-operations/modul-operations.component';
 import { DodajLiteraturuComponent } from './components/dodaj-literaturu/dodaj-literaturu.component';
 import { ZahteviComponent } from './components/zahtevi/zahtevi.component';
+import { KomentariComponent } from './components/komentari/komentari.component';
+import { LiteraturaOperationsComponent } from './components/literatura-operations/literatura-operations.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -59,7 +61,17 @@ const routes: Routes = [
       {
         path: "moduli",
         component: ModulOperationsComponent
+      },
+      {
+        path:"komentari",
+        component: KomentariComponent
+      },
+      {
+        path:"literatura",
+        component:LiteraturaOperationsComponent
       }
+      
+
     ]
   },
   { path: "error", component: ErrorComponent },

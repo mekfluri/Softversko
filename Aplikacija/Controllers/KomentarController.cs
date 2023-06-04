@@ -21,13 +21,30 @@ public class KomentarController : ControllerBase{
             if(student == null){
                 return BadRequest();
             }
-            var komentari = await Context.Komentari.Where(k => k.Student.Id == id).FirstAsync();
+            var komentari = await Context.Komentari.Where(k => k.Student.Id == id).ToListAsync();
             return Ok(komentari);
         }
         catch(Exception ex){
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
+
+    [AllowAnonymous]
+    [HttpGet("byPredmet/{id}")]
+    public async Task<ActionResult> byPredmet(int id){
+        try {
+            var predmet= Context.Predmeti.Where(s => s.Id == id).First();
+            if(predmet == null){
+                return BadRequest();
+            }
+            var komentari = await Context.Komentari.Where(k => k.Predmet.Id == id).ToListAsync();
+            return Ok(komentari);
+        }
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
 
     [AllowAnonymous]
     [HttpPost("DodajKomentar")]

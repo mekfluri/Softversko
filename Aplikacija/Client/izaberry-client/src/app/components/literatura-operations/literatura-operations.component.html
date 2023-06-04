@@ -1,0 +1,40 @@
+
+<div class="operations-container">
+    <div class="literatura literatura-list">
+        <input (keyup)="idKeyUp($event)" type="number" placeholder="Id studneta">
+        <button (click)="LiteraturaStudenta()" >Izlistaj literaturu studenta</button>
+    </div>
+
+
+ 
+   
+     <div class="kliteratura-op literatura-insertion">
+        <input  type="text" placeholder="ID literature za azuriranje">
+        <div  class="change-container">
+            
+            
+        </div>
+       
+        <button >Azuriraj</button>
+        
+
+    </div>
+    <div class="literatura-op literatura-deletion">
+        <input  type="number" placeholder="Id literature za brisanje">
+        <button >Obrisi literaturu</button>
+    </div>
+    <div class="literatura-op literatura-preview">
+        <button >Izlistaj literaturu</button>
+        <button >Ocisti listu</button>
+     
+        <div *ngIf="litearturaArray" class="literatura-container">
+            <div *ngFor="let lit of litearturaArray">
+                <p>{{lit.id}}  </p>
+            </div>
+        </div>
+        
+        
+       
+    </div>
+
+</div>
