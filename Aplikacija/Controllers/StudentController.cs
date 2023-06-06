@@ -95,25 +95,15 @@ public class StudentController : ControllerBase{
       
    }
 
-   [HttpPut("azurirajStudenta/{idstudenta}")]
-   public async Task<ActionResult> azurirajStudenta([FromBody]Student student, int idstudenta)
+   [HttpPut("azurirajStudenta/{username}/{idstudenta}")]
+   public async Task<ActionResult> azurirajStudenta(string username, int idstudenta)
   {
      var stariStudent = await Context.Studenti.FindAsync(idstudenta);
 
      if(stariStudent != null)
      {
-        stariStudent.Username = student.Username;
-        stariStudent.Password = student.Password;
-        stariStudent.Email = student.Email;
-        stariStudent.Kalendar = student.Kalendar;
-        stariStudent.Komentari = student.Komentari;
-        stariStudent.Modul = student.Modul;
-        stariStudent.Preference = student.Preference;
-        stariStudent.Privilegije = student.Privilegije;
-        stariStudent.Salt = student.Salt;
-        stariStudent.Semestar = student.Semestar;
-        stariStudent.Literatura=student.Literatura;
-
+        stariStudent.Username = username;
+      
         Context.Studenti.Update(stariStudent);
         await Context.SaveChangesAsync();
         return Ok(stariStudent);
@@ -124,6 +114,47 @@ public class StudentController : ControllerBase{
      }
 
   }
+  [HttpPut("azurirajSemestarStudenta/{semestar}/{idstudenta}")]
+   public async Task<ActionResult> azurirajSemestarStudenta(int semestar, int idstudenta)
+  {
+     var stariStudent = await Context.Studenti.FindAsync(idstudenta);
+
+     if(stariStudent != null)
+     {
+        stariStudent.Semestar = semestar;
+      
+        Context.Studenti.Update(stariStudent);
+        await Context.SaveChangesAsync();
+        return Ok(stariStudent);
+     }
+     else
+     {
+      return BadRequest("ne postoji takav student");
+     }
+
+  }
+
+   [HttpPut("azurirajBioStudenta/{bio}/{idstudenta}")]
+   public async Task<ActionResult> azurirajBioStudenta(string bio, int idstudenta)
+  {
+     var stariStudent = await Context.Studenti.FindAsync(idstudenta);
+
+     if(stariStudent != null)
+     {
+        stariStudent.Bio = bio;
+      
+        Context.Studenti.Update(stariStudent);
+        await Context.SaveChangesAsync();
+        return Ok(stariStudent);
+     }
+     else
+     {
+      return BadRequest("ne postoji takav student");
+     }
+
+  }
+  
+  
   [HttpPut("azurirajStudentovuBiografiju/{idstudenta}/{bio}")]
    public async Task<ActionResult> azurirajStudentovuBiografiju(int idstudenta,string bio)
   {
@@ -144,6 +175,34 @@ public class StudentController : ControllerBase{
      }
 
   }
+
+  
+   [HttpPut("azurirajModulStudenta/{nazivModula}/{idstudenta}")]
+   public async Task<ActionResult> azurirajModulStudenta(string nazivModula, int idstudenta)
+  {
+     var stariStudent = await Context.Studenti
+    .Include(p => p.Modul)
+    .Where(p => p.Id == idstudenta)
+    .FirstOrDefaultAsync();
+
+     var noviModul = await Context.Moduli.Where(p=> p.Naziv == nazivModula).FirstAsync();
+
+     if(stariStudent != null)
+     {
+        stariStudent.Modul = noviModul;
+      
+        Context.Studenti.Update(stariStudent);
+        await Context.SaveChangesAsync();
+        return Ok(stariStudent);
+     }
+     else
+     {
+      return BadRequest("ne postoji takav student");
+     }
+
+  }
+
+  
 
 
   

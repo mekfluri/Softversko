@@ -18,6 +18,12 @@ public class ModulController : ControllerBase
     [HttpPost("{naziv}")]
     public async Task<ActionResult> dodajModul(string naziv){
         try {
+
+            bool postojiModul = await dbContext.Moduli.AnyAsync(m => m.Naziv == naziv);
+            if(postojiModul)
+            {
+                 return BadRequest("Modul s istim imenom već postoji.");
+            }
             var modul = new Modul(naziv);
             dbContext.Moduli.Add(modul);
             await dbContext.SaveChangesAsync();
