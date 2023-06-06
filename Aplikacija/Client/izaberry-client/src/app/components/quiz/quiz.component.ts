@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Student } from 'src/app/models/student.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-quiz',
@@ -6,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit {
+  student: Student | null = null;
   pitanje1: string[] = [
     "Koje vrste matematičkih problema biste voleli da primenjujete u tehnološkim i inženjerskim oblastima?",
     "Koje oblasti matematike biste voleli da proučavate i primenjujete u ekonomiji i finansijama?",
@@ -48,8 +51,14 @@ export class QuizComponent implements OnInit {
     ]
   ];
 
-  ngOnInit() {
+  constructor(private userService: UserService){}
+
+  async ngOnInit() {
     this.updateText();
+    let token = localStorage.getItem("authToken");
+    if(this.userService.user == null && token) {
+      this.student = await this.userService.getUserByToken(token);
+    }
   }
 
   updateText() {

@@ -1,34 +1,36 @@
-
 <body>
-    <div class="toolbar">
-        <select id="predmet1" class="predmeti" ngModel="selectedPredmet" (change)="updateText()">
-          <option value="KOMUNIKACIJE I INFORMACIONE TEHNOLOGIJE">Komunikacije i informacione tehnologije</option>
-          <option value="ELEKTROENERGETIKA">Elektroenergetika</option>
-          <option value="ELEKTRONSKE KOMPONENTE I MIKROSISTEMI">Elektronske komponente i mikrosistemi</option>
-          <option value="RACUNARSTVO I INFORMATIKA">Racunarstvo i informatika</option>
-          <option value="UPRAVLJANJE SISTEMIMA">Upravljanje sistemima</option>
-        </select>
-        
-        <  <select id="brojevi" class="brojevi" ngModel="selectedBroj" (change)="updateText()">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-      </div>
-      
-      <div class="scrollableContainer">
-        <div *ngFor="let pitanje of pitanje1; let i = index">
-          <div class="subDiv">
-            <div class="pitanjeDiv">
-              <p>Pitanje {{i+1}}: {{pitanje}}</p>
-            </div>
-            <div class="odgovoriDiv">
-              <div class="odgovorDiv" *ngFor="let odgovor of odgovori1[i]">
-                <p>{{odgovor}}</p>
-              </div>
-            </div>
+  <div *ngIf="student" class="by-preferences">
+    <button>Izvrsi preporuku po preferencama</button>
+  </div>
+  <div class="toolbar">
+    <select id="predmet1" class="predmeti" ngModel="selectedPredmet" (change)="updateText()">
+      <option value="KOMUNIKACIJE I INFORMACIONE TEHNOLOGIJE">Komunikacije i informacione tehnologije</option>
+      <option value="ELEKTROENERGETIKA">Elektroenergetika</option>
+      <option value="ELEKTRONSKE KOMPONENTE I MIKROSISTEMI">Elektronske komponente i mikrosistemi</option>
+      <option value="RACUNARSTVO I INFORMATIKA">Racunarstvo i informatika</option>
+      <option value="UPRAVLJANJE SISTEMIMA">Upravljanje sistemima</option>
+    </select>
+
+    < <select id="brojevi" class="brojevi" ngModel="selectedBroj" (change)="updateText()">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      </select>
+  </div>
+
+  <div class="scrollableContainer">
+    <div *ngFor="let pitanje of pitanje1; let i = index">
+      <div class="subDiv">
+        <div class="pitanjeDiv">
+          <p>Pitanje {{i+1}}: {{pitanje}}</p>
+        </div>
+        <div class="odgovoriDiv">
+          <div class="odgovorDiv" *ngFor="let odgovor of odgovori1[i]">
+            <p>{{odgovor}}</p>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 </body>
