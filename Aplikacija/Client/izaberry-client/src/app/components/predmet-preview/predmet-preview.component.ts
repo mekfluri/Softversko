@@ -19,7 +19,7 @@ export class PredmetPreviewComponent implements OnInit {
   commentBox: string = "";
   private predmetId: number = 0;
 
-  constructor(private router: Router, private predmetiService: PredmetiService, private userService: UserService,
+  constructor(private router: Router, private predmetiService: PredmetiService, public userService: UserService,
     public loadingService: LoadingService) {
     this.predmetId = (this.router.getCurrentNavigation()?.extras.state as any).predmetId;
     this.isLoggedIn = localStorage.getItem("authToken");

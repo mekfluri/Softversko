@@ -1,7 +1,6 @@
-
 <div class="body" *ngIf="predmet">
     <div class="oglasna">
-        <button class="oglasnabtn"(click)="gotoOglasna()">Oglasna tabla</button>
+        <button class="oglasnabtn" (click)="gotoOglasna()">Oglasna tabla</button>
         <button class="oglasnabtn" (click)="gotoLiteratura()">Literatura predmeta</button>
     </div>
     <h1>{{predmet.naziv}}</h1>
@@ -21,7 +20,7 @@
     <div class="ocene-container">
 
     </div>
- 
+
     <div class="add-comment-container" *ngIf="isLoggedIn">
         <input (keyup)="komentarKeyUp($event)" type="text" placeholder="Unesite komentar">
         <button class="Dodajbutton" (click)="dodajKomentar()" value="Komentarisi">Dodaj komentar</button>
@@ -30,6 +29,7 @@
         <div class="komentar" *ngFor="let komentar of predmet.komentari">
             <span>{{komentar.student.username}}|</span>
             <p>{{komentar.text}}</p>
+            <button *ngIf="userService.user && komentar.student.username == userService.user.username">X</button>
         </div>
     </div>
 </div>
