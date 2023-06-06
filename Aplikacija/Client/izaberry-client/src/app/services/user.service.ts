@@ -5,6 +5,7 @@ import { Komentar } from '../models/komentar.model';
 import { environment } from 'src/environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Preference } from '../models/preference.model';
 
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,15 @@ export class UserService {
     let komentari$ = this.http.get<Komentar[]>(`${environment.backend}/komentar/byStudent/${this.user?.id}`);
     let komentari = await firstValueFrom(komentari$) ?? null;
     return komentari;
+  }
+
+  async addPreferences(preferences: Preference[]) {
+    let resp$ = this.http.put(`${environment.backend}/student/preference`, preferences);
+    console.log(await firstValueFrom(resp$));
+  }
+
+  async removePreference(id: number) {
+    let resp$ = this.http.delete(`${environment.backend}/preference/${id}`);
+    console.log(await firstValueFrom(resp$));
   }
 }
