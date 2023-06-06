@@ -1,0 +1,8 @@
+<div class="pref-container">
+    <select (change)="tagChange($event)" name="tag">
+        <option [id]="tag.id" *ngFor="let tag of tagovi">
+            {{ tag.naziv }}
+        </option>
+    </select>
+    <span [ngClass]="{'selected': ocenaSelected >= ocena}" *ngFor="let ocena of ocene" (click)="onSelectedOcena($event)" id="ocena">{{ ocena }}</span>
+</div>
