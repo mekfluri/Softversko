@@ -1,20 +1,30 @@
 namespace Helpers;
 
-public class AuthService {
+public class AuthService
+{
     private readonly IConfiguration _config;
     private readonly int _expirationHours = 12;
-    public AuthService(IConfiguration config){
+    public AuthService(IConfiguration config)
+    {
         _config = config;
     }
 
-    public int GetUserId(string token) {
+    public int GetUserId(HttpRequest req)
+    {
+        var authHeader = req.Headers["Authorization"].ToString();
+        if (string.IsNullOrEmpty(authHeader))
+        {
+            return -1;
+        }
+        var token = authHeader.Substring(7);
         var handler = new JwtSecurityTokenHandler();
         var jsonToken = handler.ReadJwtToken(token);
         Console.WriteLine(jsonToken.Claims);
         var id = jsonToken.Claims.First((claim) => claim.Type == "sub");
         return int.Parse(id.Value);
     }
-    public  string GenerateJWT(Student userInfo){
+    public string GenerateJWT(Student userInfo)
+    {
         var tokenHandler = new JwtSecurityTokenHandler();
         var expiration = DateTime.UtcNow.AddHours(_expirationHours);
         var key = _config["Jwt:Key"]!;
@@ -29,7 +39,8 @@ public class AuthService {
         return tokenHandler.WriteToken(token);
     }
 
-    private List<Claim> CreateClaims(Student userInfo) {
+    private List<Claim> CreateClaims(Student userInfo)
+    {
         var claims = new List<Claim>{
             new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
             new Claim(JwtRegisteredClaimNames.Sub, userInfo.Id.ToString()),
@@ -41,7 +52,8 @@ public class AuthService {
         return claims;
     }
 
-    private JwtSecurityToken CreateToken(List<Claim> claims, SigningCredentials creds, DateTime expiration){
+    private JwtSecurityToken CreateToken(List<Claim> claims, SigningCredentials creds, DateTime expiration)
+    {
         return new JwtSecurityToken(
             issuer: _config["Jwt:Issuer"],
             audience: _config["Jwt:Audience"],
