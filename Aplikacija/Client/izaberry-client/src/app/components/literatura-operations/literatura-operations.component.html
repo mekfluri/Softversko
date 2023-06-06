@@ -5,6 +5,11 @@
         <button (click)="LiteraturaStudenta()" >Izlistaj literaturu studenta</button>
     </div>
 
+    <div class="literatura literatura-list">
+        <input  (keyup)="idKeyUpPredmeta($event)" type="number" placeholder="Id predmeta">
+        <button  (click)="LiteraturaPredmeta()">Izlistaj komentare predmeta</button>
+
+    </div>
 
  
    
@@ -20,12 +25,12 @@
 
     </div>
     <div class="literatura-op literatura-deletion">
-        <input  type="number" placeholder="Id literature za brisanje">
-        <button >Obrisi literaturu</button>
+        <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id literature za brisanje">
+        <button (click)="deleteLiteratura()" >Obrisi literaturu</button>
     </div>
     <div class="literatura-op literatura-preview">
-        <button >Izlistaj literaturu</button>
-        <button >Ocisti listu</button>
+        <button (click)="getLiteartura()">Izlistaj literaturu</button>
+        <button (click)="cleanList()" >Ocisti listu</button>
      
         <div *ngIf="litearturaArray" class="literatura-container">
             <div *ngFor="let lit of litearturaArray">
