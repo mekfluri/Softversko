@@ -68,4 +68,12 @@ export class PredmetiService {
     let literature$ = this.http.get<any[]>(`${environment.backend}/literatura/vartiLiteraturuPredmeta/${idpredmeta}`);
     return await firstValueFrom(literature$);
   }
+
+  async updatePredmet(id:number, naziv:string, nazivModula: string, semestar:number, espb: number, opis:string){
+    let resp$ = this.http.put(`${environment.backend}/predmeti/azurirajPredmetOperations/${id}/${naziv}/${nazivModula}/${semestar}/${espb}/${opis}`, {
+      responseType: "text"
+    });
+    return firstValueFrom(resp$);
+  }
+  
 }
