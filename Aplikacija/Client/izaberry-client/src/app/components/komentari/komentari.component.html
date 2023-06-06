@@ -1,30 +1,25 @@
 <div class="operations-container">
-    <div class="komentar komentar-list">
+    <div class="komentar-op komentar komentar-list">
         <input  (keyup)="idKeyUp($event)" type="number" placeholder="Id studneta">
         <button  (click)="komentariStudenta()">Izlistaj komentare studenta</button>
     </div>
 
-    <div class="komentar komentar-list">
+    <div class="komentar-op komentar komentar-list">
         <input  (keyup)="idKeyUpPredmeta($event)" type="number" placeholder="Id predmeta">
         <button  (click)="komentariPredmeta()">Izlistaj komentare predmeta</button>
 
     </div>
    
      <div class="komentar-op komentar-insertion">
-        <input (keyup)="idChange($event)" type="text" placeholder="ID komanetara za azuriranje">
-        <div *ngIf="komentarToChange" class="change-container">
-            <input (keyup)="textKeyUp($event)" type="text" placeholder="Novi komentar"
-                [value]="komentarToChange ? komentarToChange.text : ''">
-            <label>Novi komentar</label>
-           
-        </div>
+        <input (keyup)="idChange($event)" type="text" placeholder="Id komanetara">
+        
        
         <button (click)="UpdateKomentar()">Azuriraj</button>
         
 
     </div>
     <div class="komentar-op komentar-deletion">
-        <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id komentara za brisanje">
+        <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id komentara">
         <button (click)="deleteKomentar()">Obrisi komentar</button>
     </div>
     <div class="komentar-op komentar-preview">
@@ -33,12 +28,24 @@
        
         
         
-        <div *ngIf="komentariArray" class="komentari-container">
-            <div *ngFor="let kom of komentariArray">
-                <p>{{kom.id}} | {{kom.text}} </p>
-            </div>
-        </div>
+       
       
     </div>
-
 </div>
+    <div class="lista">
+    <div *ngIf="komentariArray" class="komentari-container">
+        <div *ngFor="let kom of komentariArray">
+            <p>{{kom.id}} | {{kom.text}} </p>
+        </div>
+
+    </div>
+    <div *ngIf="komentarToChange" class="change-container">
+        <label>Novi komentar</label>
+        <input (keyup)="textKeyUp($event)" type="text" placeholder="Novi komentar"
+            [value]="komentarToChange ? komentarToChange.text : ''">
+      
+       
+    </div>
+  </div>
+
+
