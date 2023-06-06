@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models;
 
@@ -11,9 +12,11 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    partial class IzaberryMeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230606132455_noveMigracije2.2")]
+    partial class noveMigracije22
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -462,17 +465,15 @@ namespace Aplikacija.Migrations
 
             modelBuilder.Entity("Models.Preference", b =>
                 {
-                    b.HasOne("Models.Student", "Student")
+                    b.HasOne("Models.Student", null)
                         .WithMany("Preference")
                         .HasForeignKey("StudentId");
 
                     b.HasOne("Models.Tag", "Tag")
-                        .WithMany("Preference")
+                        .WithMany()
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Student");
 
                     b.Navigation("Tag");
                 });
@@ -566,11 +567,6 @@ namespace Aplikacija.Migrations
 
                     b.Navigation("Notes");
 
-                    b.Navigation("Preference");
-                });
-
-            modelBuilder.Entity("Models.Tag", b =>
-                {
                     b.Navigation("Preference");
                 });
 
