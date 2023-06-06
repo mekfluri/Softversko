@@ -4,7 +4,8 @@
     flex-direction: column;
     height: 100vh;
     font-family: "Poppins", sans-serif;
-    color: white
+    color: white;
+    overflow: auto;
 }
 .izloguj{
     background-color: #e2496a;
@@ -63,15 +64,17 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    min-height: 10%;
    
 }
 
 .option-preview {
     flex:3;
-    display: flex;
+    //display: flex;
     flex-direction: column;
-    justify-content:start ;
+    justify-content:space-around ;
     align-items: center;
+   
 
 }
 button{
@@ -88,6 +91,7 @@ button{
     border-radius: 10px;
     animation: fadeIn 2s;
     width: 10%;
+    
 }
 
 .panel-option:hover {
