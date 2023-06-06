@@ -22,6 +22,7 @@ import { DodajLiteraturuComponent } from './components/dodaj-literaturu/dodaj-li
 import { ZahteviComponent } from './components/zahtevi/zahtevi.component';
 import { KomentariComponent } from './components/komentari/komentari.component';
 import { LiteraturaOperationsComponent } from './components/literatura-operations/literatura-operations.component';
+import { StudentOperationsComponent } from './components/student-operations/student-operations.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -69,6 +70,10 @@ const routes: Routes = [
       {
         path:"literatura",
         component:LiteraturaOperationsComponent
+      },
+      {
+        path:"studentiop",
+        component:StudentOperationsComponent
       }
       
 
