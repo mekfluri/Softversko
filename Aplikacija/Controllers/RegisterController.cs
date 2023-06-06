@@ -30,6 +30,12 @@ public class RegisterController : ControllerBase
             return BadRequest("Student sa zadatom email adresom je vec registrovan!");
         }
 
+        var modul = _dbContext.Moduli.Where(m => m.Naziv == registerInfo.Modul!.Naziv).FirstOrDefault();
+
+        if(modul == null) {
+            return NotFound("Modul nije pronadjen!");
+        }
+
         var salt = BCrypt.Net.BCrypt.GenerateSalt();
         var encryptedPassword = BCrypt.Net.BCrypt.HashPassword(registerInfo.Password, salt);
 
@@ -38,7 +44,7 @@ public class RegisterController : ControllerBase
             registerInfo.Email,
             encryptedPassword,
             salt,
-            registerInfo.Modul,
+            modul,
             registerInfo.Semestar
         );
 

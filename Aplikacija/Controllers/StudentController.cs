@@ -16,6 +16,35 @@ public class StudentController : ControllerBase{
         this.authService = authService;
     }
 
+    [HttpPut("preference")]
+    public async Task<ActionResult> DodajPreference([FromBody] Preference[] preference) {
+      var userId = authService.GetUserId(Request);
+      if(userId == -1) {
+        return BadRequest("Invalid token!");
+      }
+      var korisnik = Context.Studenti.Find(userId);
+      if(korisnik == null) {
+        return BadRequest("Nepostojeci korisnik!");
+      }
+      if(korisnik.Preference == null){
+        korisnik.Preference = new List<Preference>();
+      }
+      foreach(Preference pref in preference) {
+        var tag = Context.Tagovi.Find(pref.Tag.Id);
+        var preferenca = new Preference(tag!, pref.Ocena);
+        preferenca.Student = korisnik;
+        Context.Preference.Add(preferenca);
+        if(tag.Preference == null){
+          tag.Preference = new List<Preference>();
+        }
+        tag.Preference.Add(preferenca);
+        Context.SaveChanges();
+      }
+      Context.Studenti.Update(korisnik);
+      await Context.SaveChangesAsync();
+      return Ok();
+    }
+
     [HttpPost("DodajStudenta")]
    public async Task<ActionResult> dodajStudenta([FromBody] Student student)
    {
@@ -38,6 +67,7 @@ public class StudentController : ControllerBase{
         return Ok(await Context.Studenti!
         .Include(s => s.Kalendar)
         .Include(s => s.Modul)
+        .Include(s => s.Preference)
         .ToListAsync());
     
    }
@@ -49,14 +79,13 @@ public class StudentController : ControllerBase{
    [HttpGet]
    public async Task<ActionResult> vratiStudenta(){
     try {
-      var authHeader = Request.Headers["Authorization"].ToString();
-      if(string.IsNullOrEmpty(authHeader)){
-        return BadRequest("No token provided");
+      var id = authService.GetUserId(Request);
+      if(id == -1) {
+        return BadRequest("Invalid token");
       }
-      var token = authHeader.Substring(7);
-      var id = authService.GetUserId(token);
       var student = await Context.Studenti.Where((student) => student.Id == id)
         .Include((student) => student.Preference)
+        .ThenInclude(p => p.Tag)
         .Include((student) => student.Modul)
         .FirstOrDefaultAsync();
       if(student == null) {
@@ -68,7 +97,8 @@ public class StudentController : ControllerBase{
         modul = student.Modul,
         semestar = student.Semestar,
         email = student.Email,
-        perm = student.Privilegije
+        perm = student.Privilegije,
+        preference = student.Preference
       });
     }catch(Exception ex){
       return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);

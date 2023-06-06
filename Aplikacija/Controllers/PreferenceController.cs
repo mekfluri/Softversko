@@ -14,5 +14,18 @@ public class PreferenceContoroller : ControllerBase{
         Context = context;
     }
 
+    [HttpGet]
+    public async Task<ActionResult> AllPreferences() {
+        return Ok(await Context.Preference.Include(p => p.Tag).ToListAsync());
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeletePreference(int id){
+        var pref = Context.Preference.Find(id);
+        Context.Preference.Remove(pref);
+        await Context.SaveChangesAsync();
+        return Ok();
+    }
+
 
 }
