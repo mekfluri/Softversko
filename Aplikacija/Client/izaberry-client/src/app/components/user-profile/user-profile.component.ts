@@ -47,10 +47,6 @@ export class UserProfileComponent implements OnInit {
     this.editingBio = false;
   }
 
-  showCalendar() {
-    this.router.navigateByUrl("kalendar");
-  }
-
   showLiteratura() {
     // Implement this method
   }

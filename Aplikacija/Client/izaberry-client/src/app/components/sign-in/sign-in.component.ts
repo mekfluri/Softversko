@@ -62,7 +62,7 @@ export class SignInComponent implements OnInit {
   }
 
   modulChange(event: Event) {
-    this.registerInfo.modul = this.getInput(event);
+    this.registerInfo.modul.naziv = this.getInput(event);
   }
 
   semestarChange(event: Event) {
