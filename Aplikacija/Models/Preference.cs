@@ -6,9 +6,12 @@ public class Preference {
     [Required]
     public Tag Tag {get; set;}
     [Required]
-    public Ocena Ocena {get; set;}
+    public int Ocena {get; set;}
+
+    [JsonIgnore]
+    public Student? Student { get; set; }
     public Preference() {}
-    public Preference(Tag tag, Ocena ocena){
+    public Preference(Tag tag, int ocena){
         Tag = tag;
         Ocena = ocena;
     }

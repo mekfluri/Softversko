@@ -8,6 +8,8 @@ public class Tag {
     public string Naziv {get; set; }
     [JsonIgnore]
     public List<Predmet>? Predmeti { get; set; }
+    [JsonIgnore]
+    public List<Preference>? Preference { get; set; }
 
     public Tag() {}
     public Tag(int id, string naziv){
