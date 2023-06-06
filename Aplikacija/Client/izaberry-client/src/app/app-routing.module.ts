@@ -22,6 +22,7 @@ import { DodajLiteraturuComponent } from './components/dodaj-literaturu/dodaj-li
 import { ZahteviComponent } from './components/zahtevi/zahtevi.component';
 import { KomentariComponent } from './components/komentari/komentari.component';
 import { LiteraturaOperationsComponent } from './components/literatura-operations/literatura-operations.component';
+import { PreferencesComponent } from './components/preferences/preferences.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -33,6 +34,9 @@ const routes: Routes = [
     path: "profile", component: UserProfileComponent, children: [
       {
         path: "kalendar", component: KalendarComponent
+      },
+      {
+        path: "preference", component: PreferencesComponent
       }
     ]
   },
@@ -63,19 +67,18 @@ const routes: Routes = [
         component: ModulOperationsComponent
       },
       {
-        path:"komentari",
+        path: "komentari",
         component: KomentariComponent
       },
       {
-        path:"literatura",
-        component:LiteraturaOperationsComponent
+        path: "literatura",
+        component: LiteraturaOperationsComponent
       }
-      
+
 
     ]
   },
   { path: "error", component: ErrorComponent },
-  { path: "kalendar", component: KalendarComponent },
 ];
 
 @NgModule({
