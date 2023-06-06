@@ -91,5 +91,19 @@ public class LiteraturaController : ControllerBase
         }
     }
 
+    [AllowAnonymous]
+    [HttpGet("vratisve")]
+    public async Task<ActionResult> vratisve()
+    {
+        try
+        {
+            return Ok(await Context.Literature.ToListAsync());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
 
 }

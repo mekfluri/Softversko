@@ -36,12 +36,6 @@ export class KomentariService {
   
   }
 
-  async getAllStudents(): Promise<Student[] | null>
-  {
-    let studenti$ = this.http.get<Student[]>(`${environment.backend}/student/vratiStudente`);
-    let studenti = await firstValueFrom(studenti$);
-    return studenti;
-  }
 
   async deleteComment(id: number){
     let resp$ = this.http.delete(`${environment.backend}/komentar/obrisiKomentar/${id}`, {

@@ -32,6 +32,7 @@ import { DodajLiteraturuComponent } from './components/dodaj-literaturu/dodaj-li
 import { ZahteviComponent } from './components/zahtevi/zahtevi.component';
 import { KomentariComponent } from './components/komentari/komentari.component';
 import { LiteraturaOperationsComponent } from './components/literatura-operations/literatura-operations.component';
+import { StudentOperationsComponent } from './components/student-operations/student-operations.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { PreferencaComponent } from './components/preferenca/preferenca.component';
 
@@ -60,6 +61,7 @@ import { PreferencaComponent } from './components/preferenca/preferenca.componen
     ZahteviComponent,
     KomentariComponent,
     LiteraturaOperationsComponent,
+    StudentOperationsComponent,
     PreferencesComponent,
     PreferencaComponent
   ],

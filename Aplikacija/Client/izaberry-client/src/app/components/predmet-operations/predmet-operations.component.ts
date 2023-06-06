@@ -18,6 +18,8 @@ export class PredmetOperationsComponent implements OnInit{
   selectedPredmet: Predmet | undefined = undefined;
   predmetToChange: Predmet | null;
   showPredmeti: boolean = false;
+  otvori: boolean = false;
+  otvoriazuriranje: boolean = false;
 
   tagovi: Tag[] | null = null;
   moduli: string[] | null = null;
@@ -60,6 +62,9 @@ export class PredmetOperationsComponent implements OnInit{
   semestarChange(event: Event){
     let target = (event.target as HTMLSelectElement);
     this.predmet.semestar = parseInt(target.options[target.selectedIndex].value);
+    console.log(parseInt(target.options[target.selectedIndex].value));
+   
+    
   }
 
   tagChange(event: Event){
@@ -72,6 +77,7 @@ export class PredmetOperationsComponent implements OnInit{
     try {
       const id = parseInt(sId);
       this.predmetToChange = this.predmeti?.find(p => p.id == id)!;
+       this.predmet = this.predmeti?.find(p => p.id == id)!;
     }
     catch(err: any) {
       console.error(err);
@@ -99,5 +105,20 @@ export class PredmetOperationsComponent implements OnInit{
   }
   async deletePredmet() {
     console.log(await this.predmetService.delete(this.predmet.id));
+  }
+
+  async updatePredmet(){
+    this.otvoriazuriranje = true;
+    let response = await this.predmetService.updatePredmet(this.predmet.id, this.predmet.naziv, this.predmet.modul.naziv, this.predmet.semestar, this.predmet.espb, this.predmet.opis);
+  }
+
+  async otvoriDiv(){
+     this.otvori = true;
+  }
+  async zatvori(){
+    this.otvori = false;
+  }
+  async close(){
+    this.predmetToChange = null;
   }
 }

@@ -1,35 +1,61 @@
 <div class="container">
     <div class="predmet-op predmet-insertion">
-        <h1>Dodavanje novog predmeta</h1>
+       <button (click)="otvoriDiv()"> Dodaj predmet</button>
+    </div>
+    <div class="predmet-op predmet-deletion">
+       
+        <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id predmeta za brisanje">
+        <button (click)="deletePredmet()">Obrisi predmet</button>
+    </div>
+    <div class="predmet-op predmet-preview">
+       
+        <button (click)="getPredmeti()">Prikazi sve predmete</button>
+       
+        
+    </div>
+    <div class="predmet-op predmet-change">
+        <label>Azuriranje predmeta</label>
+        <input (keyup)="idChange($event)" type="number" placeholder="Id predmeta">
+
+    </div>
+</div>
+
+<div class="lista">
+    <div *ngIf="otvori" class= "predmet-add">
+        <div class="deo">
         <input (keyup)="nazivKeyUp($event)" type="text" placeholder="Naziv predmeta">
+      </div>
+      <div class="deo">
         <select (change)="modulChange($event)" name="moduli">
             <option *ngFor="let modul of moduli">
                 {{modul}}
             </option>
         </select>
+        </div>
+        <div class="deo">
         <select (change)="semestarChange($event)" name="semestri">
             <option *ngFor="let semestar of semestri">
                 {{semestar}}
             </option>
         </select>
+        </div>
+         <div class="deo">
         <input (keyup)="espbKeyUp($event)" type="number" placeholder="ESPB" min="3" max="8">
+         </div>
+         <div class="deo">
         <input (keyup)="opisKeyUp($event)" type="text" placeholder="Opis">
+         </div>
+         <div class="deo">
         <select (change)="tagChange($event)" name="tagovi" multiple>
             <option *ngFor="let tag of tagovi">
                 {{tag.naziv}}
             </option>
         </select>
+         </div>
         <button (click)="dodajPredmet()">Dodaj predmet</button>
+        <button (click)="zatvori()">Close</button>
     </div>
-    <div class="predmet-op predmet-deletion">
-        <h1>Brisanje predmeta</h1>
-        <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id predmeta za brisanje">
-        <button (click)="deletePredmet()">Obrisi predmet</button>
-    </div>
-    <div class="predmet-op predmet-preview">
-        <h1>Lista predmeta</h1>
-        <button (click)="getPredmeti()">Prikazi sve predmete</button>
-        <button (click)="cleanPredmeti()">Obrisi listu</button>
+    <div *ngIf="showPredmeti" class=" predemt-op predemt-container">
         <select (change)="predmetChange($event)" *ngIf="showPredmeti">
             <option *ngFor="let predmet of predmeti">
                 {{predmet.naziv}}
@@ -40,47 +66,52 @@
             <p>Naziv: {{selectedPredmet.naziv}}</p>
             <p>ESPB: {{selectedPredmet.espb}}</p>
             <p>Semestar: {{selectedPredmet.semestar}}</p>
+            <p>Opis: {{ selectedPredmet.opis}}</p>
+            <p>Modul: {{ selectedPredmet.modul.naziv}}</p>
+           
+            
             <ul *ngIf="selectedPredmet.tagovi">
                 <li *ngFor="let tag of selectedPredmet.tagovi">
                     {{tag.naziv}}
                 </li>
             </ul>
         </div>
+        <button (click)="cleanPredmeti()"> Close </button>
+    
     </div>
-    <div class="predmet-op predmet-change">
-        <h1>Izmena predmeta</h1>
-        <input (keyup)="idChange($event)" type="number" placeholder="Id predmeta za izmenu">
-        <div *ngIf="predmetToChange" class="change-container">
-            <input (keyup)="nazivKeyUp($event)" type="text" placeholder="Novi naziv"
-                [value]="predmetToChange ? predmetToChange.naziv : ''">
-            <label>Novi modul</label>
-            <select (change)="modulChange($event)" name="moduli">
-                <option *ngFor="let modul of moduli"
-                    [attr.selected]="modul == predmetToChange.modul.naziv ? true : null"
-                    [attr.value]="predmetToChange.modul.naziv">
-                    {{modul}}
-                </option>
-            </select>
-            <label>Novi semestar</label>
-            <select *ngIf="predmetToChange" (change)="semestarChange($event)" name="semestri">
-                <option *ngFor="let semestar of semestri"
-                    [attr.selected]="semestar == predmetToChange.semestar ? true : null"
-                    [attr.value]="predmetToChange.semestar">
-                    {{semestar}}
-                </option>
-            </select>
-            <label>Novi ESPB</label>
-            <input (keyup)="espbKeyUp($event)" type="number" placeholder="ESPB" min="3" max="8"
-                [value]="predmetToChange ? predmetToChange.espb : null">
-            <label>Novi opis</label>
-            <input (keyup)="opisKeyUp($event)" type="text" placeholder="Opis"
-                [value]="predmetToChange ? predmetToChange.opis : null">
-            <label>Novi tag</label>
-            <select *ngIf="predmetToChange" (change)="tagChange($event)" name="tagovi" multiple>
-                <option *ngFor="let tag of tagovi">
-                    {{tag.naziv}}
-                </option>
-            </select>
-        </div>
+    
+    <div *ngIf="predmetToChange" class="change-container" >
+        <input (keyup)="nazivKeyUp($event)" type="text" placeholder="Novi naziv"
+            [value]="predmetToChange ? predmetToChange.naziv : ''">
+        <label>Novi modul</label>
+        <select (change)="modulChange($event)" name="moduli">
+            <option *ngFor="let modul of moduli"
+                [attr.selected]="modul == predmetToChange.modul.naziv ? true : null"
+                [attr.value]="predmetToChange.modul.naziv">
+                {{modul}}
+            </option>
+        </select>
+        <label>Novi semestar</label>
+        <select *ngIf="predmetToChange" (change)="semestarChange($event)" name="semestri">
+            <option *ngFor="let semestar of semestri" [attr.selected]="semestar == predmetToChange.semestar ? true : null" [value]="semestar">
+                {{semestar}}
+            </option>
+        </select>
+        
+        <label>Novi ESPB</label>
+        <input (keyup)="espbKeyUp($event)" type="number" placeholder="ESPB" min="3" max="8"
+            [value]="predmetToChange ? predmetToChange.espb : null">
+        <label>Novi opis</label>
+        <input (keyup)="opisKeyUp($event)" type="text" placeholder="Opis"
+            [value]="predmetToChange ? predmetToChange.opis : null">
+        <label>Novi tag</label>
+        <select *ngIf="predmetToChange" (change)="tagChange($event)" name="tagovi" multiple>
+            <option *ngFor="let tag of tagovi">
+                {{tag.naziv}}
+            </option>
+        </select>
+        <button (click)="updatePredmet()">Azuriraj predmet</button>
+         <button (click)="close()"> Zatovri </button>
     </div>
+
 </div>

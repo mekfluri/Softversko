@@ -10,10 +10,14 @@
     <div class="tag-op tag-preview">
         <button (click)="getTags()">Izlistaj tagove</button>
         <button (click)="cleanTags()">Ocisti listu</button>
+       
+        </div>
+    </div>
+        <div class="lista">
         <div *ngIf="tagovi" class="tag-container">
             <div *ngFor="let tag of tagovi">
                 <p>{{tag.id}} | {{tag.naziv}}</p>
             </div>
-        </div>
-    </div>
+            </div>
+   
 </div>

@@ -288,6 +288,37 @@ public class PredmetController : ControllerBase
 
     }
 
+    [HttpPut("azurirajPredmetOperations/{idpredmeta}/{naziv}/{nazivModula}/{semestar}/{espb}/{opis}")]
+    public async Task<ActionResult> azurirajPredmetOperations(int idpredmeta, string naziv, string nazivModula, int semestar, int espb, string opis)
+     {
+        var noviModul = await Context.Moduli.Where(p=> p.Naziv == nazivModula).FirstAsync();
+      //  var noviTag = await Context.Tagovi.Where(p=> p.Naziv == nazivTaga).FirstAsync();
+
+        var stariPredmet = await Context.Predmeti.FindAsync(idpredmeta);
+
+        if(stariPredmet != null)
+        {
+            stariPredmet.Naziv = naziv;
+            stariPredmet.Modul = noviModul;
+            stariPredmet.Semestar = semestar;
+            stariPredmet.ESPB = espb;
+            stariPredmet.Opis = opis;
+            
+          /*  var ntag = new Tag();
+            ntag = noviTag;
+            stariPredmet.Tagovi!.Add(ntag);*/
+
+            Context.Predmeti.Update(stariPredmet);
+            await Context.SaveChangesAsync();
+            return Ok(stariPredmet);
+
+        }
+        else{
+          return BadRequest("ne postoji takav predmet");  
+        }
+     }
+  
+  
     [HttpGet("ocenaPredmeta/{idpredmeta}")]
     public async Task<ActionResult> ocenaPredmeta(int idpredmeta)
     {

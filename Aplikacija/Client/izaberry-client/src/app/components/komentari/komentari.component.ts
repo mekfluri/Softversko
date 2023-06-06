@@ -8,6 +8,7 @@ import { KomentariService } from 'src/app/services/komentari.service';
 import { Student } from 'src/app/models/student.model';
 import { Predmet } from 'src/app/models/predmet.model';
 import { PredmetiService } from 'src/app/services/predmeti.service';
+import { StudentiService } from 'src/app/services/studenti.service';
 
 @Component({
   selector: 'app-komentari',
@@ -24,14 +25,14 @@ export class KomentariComponent implements OnInit {
   predmet: Predmet | null = null;
   komentarToChange: Komentar | null = null;
 
-  constructor(private KomentarService: KomentariService, private PredmetiService: PredmetiService) {
+  constructor(private StudentiService: StudentiService, private KomentarService: KomentariService, private PredmetiService: PredmetiService) {
     this.currentKomentar = null;
 
   }
 
   async ngOnInit(): Promise<void> {
     this.komentari = await this.KomentarService.getAllComments();
-    this.studenti = await this.KomentarService.getAllStudents();
+    this.studenti = await this.StudentiService.getAllStudents();
     this.predmeti = await this.PredmetiService.getAll();
     
   }
@@ -113,7 +114,7 @@ export class KomentariComponent implements OnInit {
       console.error(err);
     }
 
-    console.log(this.student);
+   
   }
 
   deletionKeyUp(event:Event){
