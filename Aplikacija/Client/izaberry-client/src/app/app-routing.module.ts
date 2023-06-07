@@ -37,6 +37,12 @@ const routes: Routes = [
         path: "kalendar", component: KalendarComponent
       },
       {
+        path: "literatura", component: LiteraturaComponent
+      },
+      {
+        path: "komentari", component: KomentariComponent
+      },
+      {
         path: "preference", component: PreferencesComponent
       }
     ]
@@ -76,8 +82,8 @@ const routes: Routes = [
         component: LiteraturaOperationsComponent
       },
       {
-        path:"studentiop",
-        component:StudentOperationsComponent
+        path: "studentiop",
+        component: StudentOperationsComponent
       }
 
 
