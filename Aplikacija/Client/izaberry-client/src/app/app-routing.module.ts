@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
@@ -32,7 +32,17 @@ const routes: Routes = [
   { path: "zahtevi", component: ZahteviComponent },
   { path: "dodajLiteraturu/:predmetId", component: DodajLiteraturuComponent },
   {
-    path: "profile", component: UserProfileComponent, children: [
+    path: "profile/:userId", component: UserProfileComponent, children: [
+      {
+        path: "kalendar", component: KalendarComponent
+      },
+      {
+        path: "preference", component: PreferencesComponent
+      }
+    ]
+  },
+  {
+    path: "me", component: UserProfileComponent, children: [
       {
         path: "kalendar", component: KalendarComponent
       },
@@ -86,8 +96,12 @@ const routes: Routes = [
   { path: "error", component: ErrorComponent },
 ];
 
+export const routingConfig: ExtraOptions = {
+  paramsInheritanceStrategy: 'always'
+}
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, routingConfig)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
