@@ -5,6 +5,9 @@
     animation: fadeIn 2s;
 }
 
+.komentar:hover {
+    cursor: pointer;
+}
 .oglasna {
     padding: 20px;
     display:flex;
@@ -18,7 +21,6 @@
     background: linear-gradient(150deg, #fb7784, #29082b);
     display: flex;
     flex-direction: column;
-    height: 100vh;
     font-family: "Poppins", sans-serif;
     color: white;
     overflow: hidden;
