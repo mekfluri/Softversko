@@ -25,7 +25,7 @@ public class NotaController : ControllerBase
         if (s == null)
             return BadRequest("Ne postoji student sa ovima id-em.");
         note.Student = s;
-        note.doneVisible=false;
+        note.doneVisible=true;
         try
         {
             Context.Notes.Add(note);
@@ -37,6 +37,7 @@ public class NotaController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+  
 
     [HttpDelete("obrisiNotes/{idnote}")]
     public async Task<ActionResult> obrisiNotes(int idnote)
