@@ -40,7 +40,9 @@ export class AdminLoginComponent {
       });
     }
     catch (err: any) {
-      this.error = err as Error;
+      this.router.navigate(["error"], {
+        state: err as Error
+      })
     }
   }
   emailKeyUp(event: KeyboardEvent) {
