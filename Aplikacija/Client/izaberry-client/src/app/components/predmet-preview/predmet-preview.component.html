@@ -4,21 +4,25 @@
         <button class="oglasnabtn" (click)="gotoLiteratura()">Literatura predmeta</button>
     </div>
     <h1>{{predmet.naziv}}</h1>
-    <h2>{{predmet.modul.naziv}}</h2>
-    <div class="ocene-container" *ngIf="predmet.ocene">
-        <div class="ocena" *ngFor="let ocena of predmet.ocene">
-            <p>Dostupnost materijala: {{ocena.dostupnostMaterijala}}</p>
-            <p>Angazovanje profesora: {{ocena.angazovanjeProfesora}}</p>
-            <p>Laboratorijske vezbe: {{ocena.laboratorijskeVezbe}}</p>
-            <p>Tezina predmeta: {{ocena.tezinaPredmeta}}</p>
-            <p>Prakticno znanje: {{ocena.prakticnoZnanje}}</p>
-        </div>
-    </div>
+    <h2>Modul: {{predmet.modul.naziv}}</h2>
     <p>Semestar: {{predmet.semestar}}</p>
     <p>ESPB: {{predmet.espb}}</p>
     <p>Opis: {{predmet.opis}}</p>
-    <div class="ocene-container">
-
+    <div class="add-ocena" *ngIf="isLoggedIn">
+        <label>Angazovanje profesora</label>
+        <input [(ngModel)]="ocena.angazovanjeProfesora" type="number" placeholder="Angazovanje profesora" min="1" max="5"><br>
+        <label>Laboratorijske vezbe</label>
+        <input [(ngModel)]="ocena.laboratorijskeVezbe" type="number" placeholder="Laboratorijske vezbe" min="1" max="5"><br>
+        <label>Tezina predmeta</label>
+        <input [(ngModel)]="ocena.tezinaPredmeta" type="number" placeholder="Tezina" min="1" max="5"><br>
+        <label>Prakticno znanje</label>
+        <input [(ngModel)]="ocena.prakticnoZnanje" type="number" placeholder="Prakticno znanje" min="1" max="5"><br>
+        <label>Dostupnost materijala</label>
+        <input [(ngModel)]="ocena.dostupnostMaterijala" type="number" placeholder="Dostupnost materijala" min="1" max="5"><br>
+        <button (click)="addOcena()">Dodaj ocenu</button>
+    </div>
+    <div *ngIf="predmet.ocene" class="ocene-container">
+        <app-ocena-preview *ngFor="let ocena of predmet.ocene" [ocena]="ocena"></app-ocena-preview>
     </div>
 
     <div class="add-comment-container" *ngIf="isLoggedIn">
@@ -27,7 +31,7 @@
     </div>
     <div class="komentari-container" *ngIf="predmet.komentari">
         <div class="komentar" *ngFor="let komentar of predmet.komentari">
-            <span>{{komentar.student.username}}|</span>
+            <span [id]="komentar.student.id" (click)="viewProfile($event)">{{komentar.student.username}}|</span>
             <p>{{komentar.text}}</p>
             <button *ngIf="userService.user && komentar.student.username == userService.user.username">X</button>
         </div>

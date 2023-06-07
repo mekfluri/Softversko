@@ -22,6 +22,11 @@ export class UserService {
     this.user.token = token;
     return this.user;
   }
+
+  async getUserById(id: number): Promise<Student | null> {
+    let user$ = this.http.get<Student>(`${environment.backend}/student/${id}`);
+    return (await firstValueFrom(user$));
+  }
  
 
   async addNote(tekst: string): Promise<any> {

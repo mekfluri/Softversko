@@ -97,7 +97,7 @@ public class PredmetController : ControllerBase
             predmet.Ocene.Add(ocena);
             Context.Predmeti.Update(predmet);
             await Context.SaveChangesAsync();
-            return Ok(predmet);
+            return Ok(ocena);
         }
         catch (Exception ex)
         {

@@ -62,14 +62,11 @@ export class PredmetOperationsComponent implements OnInit{
   semestarChange(event: Event){
     let target = (event.target as HTMLSelectElement);
     this.predmet.semestar = parseInt(target.options[target.selectedIndex].value);
-    console.log(parseInt(target.options[target.selectedIndex].value));
-   
-    
   }
 
   tagChange(event: Event){
     let target = (event.target as HTMLSelectElement);
-    this.predmet.tagovi.push(new Tag(0, target.options[target.selectedIndex].value));
+    this.predmet.tagovi = [...Array.from(target.selectedOptions).map(t => new Tag(0, t.value))];
   }
 
   idChange(event: Event){ 

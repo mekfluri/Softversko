@@ -6,6 +6,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core'; 
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -17,7 +19,8 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
 })
 
 export class KalendarComponent implements OnInit {
- 
+  userId: number;
+  localId: number;
 
  //pozovemo iz bazu podatke 
  // i prikazemo ih 
@@ -45,7 +48,16 @@ export class KalendarComponent implements OnInit {
   
   //Add Some Events
   markiraniDatumi1: any[] = [];  
-  constructor( private http: HttpClient){}
+  constructor( private http: HttpClient, private route: ActivatedRoute, private authService: AuthService){
+    let user = this.route.snapshot.paramMap.get("userId");
+    this.localId = this.authService.currentUserId();
+    if(user){
+      this.userId = parseInt(user);
+    }
+    else {
+      this.userId = this.authService.currentUserId();
+    }
+  }
  
   ngAfterViewInit() {
     this.initializeFullCalendar();
