@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aplikacija.Controllers;
@@ -13,6 +14,38 @@ public class LiteraturaController : ControllerBase
     {
         Context = context;
     }
+
+    [AllowAnonymous]
+    [HttpGet("vratiPoslednjuDodatu")]
+    public async Task<ActionResult> vratiPoslednjuDodatu()
+    {
+        try
+        {
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+
+            var poslednjaDodataLiteratura = await Context.Literature
+                .OrderByDescending(l => l.Id)
+                .Include(l => l.Student)
+                .Include(l => l.Predmet)
+                .FirstOrDefaultAsync();
+
+            if (poslednjaDodataLiteratura == null)
+            {
+                return NotFound();
+            }
+
+            var jsonString = JsonSerializer.Serialize(poslednjaDodataLiteratura, options);
+            return Content(jsonString, "application/json");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
 
 
     [HttpPost("dodajLiteraturu/{studentID}/{predmetID}")]
@@ -32,7 +65,7 @@ public class LiteraturaController : ControllerBase
         {
             Context.Literature.Add(literatura);
             await Context.SaveChangesAsync();
-            return Ok("Dodali smo literatura sa id-jem" + literatura.Id);
+            return Ok(literatura);
         }
         catch (Exception e)
         {
@@ -41,15 +74,15 @@ public class LiteraturaController : ControllerBase
     }
 
     [HttpDelete("obrisiLiteraturu/{idliteratura}")]
-    public async Task<ActionResult> obrisiKalendar(int idliteratura)
+    public async Task<ActionResult> obrisiLiteraturu(int idliteratura)
     {
-        var k = await Context.Kalendari.FindAsync(idliteratura);
+        var k = await Context.Literature.FindAsync(idliteratura);
 
         if (k != null)
         {
-            Context.Kalendari.Remove(k);
+            Context.Literature.Remove(k);
             await Context.SaveChangesAsync();
-            return Ok("Obrisali smo literatura sa rednim brojem" + idliteratura);
+            return Ok(idliteratura);
         }
         else
         {
@@ -60,16 +93,16 @@ public class LiteraturaController : ControllerBase
     [HttpGet("vartiLiteraturu/{idstudenta}")]
     public async Task<ActionResult> vratiLiteraturu(int idstudenta)
     {
-       var kal=await Context.Literature.Where(x=>x.Student.Id==idstudenta).Include(x=>x.Student).ToListAsync();
+        var kal = await Context.Literature.Where(x => x.Student.Id == idstudenta).Include(x => x.Student).ToListAsync();
 
         return Ok(kal);
 
     }
-    
+
     [HttpGet("vartiLiteraturuPredmeta/{idpredmeta}")]
     public async Task<ActionResult> vratiLiteraturuPredmeta(int idpredmeta)
     {
-       var kal=await Context.Literature.Where(x=>x.Predmet!.Id==idpredmeta).ToListAsync();
+        var kal = await Context.Literature.Where(x => x.Predmet!.Id == idpredmeta).ToListAsync();
 
         return Ok(kal);
 
@@ -77,16 +110,20 @@ public class LiteraturaController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet("byStudentLit/{id}")]
-    public async Task<ActionResult> byStudentLit(int id){
-        try {
+    public async Task<ActionResult> byStudentLit(int id)
+    {
+        try
+        {
             var student = Context.Studenti.Where(s => s.Id == id).First();
-            if(student == null){
+            if (student == null)
+            {
                 return BadRequest();
             }
             var literatura = await Context.Literature.Where(k => k.Student!.Id == id).ToListAsync();
             return Ok(literatura);
         }
-        catch(Exception ex){
+        catch (Exception ex)
+        {
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }

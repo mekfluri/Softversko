@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Komentar } from 'src/app/models/komentar.model';
 import { Student } from 'src/app/models/student.model';
 import { UserService } from 'src/app/services/user.service';
+import { Privilegije } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +23,7 @@ export class UserProfileComponent implements OnInit {
     let token = localStorage.getItem("authToken");
     if (token) {
       this.student = await this.userService.getUserByToken(token);
-      console.log(this.student);
+ 
     }
   }
 
@@ -53,7 +54,7 @@ export class UserProfileComponent implements OnInit {
 
   async showKomentari() {
     let komentari = await this.userService.getUserComments();
-    console.log(komentari);
+
     return komentari;
   }
 
@@ -72,4 +73,20 @@ export class UserProfileComponent implements OnInit {
   redirectToPredmeti() {
     this.router.navigateByUrl("predmeti");
   }
+  redirectToZahtevi(){
+    this.router.navigateByUrl("zahtevi");
+  }
+
+  canShowButtons(): boolean {
+    if (this.userService.user) {
+
+      return (
+        this.userService.user.perm === Privilegije.ADMIN ||
+        this.userService.user.perm === Privilegije.MENTOR
+        
+      );
+    }
+    return false;
+  }
+  
 }

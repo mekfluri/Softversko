@@ -16,28 +16,22 @@ public class ZahtevController : ControllerBase
     {
         Context = context;
     }
-
     [HttpPost("dodajZahtev/{literaturaID}")]
     public async Task<ActionResult> dodajZahtev(int literaturaID)
     {
-        Literatura literatura = await Context.Literature!.Where(x => x.Id == literaturaID).FirstOrDefaultAsync();
+        Literatura literatura = await Context.Literature.FindAsync(literaturaID);
         if (literatura == null)
-            return BadRequest("");
+            return NotFound("Ne postoji ova literatura");
+
         Zahtev zahtev = new Zahtev();
         zahtev.Literatura = literatura;
 
         try
         {
-            JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.Preserve
-            };
-
             Context.Zahtevi.Add(zahtev);
             await Context.SaveChangesAsync();
 
-            string serializedZahtev = JsonSerializer.Serialize(zahtev, options);
-            return Ok(serializedZahtev);
+            return Ok(zahtev);
         }
         catch (Exception e)
         {
@@ -62,5 +56,49 @@ public class ZahtevController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
+    [HttpDelete("ObrisiZahteve/{id}")]
+    public async Task<ActionResult<Zahtev>> ObrisiZahtev(int id)
+    {
+        try
+        {
+            var tag = await Context.Zahtevi.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (tag == null)
+            {
+                return BadRequest("Ne postoji zahtev sa zadatim identifikatorom");
+            }
+            Context.Zahtevi.Remove(tag);
+            await Context.SaveChangesAsync();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+    [HttpPut("izmeniZahtev/{id}")]
+    public async Task<ActionResult> IzmeniZahtev(int id)
+    {
+        try
+        {
+            var zahtev = await Context.Zahtevi.Where(z => z.Id == id).FirstOrDefaultAsync();
+            if (zahtev == null)
+            {
+                return NotFound("Ne postoji zahtev sa zadatim identifikatorom");
+            }
 
+            zahtev.Odobren = true;
+
+            Context.Zahtevi.Update(zahtev);
+            await Context.SaveChangesAsync();
+
+            return Ok(zahtev);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
 }
+
+
+

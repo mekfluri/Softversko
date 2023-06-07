@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { Modul } from '../models/modul.model';
 import { Komentar } from '../models/komentar.model';
+import { Literatura } from '../models/literatura.model';
 
 
 @Injectable({
@@ -20,6 +21,50 @@ export class PredmetiService {
     let predmeti = await firstValueFrom(predmeti$);
     return predmeti;
   }
+  async dodajLiteraturu(filePath: string, studentID: number, predmetID: number): Promise<any> {
+    const response$ = this.http.post<any>(
+      `${environment.backend}/literatura/dodajLiteraturu/${studentID}/${predmetID}?filePath=${filePath}`,
+      {}
+    );
+
+    const response = await firstValueFrom(response$);
+    return response;
+  }
+  async dodajZahtev(literaturaID: number): Promise<any> {
+    try {
+      const response = await this.http.post<any>(
+        `${environment.backend}/zahtevi/dodajZahtev/${literaturaID}`,
+        {}
+      ).toPromise();
+
+      if (response.ok) {
+        return response.body;
+      } else {
+        console.error('Error while adding zahtev:', response.error);
+        throw new Error(response.error);
+      }
+    } catch (error) {
+      console.error('Error while adding zahtev:', error);
+      throw error;
+    }
+  }
+  async vratiPoslednjuLiteraturu(): Promise<Literatura | null> {
+    let zahtevi$ = this.http.get<any>(`${environment.backend}/literatura/vratiPoslednjuDodatu`);
+    let zahtevi = await firstValueFrom(zahtevi$);
+    if (zahtevi) {
+      return new Literatura(
+        zahtevi.Id,
+        zahtevi.mentor,
+        zahtevi.student,
+        zahtevi.predmet,
+        zahtevi.filePath
+      );
+    } else {
+      return null;
+    }
+  }
+
+
   async vratiZahteve(): Promise<Zahtev[] | null> {
     let zahtevi$ = this.http.get<any[]>(`${environment.backend}/zahtevi/vratiZahteve`);
     let zahtevi = await firstValueFrom(zahtevi$);
@@ -37,7 +82,7 @@ export class PredmetiService {
     return await firstValueFrom(predmet$);
   }
 
-  async addComment(userId: number, predmetId: number, text: string){
+  async addComment(userId: number, predmetId: number, text: string) {
     let komentarRequest = {
       studentId: userId,
       predmetId,
@@ -48,7 +93,7 @@ export class PredmetiService {
     return resp;
   }
 
-  async create(predmet: PredmetDto){
+  async create(predmet: PredmetDto) {
     console.log(predmet);
     let resp$ = this.http.post(`${environment.backend}/predmeti/dodajPredmet`, predmet, {
       responseType: "text"
@@ -69,11 +114,11 @@ export class PredmetiService {
     return await firstValueFrom(literature$);
   }
 
-  async updatePredmet(id:number, naziv:string, nazivModula: string, semestar:number, espb: number, opis:string){
+  async updatePredmet(id: number, naziv: string, nazivModula: string, semestar: number, espb: number, opis: string) {
     let resp$ = this.http.put(`${environment.backend}/predmeti/azurirajPredmetOperations/${id}/${naziv}/${nazivModula}/${semestar}/${espb}/${opis}`, {
       responseType: "text"
     });
     return firstValueFrom(resp$);
   }
-  
+
 }
