@@ -14,6 +14,8 @@ export class UserProfileComponent implements OnInit {
   student: Student | null;
   komentari: Komentar[] | null = null;
   editingBio: boolean = false;
+  showLiteraturaDiv: boolean = false;
+
 
   constructor(private router: Router, private userService: UserService) {
     this.student = null;
@@ -49,8 +51,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   showLiteratura() {
-    // Implement this method
+    this.showLiteraturaDiv = !this.showLiteraturaDiv;
   }
+  
 
   async showKomentari() {
     let komentari = await this.userService.getUserComments();
