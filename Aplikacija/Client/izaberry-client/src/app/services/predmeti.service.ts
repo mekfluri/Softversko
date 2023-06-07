@@ -7,6 +7,9 @@ import { firstValueFrom } from 'rxjs';
 import { Modul } from '../models/modul.model';
 import { Komentar } from '../models/komentar.model';
 import { Literatura } from '../models/literatura.model';
+import { Ocena } from '../models/ocena.model';
+
+type NoIDOcena = Omit<Ocena, "id">;
 
 
 @Injectable({
@@ -91,6 +94,11 @@ export class PredmetiService {
     let resp$ = this.http.post<Komentar>(`${environment.backend}/komentar/DodajKomentar`, komentarRequest);
     let resp = await firstValueFrom(resp$);
     return resp;
+  }
+
+  async addOcena(predmetId: number, ocena: Partial<Ocena>) {
+    let ocena$ = this.http.put(`${environment.backend}/predmeti/dodajOcenu/${predmetId}`, ocena);
+    return firstValueFrom(ocena$);
   }
 
   async create(predmet: PredmetDto) {
