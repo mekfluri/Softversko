@@ -10,8 +10,15 @@
 
     <div class="container" *ngIf="student">
         <div class="profile-header">
+          
             <div class="profile-img">
-                <img src="../../../assets/logoFinal.png" width="100%" alt="Profile Image">
+                <img [src]= "rezultat" width="100%" alt="Profile Image">
+                
+                <div class="row">
+  <div class="offset-md-5 col-md-2">
+   
+  </div>
+</div>
             </div>
             <div class="profile-nav-info">
                 <h3 class="user-name" *ngIf="student && student.username">{{ student.username }}</h3>
@@ -31,6 +38,8 @@
         <div class="main-bd">
             <div class="left-side">
                 <div class="profile-side">
+                    <button class="btn" (click)="showPhoto()" >Edit photo</button>
+                   
                     <p class="user-mail"><i class="fa fa-envelope" *ngIf="student.email"></i>{{ student.email }}</p>
                     <div class="user-bio">
                         <h3>Biografija</h3>
@@ -59,10 +68,23 @@
                         <li routerLink="preference" (click)="showKomentari()" class="user-komentar"> Preference</li>
                     </ul>
                 </div>
+                <div *ngIf="showdiv" class="slika">
+                   <label class="labela">Editovanje profilne fotografije:</label>
+                   <br>
+                   <label>1.korak:</label>
+                    <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+                    <label>2.korak:</label>
+                    <button  type="button" class="btn btn-primary" (click)="onCreate()">Update photo</button>
+                    </div>
+            
                 <div class="router-container">
+                                  
                     <router-outlet></router-outlet>
                 </div>
             </div>
         </div>
     </div>
+    
+
 </div>
+

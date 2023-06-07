@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aplikacija.Controllers;
@@ -98,7 +99,9 @@ public class StudentController : ControllerBase{
         semestar = student.Semestar,
         email = student.Email,
         perm = student.Privilegije,
-        preference = student.Preference
+        preference = student.Preference,
+        bio = student.Bio,
+        url = student.ProfileImageUrl
       });
     }catch(Exception ex){
       return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
@@ -232,15 +235,84 @@ public class StudentController : ControllerBase{
 
   }
 
-  
+  [HttpPut("azurirajURLStudenta/{url}/{idstudenta}")]
+   public async Task<ActionResult> azurirajURLStudenta(string url, int idstudenta)
+  {
+     var stariStudent = await Context.Studenti
+    .Include(p => p.Modul)
+    .Where(p => p.Id == idstudenta)
+    .FirstOrDefaultAsync();
+
+    
+
+     if(stariStudent != null)
+     {
+        stariStudent.ProfileImageUrl = url;
+      
+        Context.Studenti.Update(stariStudent);
+        await Context.SaveChangesAsync();
+        return Ok(stariStudent);
+     }
+     else
+     {
+      return BadRequest("ne postoji takav student");
+     }
+
+  }
 
 
-  
+  [HttpGet("vratiSliku/{idstudenta}")]
+   public async Task<ActionResult> vratiSliku(int idstudenta)
+  {
+     var stariStudent = await Context.Studenti
+    .Include(p => p.Modul)
+    .Where(p => p.Id == idstudenta)
+    .FirstOrDefaultAsync();
 
- 
+    
 
-  
+     if(stariStudent != null)
+     {
+       
+      
+        
+        return Ok(stariStudent.ProfileImageUrl);
+     }
+     else
+     {
+      return BadRequest("ne postoji takav student");
+     }
 
-
-
+  }
+    
+    
+    [HttpPost("upload"), DisableRequestSizeLimit]
+    public IActionResult Upload()
+   {
+    try
+    {
+        var file = Request.Form.Files[0];
+        var folderName = Path.Combine("Client", "izaberry-client", "src","assets");
+        var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+        if (file.Length > 0)
+        {
+            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName!.Trim('"');
+            var fullPath = Path.Combine(pathToSave, fileName);
+            var dbPath = Path.Combine(folderName, fileName);
+            using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+            return Ok(new { dbPath });
+        }
+        else
+        {
+            return BadRequest();
+        }
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, $"Internal server error: {ex}");
+    }
+  }
 }

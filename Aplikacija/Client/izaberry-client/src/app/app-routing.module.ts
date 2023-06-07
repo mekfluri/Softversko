@@ -24,6 +24,7 @@ import { KomentariComponent } from './components/komentari/komentari.component';
 import { LiteraturaOperationsComponent } from './components/literatura-operations/literatura-operations.component';
 import { StudentOperationsComponent } from './components/student-operations/student-operations.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -38,9 +39,14 @@ const routes: Routes = [
       },
       {
         path: "preference", component: PreferencesComponent
-      }
+      },
+     /* {
+        path: "upload", component: UploadComponent
+      }*/
     ]
   },
+
+  {  path: "upload", component: UploadComponent},
   { path: "oglasna", component: OglasnaComponent },
   {
     path: 'literatura/:predmetId',

@@ -35,6 +35,7 @@ import { LiteraturaOperationsComponent } from './components/literatura-operation
 import { StudentOperationsComponent } from './components/student-operations/student-operations.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { PreferencaComponent } from './components/preferenca/preferenca.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 
 
@@ -63,7 +64,8 @@ import { PreferencaComponent } from './components/preferenca/preferenca.componen
     LiteraturaOperationsComponent,
     StudentOperationsComponent,
     PreferencesComponent,
-    PreferencaComponent
+    PreferencaComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
