@@ -3,11 +3,11 @@
     <div class="pref-preview-list">
         <div class="pref-preview" *ngFor="let pref of student.preference">
             {{pref.tag.naziv}} | {{pref.ocena}}
-        <button (click)="removePref($event)" [id]="pref.id">X</button>
+        <button *ngIf="localId == userId" (click)="removePref($event)" [id]="pref.id">X</button>
         </div>
     </div>
     </div>
-    <div class="new-prefs">
+    <div class="new-prefs" *ngIf="localId == userId">
         <button (click)="addPreference()">Dodaj novu preferencu</button>
         <div class="new-prefs-list">
             <app-preferenca [preferenca]="pref" *ngFor="let pref of newPreferences" [tagovi]="tagovi"></app-preferenca>
