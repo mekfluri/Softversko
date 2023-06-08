@@ -37,6 +37,7 @@
         <div *ngFor="let kom of komentariArray">
             <p>{{kom.id}} | {{kom.text}} </p>
         </div>
+        <button (click)="cleanList()">Close</button>
 
     </div>
     <div *ngIf="komentarToChange" class="change-container">

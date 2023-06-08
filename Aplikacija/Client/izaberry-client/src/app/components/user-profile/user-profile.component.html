@@ -10,8 +10,15 @@
 
     <div class="container" *ngIf="student">
         <div class="profile-header">
+          
             <div class="profile-img">
-                <img src="../../../assets/logoFinal.png" width="100%" alt="Profile Image">
+                <img [src]= "rezultat" width="100%" alt="Profile Image">
+                
+                <div class="row">
+  <div class="offset-md-5 col-md-2">
+   
+  </div>
+</div>
             </div>
             <div class="profile-nav-info">
                 <h3 class="user-name" *ngIf="student && student.username">{{ student.username }}</h3>
@@ -20,17 +27,14 @@
                 </div>
 
             </div>
-            <div class="profile-option">
-                <div class="notification">
-                    <i class="fa fa-bell"></i>
-                    <span class="alert-message">3</span>
-                </div>
-            </div>
+           
         </div>
 
         <div class="main-bd">
             <div class="left-side">
                 <div class="profile-side">
+                    <button class="btn" (click)="prikaz()" *ngIf="localId == userId">Edit photo</button>
+                   
                     <p class="user-mail"><i class="fa fa-envelope" *ngIf="student.email"></i>{{ student.email }}</p>
                     <div class="user-bio">
                         <h3>Biografija</h3>
@@ -44,7 +48,7 @@
                         <button *ngIf="localId == userId && !editingBio" class="editbtn" (click)="editBio()">Edit</button>
                     </div>
                     <div class="profile-btn" *ngIf="localId == userId">
-                        <button class="chatbtn" id="chatBtn"><i class="fa fa-comment"></i> Chat</button>
+
                         <button (click)="logOut()" class="chatbtn" id="logoutBtn"><i class="fa fa-comment"></i> Log
                             out</button>
                     </div>
@@ -53,18 +57,31 @@
             <div class="right-side">
                 <div class="nav">
                     <ul>
-                        <li routerLink="literatura-user" [class.user-literatura]="isActiveLink('literatura-user')" [class.active]="isActiveLink('literatura-user')">Literatura</li>
-                        <li routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')" [class.active]="isActiveLink('kalendar')">Kalendar</li>
-                        <li routerLink="komentari-user" [class.user-komentar]="isActiveLink('komentari-user')" [class.active]="isActiveLink('komentari-user')">Komentar</li>
-                        <li routerLink="preference" [class.user-preference]="isActiveLink('preference')" [class.active]="isActiveLink('preference')">Preference</li>
+                        <li (click)="show()" routerLink="literatura-user" [class.user-literatura]="isActiveLink('literatura-user')" [class.active]="isActiveLink('literatura-user')">Literatura</li>
+                        <li  (click)="show()" routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')" [class.active]="isActiveLink('kalendar')">Kalendar</li>
+                        <li  (click)="show()" routerLink="komentari-user" [class.user-komentar]="isActiveLink('komentari-user')" [class.active]="isActiveLink('komentari-user')">Komentar</li>
+                        <li  (click)="show()" routerLink="preference" [class.user-preference]="isActiveLink('preference')" [class.active]="isActiveLink('preference')">Preference</li>
                       </ul>
                       
                       
                 </div>
-                <div class="router-container">
+                <div *ngIf="showdiv" class="slika">
+                    <label class="labela">Editovanje profilne fotografije:</label>
+                    <br>
+                    <label>1.korak:</label>
+                     <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+                     <label>2.korak:</label>
+                     <button  type="button" class="btn btn-primary" (click)="onCreate()">Update photo</button>
+                     </div>
+            
+                <div *ngIf="showcontainer" class="router-container">
+                                  
                     <router-outlet></router-outlet>
                 </div>
             </div>
         </div>
     </div>
+    
+
 </div>
+

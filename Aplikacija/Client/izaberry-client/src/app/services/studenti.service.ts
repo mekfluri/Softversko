@@ -74,4 +74,29 @@ export class StudentiService {
    return firstValueFrom(resp$);
   }
 
+  async UpdatePhoto(id: number, slikaurl:string)
+  {
+    
+      let resp$= this.http.put( `${environment.backend}/student/azurirajURLStudenta/${slikaurl}/${id}`,  {
+        responseType: "text"
+     });
+     return firstValueFrom(resp$);
+    
+  }
+
+  async VratiSliku(id: number): Promise<string> {
+    const url = `http://localhost:5006/student/vratiSliku/${id}`;
+  
+    try {
+      const response = await this.http.get(url, { responseType: 'text' }).toPromise();
+      console.log(response);
+      return response as string;
+      
+    } catch (error) {
+      console.error('Greška prilikom slanja HTTP zahtjeva:', error);
+      throw error;
+    }
+  }
+  
+
 }

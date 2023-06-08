@@ -312,6 +312,10 @@ namespace Aplikacija.Migrations
                     b.Property<int>("Privilegije")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProfileImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Salt")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
