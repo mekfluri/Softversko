@@ -53,11 +53,13 @@
             <div class="right-side">
                 <div class="nav">
                     <ul>
-                        <li routerLink="literatura" class="user-literatura">Literatura</li>
-                        <li routerLink="kalendar" class="user-kalendar">Kalendar</li>
-                        <li routerLink="komentar" class="user-komentar"> Komentar</li>
-                        <li routerLink="preference" class="user-preference"> Preference</li>
-                    </ul>
+                        <li routerLink="literatura-user" [class.user-literatura]="isActiveLink('literatura-user')" [class.active]="isActiveLink('literatura-user')">Literatura</li>
+                        <li routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')" [class.active]="isActiveLink('kalendar')">Kalendar</li>
+                        <li routerLink="komentari-user" [class.user-komentar]="isActiveLink('komentari-user')" [class.active]="isActiveLink('komentari-user')">Komentar</li>
+                        <li routerLink="preference" [class.user-preference]="isActiveLink('preference')" [class.active]="isActiveLink('preference')">Preference</li>
+                      </ul>
+                      
+                      
                 </div>
                 <div class="router-container">
                     <router-outlet></router-outlet>

@@ -63,15 +63,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   showLiteratura() {
-    this.showLiteraturaDiv = !this.showLiteraturaDiv;
+ 
   }
   
+isActiveLink(link: string): boolean {
+  return this.router.isActive(link, true);
+}
 
-  async showKomentari() {
-    let komentari = await this.userService.getUserComments();
-
-    return komentari;
-  }
+  
 
   logOut() {
     localStorage.removeItem("authToken");
