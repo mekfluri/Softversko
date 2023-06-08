@@ -21,7 +21,7 @@ public class KomentarController : ControllerBase{
             if(student == null){
                 return BadRequest();
             }
-            var komentari = await Context.Komentari.Where(k => k.Student.Id == id).ToListAsync();
+            var komentari = await Context.Komentari.Where(k => k.Student.Id == id).Include(p=>p.Predmet).ToListAsync();
             return Ok(komentari);
         }
         catch(Exception ex){
