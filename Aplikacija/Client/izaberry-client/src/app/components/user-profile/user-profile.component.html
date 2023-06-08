@@ -33,7 +33,7 @@
         <div class="main-bd">
             <div class="left-side">
                 <div class="profile-side">
-                    <button class="btn" (click)="prikaz()" >Edit photo</button>
+                    <button class="btn" (click)="prikaz()" *ngIf="localId == userId">Edit photo</button>
                    
                     <p class="user-mail"><i class="fa fa-envelope" *ngIf="student.email"></i>{{ student.email }}</p>
                     <div class="user-bio">

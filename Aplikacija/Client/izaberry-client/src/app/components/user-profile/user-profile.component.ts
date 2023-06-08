@@ -7,8 +7,6 @@ import { Privilegije } from 'src/app/models/permission.model';
 import { StudentiService } from 'src/app/services/studenti.service';
 import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 
-//import { ConsoleReporter } from 'jasmine';
-
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -25,17 +23,21 @@ export class UserProfileComponent implements OnInit {
   showdiv: boolean = false;
   showcontainer: boolean = false;
   rezultat: string = "";
-  response!: { dbPath: ''; };
-  
+  response!: { dbPath: '' };
 
-
-  constructor(private StudentiService: StudentiService, private route: ActivatedRoute, private router: Router, private userService: UserService, private authService: AuthService) {
+  constructor(
+    private StudentiService: StudentiService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private userService: UserService,
+    private authService: AuthService,
+    private http: HttpClient // Added http client injection
+  ) {
     this.localId = this.authService.currentUserId();
     let userId = this.route.snapshot.paramMap.get("userId");
     if (userId) {
       this.userId = parseInt(userId);
-    }
-    else {
+    } else {
       this.userId = this.authService.currentUserId();
     }
     this.student = null;
@@ -44,36 +46,29 @@ export class UserProfileComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.student = await this.userService.getUserById(this.userId);
-    }
-    catch(err: any){
+    } catch (err: any) {
       this.router.navigate(["error"], {
         state: err as Error
       });
     }
     this.PostaviSliku();
+  }
 
+  async showPhoto() {
+    this.showdiv = true;
   }
-  async showPhoto(){
-    this.showdiv = true
- 
-  }
-  
-  PostaviSliku()
-  {
-    
-      var rez = this.StudentiService.VratiSliku(this.student!.id);
-      rez.then((odgovor) => {
-      
-        //this.rezultat = encodeURIComponent(odgovor);
-        
+
+  PostaviSliku() {
+    var rez = this.StudentiService.VratiSliku(this.student!.id);
+    rez
+      .then((odgovor) => {
         this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
         console.log(this.rezultat);
-
         console.log(odgovor);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.error('Greška prilikom dohvatanja slike:', error);
       });
- 
   }
 
   editBio() {
@@ -81,12 +76,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   async saveBio() {
-    
     if (this.student && this.student.bio) {
       this.student.bio = this.student.bio.trim();
       this.editingBio = false;
       try {
-        await this.StudentiService.updateStudentBiografija(this.student.bio, this.student.id);
+        await this.StudentiService.updateStudentBiografija(
+          this.student.bio,
+          this.student.id
+        );
         console.log("Bio saved successfully");
       } catch (error) {
         console.error("Failed to save bio:", error);
@@ -94,35 +91,27 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  async prikaz()
-  {
+  async prikaz() {
     this.showcontainer = false;
     this.showdiv = true;
   }
 
-
-  async ugasidiv(){
-    
+  async ugasidiv() {
     this.showdiv = false;
   }
-
-  
 
   cancelEditBio() {
     this.editingBio = false;
   }
 
   async show() {
- 
     this.showcontainer = true;
     this.showdiv = false;
   }
-  
-isActiveLink(link: string): boolean {
-  return this.router.isActive(link, true);
-}
 
-  
+  isActiveLink(link: string): boolean {
+    return this.router.isActive(link, true);
+  }
 
   logOut() {
     localStorage.removeItem("authToken");
@@ -136,57 +125,60 @@ isActiveLink(link: string): boolean {
   redirectToHome() {
     this.router.navigateByUrl("");
   }
+
   redirectToPredmeti() {
     this.router.navigateByUrl("predmeti");
   }
+
   redirectToZahtevi() {
     this.router.navigateByUrl("zahtevi");
   }
 
-  canShowButtons(): boolean {
-    if (this.userService.user) {
-
-      return (
-        this.userService.user.perm === Privilegije.ADMIN ||
-        this.userService.user.perm === Privilegije.MENTOR
-
-      );
+  async canShowButtons(): Promise<boolean> {
+    const url = `http://localhost:5006/student/${this.authService.currentUserId()}`;
+  
+    try {
+      const user = await this.http.get<Student | undefined>(url).toPromise();
+      if (user) {
+        return (
+          user.perm === Privilegije.ADMIN ||
+          user.perm === Privilegije.MENTOR
+        );
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching data:', error);
     }
+  
     return false;
   }
-  uploadFinished = (event: { dbPath: ""; }) => { 
-    this.response = event; 
+  
+
+  uploadFinished = (event: { dbPath: "" }) => {
+    this.response = event;
     console.log(this.response);
-  }
- async onCreate(){
+  };
+
+  async onCreate() {
     this.student!.ProfilePhotoURL = this.response.dbPath;
     console.log(this.student!.ProfilePhotoURL);
     var kodiraj = encodeURIComponent(this.student!.ProfilePhotoURL);
     console.log(kodiraj);
-    //da uzmem studentov id i da ga zapamtim zajedno sa putanjom
-    let updatovano = await this.StudentiService.UpdatePhoto(this.student!.id, kodiraj);
-   
+    let updatovano = await this.StudentiService.UpdatePhoto(
+      this.student!.id,
+      kodiraj
+    );
+
     var rez = this.StudentiService.VratiSliku(this.student!.id);
-      rez.then((odgovor) => {
-      
-        //this.rezultat = encodeURIComponent(odgovor);
-        
+    rez
+      .then((odgovor) => {
         this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
         console.log(this.rezultat);
-
         console.log(odgovor);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.error('Greška prilikom dohvatanja slike:', error);
       });
-    
   }
 
-  createImgPath()
-  {
-     
-   
-    
-  }
-   
-
+  createImgPath() { }
 }
