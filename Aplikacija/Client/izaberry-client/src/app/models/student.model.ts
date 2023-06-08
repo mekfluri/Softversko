@@ -12,8 +12,9 @@ class Student {
     perm: Privilegije;
     preference: Preference[];
     bio: string;
+    ProfilePhotoURL: string;
 
-    constructor(id: number, username: string, modul: Modul, semestar: number, email: string, perm?: Privilegije, bio: string = "", preference?: Preference[]){
+    constructor(id: number, username: string, modul: Modul, semestar: number, email: string, perm?: Privilegije,  bio: string = "",ProfilePhotoURL: string ="", preference?: Preference[]){
         this.id = id;
         this.username = username;
         this.modul = modul;
@@ -22,7 +23,9 @@ class Student {
         this.token = null;
         this.perm = perm ?? Privilegije.STUDENT;
         this.bio = bio;
-        this.preference = preference || [];
+        this.ProfilePhotoURL = ProfilePhotoURL; 
+         this.preference = preference || [];
+ 
     }
 }
 

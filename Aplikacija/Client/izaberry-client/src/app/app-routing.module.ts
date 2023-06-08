@@ -25,6 +25,7 @@ import { LiteraturaOperationsComponent } from './components/literatura-operation
 import { StudentOperationsComponent } from './components/student-operations/student-operations.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { MentorOperationsComponent } from './components/mentor-operations/mentor-operations.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -39,10 +40,8 @@ const routes: Routes = [
       },
       {
         path: "preference", component: PreferencesComponent
-      },
-     /* {
-        path: "upload", component: UploadComponent
-      }*/
+      }
+   
     ]
   },
 
@@ -84,6 +83,10 @@ const routes: Routes = [
       {
         path:"studentiop",
         component:StudentOperationsComponent
+      },
+      {
+        path:"mentor-op",
+        component: MentorOperationsComponent
       }
 
 

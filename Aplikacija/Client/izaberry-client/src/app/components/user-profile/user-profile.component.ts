@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit {
   editingBio: boolean = false;
   rezultat: string = "";
   showdiv: boolean = false;
+  showcontainer: boolean = false;
 
 
   response!: { dbPath: ''; };
@@ -42,6 +43,7 @@ export class UserProfileComponent implements OnInit {
   }
   async showPhoto(){
     this.showdiv = true
+    this.showcontainer = false;
   }
   
   PostaviSliku()
@@ -80,17 +82,27 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  async ugasidiv(){
+    this.showcontainer = true;
+    this.showdiv = false;
+  }
+
+  
+
   cancelEditBio() {
     this.editingBio = false;
   }
 
   showLiteratura() {
     // Implement this method
+    this.showcontainer = true;
+    this.showdiv = false;
   }
 
   async showKomentari() {
+    this.showcontainer = true;
     let komentari = await this.userService.getUserComments();
-
+    this.showdiv = false;
     return komentari;
   }
 

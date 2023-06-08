@@ -36,6 +36,7 @@ import { StudentOperationsComponent } from './components/student-operations/stud
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { PreferencaComponent } from './components/preferenca/preferenca.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { MentorOperationsComponent } from './components/mentor-operations/mentor-operations.component';
 
 
 
@@ -65,7 +66,8 @@ import { UploadComponent } from './components/upload/upload.component';
     StudentOperationsComponent,
     PreferencesComponent,
     PreferencaComponent,
-    UploadComponent
+    UploadComponent,
+    MentorOperationsComponent
   ],
   imports: [
     BrowserModule,
