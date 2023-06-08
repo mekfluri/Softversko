@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Privilegije } from 'src/app/models/permission.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-zahtevi',
@@ -17,7 +18,8 @@ export class ZahteviComponent implements OnInit {
     private predmetiService: PredmetiService,
     private userService: UserService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private aut:AuthService
   ) { }
 
   ngOnInit() {
@@ -91,7 +93,7 @@ export class ZahteviComponent implements OnInit {
     this.router.navigateByUrl('');
   }
   redirectToProfil() {
-    this.router.navigateByUrl('profile');
+    this.router.navigate(["profile", this.aut.currentUserId()]);
   }
   redirectToQuiz() {
     this.router.navigateByUrl('kviz');
