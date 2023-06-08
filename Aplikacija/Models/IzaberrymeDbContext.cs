@@ -13,6 +13,7 @@ public class IzaberryMeDbContext : DbContext
     public DbSet<Modul> Moduli { get; set; }
     public DbSet<Literatura> Literature { get; set; }
     public DbSet<Mentor> Mentori { get; set; }
+    public DbSet<MentorRequest> MentorZahtevi { get; set; }
     public DbSet<Note> Notes { get; set; }
     public DbSet<Zahtev> Zahtevi { get; set; }
 
