@@ -20,12 +20,7 @@
                 </div>
 
             </div>
-            <div class="profile-option">
-                <div class="notification">
-                    <i class="fa fa-bell"></i>
-                    <span class="alert-message">3</span>
-                </div>
-            </div>
+           
         </div>
 
         <div class="main-bd">
@@ -44,7 +39,7 @@
                         <button *ngIf="localId == userId && !editingBio" class="editbtn" (click)="editBio()">Edit</button>
                     </div>
                     <div class="profile-btn" *ngIf="localId == userId">
-                        <button class="chatbtn" id="chatBtn"><i class="fa fa-comment"></i> Chat</button>
+
                         <button (click)="logOut()" class="chatbtn" id="logoutBtn"><i class="fa fa-comment"></i> Log
                             out</button>
                     </div>
