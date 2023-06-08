@@ -2,6 +2,7 @@
     <div class="oglasna">
         <button class="oglasnabtn" (click)="gotoOglasna()">Oglasna tabla</button>
         <button class="oglasnabtn" (click)="gotoLiteratura()">Literatura predmeta</button>
+        <button *ngIf="isLoggedIn" class="oglasnabtn" (click)="gotoMentorRequest()">Postani mentor ovog predmeta!</button>
     </div>
     <h1>{{predmet.naziv}}</h1>
     <h2>Modul: {{predmet.modul.naziv}}</h2>
