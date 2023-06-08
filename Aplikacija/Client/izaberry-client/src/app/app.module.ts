@@ -37,6 +37,9 @@ import { PreferencesComponent } from './components/preferences/preferences.compo
 import { PreferencaComponent } from './components/preferenca/preferenca.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { MentorOperationsComponent } from './components/mentor-operations/mentor-operations.component';
+import { OcenaPreviewComponent } from './components/ocena-preview/ocena-preview.component';
+import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
+import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
 
 
 
@@ -67,7 +70,10 @@ import { MentorOperationsComponent } from './components/mentor-operations/mentor
     PreferencesComponent,
     PreferencaComponent,
     UploadComponent,
-    MentorOperationsComponent
+    MentorOperationsComponent,
+    OcenaPreviewComponent,
+    LiteraturaUserComponent,
+    KomentariUserComponent
   ],
   imports: [
     BrowserModule,

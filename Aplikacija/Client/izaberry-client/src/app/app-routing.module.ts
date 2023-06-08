@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
@@ -26,6 +26,8 @@ import { StudentOperationsComponent } from './components/student-operations/stud
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { MentorOperationsComponent } from './components/mentor-operations/mentor-operations.component';
+import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
+import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -34,7 +36,23 @@ const routes: Routes = [
   { path: "zahtevi", component: ZahteviComponent },
   { path: "dodajLiteraturu/:predmetId", component: DodajLiteraturuComponent },
   {
-    path: "profile", component: UserProfileComponent, children: [
+    path: "profile/:userId", component: UserProfileComponent, children: [
+      {
+        path: "kalendar", component: KalendarComponent
+      },
+      {
+        path: "preference", component: PreferencesComponent
+      },
+      {
+        path: "literatura-user", component: LiteraturaUserComponent
+      },
+      {
+        path: "komentari-user", component: KomentariUserComponent
+      }
+    ]
+  },
+  {
+    path: "me", component: UserProfileComponent, children: [
       {
         path: "kalendar", component: KalendarComponent
       },
@@ -81,8 +99,8 @@ const routes: Routes = [
         component: LiteraturaOperationsComponent
       },
       {
-        path:"studentiop",
-        component:StudentOperationsComponent
+        path: "studentiop",
+        component: StudentOperationsComponent
       },
       {
         path:"mentor-op",
@@ -95,8 +113,12 @@ const routes: Routes = [
   { path: "error", component: ErrorComponent },
 ];
 
+export const routingConfig: ExtraOptions = {
+  paramsInheritanceStrategy: 'always'
+}
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, routingConfig)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

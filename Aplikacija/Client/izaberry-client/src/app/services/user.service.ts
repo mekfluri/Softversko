@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Preference } from '../models/preference.model';
+import { Literatura } from '../models/literatura.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +24,22 @@ export class UserService {
     this.user.token = token;
     return this.user;
   }
+
+  async getUserById(id: number | undefined): Promise<Student | null> {
+    let user$ = this.http.get<Student>(`${environment.backend}/student/${id}`);
+    return (await firstValueFrom(user$));
+  }
+  async vratiLiteraturuStudenta(id: number): Promise<Literatura[] | null> {
+    let user$ = this.http.get<Literatura[]>(`${environment.backend}/literatura/vartiLiteraturu/${id}`);
+    const response = await user$.toPromise();
+    return response ?? null;
+  }
+  
+  
  
 
-  async addNote(tekst: string): Promise<any> {
-    const url = `${environment.backend}/note/dodajNotes/${encodeURIComponent(tekst)}/${this.user?.id}`;
+  async addNote(tekst: string,id:number): Promise<any> {
+    const url = `${environment.backend}/note/dodajNotes/${encodeURIComponent(tekst)}/${id}`;
     const headers = new HttpHeaders({
       'accept': '*/*',
       'Authorization': `Bearer ${this.user?.token}`,
@@ -59,8 +73,8 @@ export class UserService {
   }
   
   
-  async getUserComments(): Promise<Komentar[] | null> {
-    let komentari$ = this.http.get<Komentar[]>(`${environment.backend}/komentar/byStudent/${this.user?.id}`);
+  async getUserComments(id:number): Promise<Komentar[] | null> {
+    let komentari$ = this.http.get<Komentar[]>(`${environment.backend}/komentar/byStudent/${id}`);
     let komentari = await firstValueFrom(komentari$) ?? null;
     return komentari;
   }

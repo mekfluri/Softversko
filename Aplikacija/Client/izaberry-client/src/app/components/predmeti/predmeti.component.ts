@@ -8,6 +8,7 @@ import { Tag } from 'src/app/models/tag.model';
 import { PredmetiService } from 'src/app/services/predmeti.service';
 import { TagService } from 'src/app/services/tag.service';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-predmeti',
@@ -20,7 +21,7 @@ export class PredmetiComponent implements OnInit{
   tagovi: Tag[] | null = null;
 
   constructor(private http: HttpClient, private predmetiService: PredmetiService,
-     private router: Router, private tagService: TagService) {}
+     private router: Router, private tagService: TagService,private autthService:AuthService) {}
 
   private async fetchModules(): Promise<string[]> {
     let module$ = this.http.get<Modul[]>(`${environment.backend}/moduli`);
@@ -40,7 +41,7 @@ export class PredmetiComponent implements OnInit{
     return localStorage.getItem("authToken") !== null;
   }
   redirectToProfil() {
-    this.router.navigateByUrl("profile");
+    this.router.navigateByUrl("profile/"+this.autthService.currentUserId());
   }
 
   predmetClick(event: Event){

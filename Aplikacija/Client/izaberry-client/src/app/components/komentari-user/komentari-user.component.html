@@ -1,0 +1,13 @@
+<div class="comments-container" *ngIf="komentari">
+    <div *ngFor="let komentar of komentari" class="comment">
+      <div class="comment-content">
+        <label class="subject">Komentar za predmet: {{ komentar }}</label>
+      <div>
+    
+      </div>
+        <label class="comment-text">{{ komentar.text }}</label>
+      </div>
+      <div class="berry"></div>
+    </div>
+  </div>
+  

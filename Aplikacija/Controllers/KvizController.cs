@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Aplikacija.Controllers;
 
@@ -33,25 +34,31 @@ public class KvizController : ControllerBase
         .Where(s => s.Id == userId)
         .FirstOrDefaultAsync();
         var predmeti = new List<Predmet>();
-        List<Tuple<Predmet, int>> scores = new List<Tuple<Predmet, int>>();
-        int score = 0;
+        Dictionary<int, MutableTuple<Predmet, int>> results = new Dictionary<int, MutableTuple<Predmet,int>>();
+        int compatabilityScore = 0;
         foreach (Preference preferenca in user.Preference)
         {
             foreach (Predmet predmet in preferenca.Tag.Predmeti)
             {
-                score = 0;
-                predmeti.Add(predmet);
+                compatabilityScore = 0;
                 foreach (Tag t in predmet.Tagovi)
                 {
-                    var pref = user.Preference.Select(pref => pref.Tag.Id == t.Id ? pref : null).First();
-                    if(pref != null) {
-                        score += pref.Ocena;
+                    if (preferenca.Tag.Id == t.Id)
+                    {
+                        compatabilityScore += preferenca.Ocena;
                     }
                 }
-                scores.Add(new Tuple<Predmet, int>(predmet, score));
+                if (!results.ContainsKey(predmet.Id))
+                {
+                    results.Add(predmet.Id, new MutableTuple<Predmet, int>(predmet, compatabilityScore));
+                }
+                else
+                {
+                    results[predmet.Id].Second += compatabilityScore;
+                }
             }
         }
-        return Ok(scores);
+        return Ok(results.OrderByDescending(kvp => kvp.Value.Second));
     }
 
 }

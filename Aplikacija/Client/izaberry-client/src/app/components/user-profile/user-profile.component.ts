@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Komentar } from 'src/app/models/komentar.model';
 import { Student } from 'src/app/models/student.model';
 import { UserService } from 'src/app/services/user.service';
@@ -8,6 +8,7 @@ import { StudentiService } from 'src/app/services/studenti.service';
 import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 //import { ConsoleReporter } from 'jasmine';
 
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,26 +19,29 @@ export class UserProfileComponent implements OnInit {
   student: Student | null;
   komentari: Komentar[] | null = null;
   editingBio: boolean = false;
-  rezultat: string = "";
-  showdiv: boolean = false;
-  showcontainer: boolean = false;
+  userId: number;
+  localId: number;
 
-
-  response!: { dbPath: ''; };
-  
-
-
-  constructor(private http: HttpClient, private router: Router, private userService: UserService, private studentService: StudentiService) {
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private authService: AuthService) {
+    this.localId = this.authService.currentUserId();
+    let userId = this.route.snapshot.paramMap.get("userId");
+    if (userId) {
+      this.userId = parseInt(userId);
+    }
+    else {
+      this.userId = this.authService.currentUserId();
+    }
     this.student = null;
   }
 
   async ngOnInit(): Promise<void> {
-    let token = localStorage.getItem("authToken");
-    if (token) {
-      this.student = await this.userService.getUserByToken(token);
-
-      this.PostaviSliku();
- 
+    try {
+      this.student = await this.userService.getUserById(this.userId);
+    }
+    catch(err: any){
+      this.router.navigate(["error"], {
+        state: err as Error
+      });
     }
 
   }
@@ -94,17 +98,16 @@ export class UserProfileComponent implements OnInit {
   }
 
   showLiteratura() {
-    // Implement this method
+ 
     this.showcontainer = true;
     this.showdiv = false;
   }
+  
+isActiveLink(link: string): boolean {
+  return this.router.isActive(link, true);
+}
 
-  async showKomentari() {
-    this.showcontainer = true;
-    let komentari = await this.userService.getUserComments();
-    this.showdiv = false;
-    return komentari;
-  }
+  
 
   logOut() {
     localStorage.removeItem("authToken");
@@ -121,7 +124,7 @@ export class UserProfileComponent implements OnInit {
   redirectToPredmeti() {
     this.router.navigateByUrl("predmeti");
   }
-  redirectToZahtevi(){
+  redirectToZahtevi() {
     this.router.navigateByUrl("zahtevi");
   }
 
@@ -131,7 +134,7 @@ export class UserProfileComponent implements OnInit {
       return (
         this.userService.user.perm === Privilegije.ADMIN ||
         this.userService.user.perm === Privilegije.MENTOR
-        
+
       );
     }
     return false;

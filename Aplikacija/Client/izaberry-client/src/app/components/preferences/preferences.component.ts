@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Preference } from 'src/app/models/preference.model';
 import { Student } from 'src/app/models/student.model';
 import { Tag } from 'src/app/models/tag.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { TagService } from 'src/app/services/tag.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -15,11 +17,27 @@ export class PreferencesComponent implements OnInit{
   @Input()
   tagovi: Tag[] | null = null;
   newPreferences: Preference[] | null = null;
+  userId: number;
+  localId: number;
 
-  constructor(private userService: UserService, private tagService: TagService) {
+  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute, private userService: UserService, private tagService: TagService) {
+    this.localId = this.authService.currentUserId();
+    let userId = this.route.snapshot.paramMap.get("userId");
+    if(userId) {
+      this.userId = parseInt(userId);
+    }
+    else {
+      this.userId = 0;
+      let err = new Error();
+      err.message = "Cannot find user prefs";
+      this.router.navigate(["error"], {
+        state: err
+      });
+    }
+    console.log("user id = " + userId);
   }
   async ngOnInit(): Promise<void> {
-    this.student = await this.userService.getUserByToken(localStorage.getItem("authToken")!);
+    this.student = await this.userService.getUserById(this.userId);
     this.tagovi = await this.tagService.getAllTags();
   }
 

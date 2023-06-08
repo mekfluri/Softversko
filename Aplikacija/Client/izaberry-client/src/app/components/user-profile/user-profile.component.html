@@ -44,15 +44,15 @@
                     <div class="user-bio">
                         <h3>Biografija</h3>
                         <p>{{ student.bio }}</p>
-                        <div *ngIf="editingBio">
+                        <div *ngIf="(localId == userId) && editingBio">
                             <textarea [(ngModel)]="student.bio"></textarea>
                    
                             <button class="editbtn" (click)="saveBio()">Save</button>
                             <button class="editbtn" (click)="cancelEditBio()">Cancel</button>
                         </div>
-                        <button class="editbtn" *ngIf="!editingBio" (click)="editBio()">Edit</button>
+                        <button *ngIf="localId == userId && !editingBio" class="editbtn" (click)="editBio()">Edit</button>
                     </div>
-                    <div class="profile-btn">
+                    <div class="profile-btn" *ngIf="localId == userId">
                         <button class="chatbtn" id="chatBtn"><i class="fa fa-comment"></i> Chat</button>
                         <button (click)="logOut()" class="chatbtn" id="logoutBtn"><i class="fa fa-comment"></i> Log
                             out</button>
@@ -62,11 +62,13 @@
             <div class="right-side">
                 <div class="nav">
                     <ul>
-                        <li (click)="showLiteratura()" class="user-literatura active">Literatura</li>
-                        <li (click)="ugasidiv()" routerLink="kalendar" class="user-kalendar">Kalendar</li>
-                        <li (click)="showKomentari()" class="user-komentar"> Komentar</li>
-                        <li routerLink="preference" (click)="showKomentari()" class="user-komentar"> Preference</li>
-                    </ul>
+                        <li routerLink="literatura-user" [class.user-literatura]="isActiveLink('literatura-user')" [class.active]="isActiveLink('literatura-user')">Literatura</li>
+                        <li routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')" [class.active]="isActiveLink('kalendar')">Kalendar</li>
+                        <li routerLink="komentari-user" [class.user-komentar]="isActiveLink('komentari-user')" [class.active]="isActiveLink('komentari-user')">Komentar</li>
+                        <li routerLink="preference" [class.user-preference]="isActiveLink('preference')" [class.active]="isActiveLink('preference')">Preference</li>
+                      </ul>
+                      
+                      
                 </div>
                 <div *ngIf="showdiv" class="slika">
                     <label class="labela">Editovanje profilne fotografije:</label>

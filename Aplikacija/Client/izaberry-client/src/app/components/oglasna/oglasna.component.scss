@@ -80,7 +80,16 @@ app-oglasna{
 
 
 }
-
+.email-link {
+  font-size: 80%;
+  font-weight: bold;
+   margin-left: 19%;
+   background-color: #ffe187;
+   width:min-content;
+   border: 2px dotted white;
+   display: flex;
+   justify-self: center;
+}
 .drop-area {
   border: #ccc dashed 2px;
   padding: 20px 10px;

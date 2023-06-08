@@ -12,25 +12,23 @@
         <div *ngFor="let note of notes" class="noteHolder">
           <div cdkDrag class="noterounded" (dragend)="dragEnd($event)" (dragstart)="dragStart($event)">
             <div class="ikonice" id="done">
-              <button class="icon-button" id="close" (click)="deleteNote(note)" >
+              <button class="icon-button" id="close" (click)="deleteNote(note)" *ngIf="note.student?.id === getCurrentUserId()">
                 <span class="material-symbols-outlined">
                   close
                 </span>
               </button>
-              <button class="icon-button" id="done" (click)="saveNote()"  *ngIf="!note.doneVisible" >
+              <button class="icon-button" id="done" (click)="saveNote()" *ngIf="!note.doneVisible">
                 <span class="material-symbols-outlined">
                   done
                 </span>
-              </button>
-              
-         
-              
-              </div>
-         
-            <textarea [id]="note.id" class="textArea" (input)="textAreaInput($event)">
-              {{note.text}}
+              </button>              
+            </div>
+            <textarea [id]="note.id" class="textArea" [readonly]="note.doneVisible ? true : null" (input)="textAreaInput($event)">
+              {{ note.text }}
             </textarea>
-           
+            <div class="email-link" *ngIf="note.student">
+              <a [href]="'/profile/' + note.student.id">{{ note.student.username }}</a>
+            </div>
             
           </div>
         </div>

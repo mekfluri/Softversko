@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PredmetiService } from 'src/app/services/predmeti.service';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-dodaj-literaturu',
@@ -18,7 +20,8 @@ export class DodajLiteraturuComponent implements OnInit {
     private route: ActivatedRoute,
     private predmetiService: PredmetiService,
     private userService: UserService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private AuthService:AuthService
   ) { }
   async ngOnInit(): Promise<void> {
     if (this.userService.user == null) {
@@ -61,7 +64,7 @@ export class DodajLiteraturuComponent implements OnInit {
       const filePath = literaturaInput.value;
       console.log(filePath);
 
-      const number = this.userService.user?.id;
+      const number = this.AuthService.currentUserId();;
       if (number != null) {
         const literaturaPromise = this.predmetiService.dodajLiteraturu(
           filePath,

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Note } from 'src/app/models/note.model';
 import { UserService } from 'src/app/services/user.service';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -14,27 +15,46 @@ export class OglasnaComponent implements OnInit {
   currentNote: Note | null = null;
   i: number = 0;
   notes: Note[] = [];
+  id: number = 0;
 
   ngOnInit(): void {
     this.retrieveAllNotes();
   }
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(private http: HttpClient, private userService: UserService, private AuthService: AuthService) {
   }
   async retrieveAllNotes() {
     try {
       const response = await this.http.get<Note[]>('http://localhost:5006/note/vartiSveNotes').toPromise();
       console.log(response);
+
       if (response) {
-        this.notes = response.map(note => {
+        const notesWithStudentPromises = response.map(async note => {
           const { id, text } = note;
-          return { id, text, student: null, predmet: null, doneVisible: true };
+          const token = note.student?.token;
+
+          if (token) {
+            try {
+              const student = await this.userService.getUserByToken(token);
+              note.student = student;
+            } catch (error) {
+              console.error(`Failed to fetch student details for note with ID ${note.id}:`, error);
+            }
+          }
+
+          return note;
         });
+
+        this.notes = await Promise.all(notesWithStudentPromises);
       }
     } catch (error) {
       console.error(error);
     }
   }
+
+
+
+
 
   dragOver(event: Event) {
     console.log("dragOver");
@@ -87,17 +107,18 @@ export class OglasnaComponent implements OnInit {
   }
 
   obrisiStiker() {
-  
+
   }
 
   async dodajNote() {
     let newNote: Note = new Note(this.notes.length);
     console.log(newNote);
     this.notes.push(newNote);
-    this.currentNote = newNote; 
+    this.currentNote = newNote;
   }
 
   textAreaInput(event: Event) {
+
     let target = event.target as HTMLTextAreaElement;
     const noteId = parseInt(target.id);
     this.notes[noteId].text = target.value.trim();
@@ -107,7 +128,8 @@ export class OglasnaComponent implements OnInit {
   async saveNote() {
     if (this.currentNote) {
       try {
-        const response = await this.userService.addNote(this.currentNote.text);
+  
+        const response = await this.userService.addNote(this.currentNote.text,this.AuthService.currentUserId());
         console.log(this.currentNote.text);
         console.log(response);
 
@@ -130,7 +152,7 @@ export class OglasnaComponent implements OnInit {
       const index = this.notes.findIndex(note => note.id === currentNote.id);
       if (index !== -1) {
         this.notes.splice(index, 1);
-        
+
         try {
           const response = await this.http.delete(`http://localhost:5006/note/obrisiNotes/${currentNote.id}`).toPromise();
           console.log(response);
@@ -141,6 +163,10 @@ export class OglasnaComponent implements OnInit {
       this.currentNote = null;
     }
   }
-  
-  
+  getCurrentUserId(): number | undefined {
+ 
+    return this.AuthService.currentUserId();;
+  }
+
+
 }

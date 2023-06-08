@@ -21,15 +21,10 @@ export class AuthService {
   currentUserId(): number {
     let token = localStorage.getItem("authToken");
     if (token) {
-      let decoded = this.decodeToken(token);
-      return decoded.id;
+      let decoded = this.jwtService.decodeToken(token);
+      return parseInt(decoded.sub);
     }
     else return -1;
-  }
-
-  decodeToken(token: string): any {
-    let decoded = this.jwtService.decodeToken(token);
-    console.log(decoded);
   }
 
   async login(credentials: LoginModel, admin?: boolean): Promise<string> {

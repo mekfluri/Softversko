@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Komentar } from 'src/app/models/komentar.model';
+import { Ocena } from 'src/app/models/ocena.model';
 import { Predmet } from 'src/app/models/predmet.model';
 import { Student } from 'src/app/models/student.model';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -17,6 +18,7 @@ export class PredmetPreviewComponent implements OnInit {
   predmet: Predmet | null = null;
   isLoggedIn: string | null = null;
   commentBox: string = "";
+  ocena: Ocena = new Ocena();
   private predmetId: number = 0;
 
   constructor(private router: Router, private predmetiService: PredmetiService, public userService: UserService,
@@ -28,6 +30,16 @@ export class PredmetPreviewComponent implements OnInit {
     }
   }
 
+  async addOcena() {
+    console.log(await this.predmetiService.addOcena(this.predmetId, {
+      angazovanjeProfesora: this.ocena.angazovanjeProfesora,
+      dostupnostMaterijala: this.ocena.dostupnostMaterijala,
+      laboratorijskeVezbe: this.ocena.laboratorijskeVezbe,
+      prakticnoZnanje: this.ocena.prakticnoZnanje,
+      tezinaPredmeta: this.ocena.tezinaPredmeta
+    }));
+  }
+
   async ngOnInit(): Promise<void> {
     this.predmet = await this.predmetiService.getById(this.predmetId);
   }
@@ -36,6 +48,10 @@ export class PredmetPreviewComponent implements OnInit {
     this.commentBox = (event.target as HTMLInputElement).value;
   }
 
+  viewProfile(event: Event){
+    let profileId = parseInt((event.target as HTMLSpanElement).id);
+    this.router.navigate(["profile", profileId]);
+  }
   async dodajKomentar() {
     let komentar = await this.predmetiService.addComment(this.userService.user!.id, this.predmetId, this.commentBox);
     console.log(komentar);
