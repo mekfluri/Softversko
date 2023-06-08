@@ -24,6 +24,8 @@ import { KomentariComponent } from './components/komentari/komentari.component';
 import { LiteraturaOperationsComponent } from './components/literatura-operations/literatura-operations.component';
 import { StudentOperationsComponent } from './components/student-operations/student-operations.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
+import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
+import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -38,6 +40,12 @@ const routes: Routes = [
       },
       {
         path: "preference", component: PreferencesComponent
+      },
+      {
+        path: "literatura-user", component: LiteraturaUserComponent
+      },
+      {
+        path: "komentari-user", component: KomentariUserComponent
       }
     ]
   },
@@ -45,12 +53,6 @@ const routes: Routes = [
     path: "me", component: UserProfileComponent, children: [
       {
         path: "kalendar", component: KalendarComponent
-      },
-      {
-        path: "literatura", component: LiteraturaComponent
-      },
-      {
-        path: "komentari", component: KomentariComponent
       },
       {
         path: "preference", component: PreferencesComponent
