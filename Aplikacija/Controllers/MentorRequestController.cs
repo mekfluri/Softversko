@@ -21,7 +21,7 @@ public class MentorRequestController : ControllerBase{
 
     [HttpGet("all")]
     public async Task<ActionResult> GetAll() {
-        return Ok(await dbContext.MentorZahtevi.ToListAsync());
+        return Ok(await dbContext.MentorZahtevi.Include(z => z.Student).Include(z => z.Predmet).ToListAsync());
     }
 
     [HttpPost("{userId}/{predmetId}")]
@@ -54,6 +54,23 @@ public class MentorRequestController : ControllerBase{
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
         return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> RemoveRequest(int id) {
+        try {
+            var request = dbContext.MentorZahtevi.Include(z => z.Student).Include(z => z.Predmet).Where(z => z.Id == id).First();
+            if(request == null){
+                return NotFound();
+            }
+            await firebaseService.RemoveMentorRequestPhotos(request.Predmet.Id, request.Student.Id);
+            dbContext.MentorZahtevi.Remove(request);
+            await dbContext.SaveChangesAsync();
+            return Ok();
+        }
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
 
 }
