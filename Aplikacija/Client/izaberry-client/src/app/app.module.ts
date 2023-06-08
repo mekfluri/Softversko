@@ -38,6 +38,7 @@ import { PreferencaComponent } from './components/preferenca/preferenca.componen
 import { OcenaPreviewComponent } from './components/ocena-preview/ocena-preview.component';
 import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
 import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
+import { MentorRequestComponent } from './components/mentor-request/mentor-request.component';
 
 
 
@@ -69,7 +70,8 @@ import { KomentariUserComponent } from './components/komentari-user/komentari-us
     PreferencaComponent,
     OcenaPreviewComponent,
     LiteraturaUserComponent,
-    KomentariUserComponent
+    KomentariUserComponent,
+    MentorRequestComponent
   ],
   imports: [
     BrowserModule,

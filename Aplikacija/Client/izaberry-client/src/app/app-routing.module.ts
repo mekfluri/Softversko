@@ -26,6 +26,7 @@ import { StudentOperationsComponent } from './components/student-operations/stud
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
 import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
+import { MentorRequestComponent } from './components/mentor-request/mentor-request.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -102,6 +103,7 @@ const routes: Routes = [
     ]
   },
   { path: "error", component: ErrorComponent },
+  { path: "mentor-request", component: MentorRequestComponent}
 ];
 
 export const routingConfig: ExtraOptions = {
