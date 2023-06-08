@@ -36,6 +36,8 @@ import { StudentOperationsComponent } from './components/student-operations/stud
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { PreferencaComponent } from './components/preferenca/preferenca.component';
 import { OcenaPreviewComponent } from './components/ocena-preview/ocena-preview.component';
+import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
+import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
 
 
 
@@ -65,7 +67,9 @@ import { OcenaPreviewComponent } from './components/ocena-preview/ocena-preview.
     StudentOperationsComponent,
     PreferencesComponent,
     PreferencaComponent,
-    OcenaPreviewComponent
+    OcenaPreviewComponent,
+    LiteraturaUserComponent,
+    KomentariUserComponent
   ],
   imports: [
     BrowserModule,
