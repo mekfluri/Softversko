@@ -21,7 +21,7 @@ export class OglasnaComponent implements OnInit {
     this.retrieveAllNotes();
   }
 
-  constructor(private http: HttpClient, private userService: UserService, private authService: AuthService) {
+  constructor(private http: HttpClient, private userService: UserService, private AuthService: AuthService) {
   }
   async retrieveAllNotes() {
     try {
@@ -128,7 +128,8 @@ export class OglasnaComponent implements OnInit {
   async saveNote() {
     if (this.currentNote) {
       try {
-        const response = await this.userService.addNote(this.currentNote.text);
+  
+        const response = await this.userService.addNote(this.currentNote.text,this.AuthService.currentUserId());
         console.log(this.currentNote.text);
         console.log(response);
 
@@ -163,8 +164,8 @@ export class OglasnaComponent implements OnInit {
     }
   }
   getCurrentUserId(): number | undefined {
-    console.log(this.userService.user?.id);
-    return this.userService.user?.id;
+ 
+    return this.AuthService.currentUserId();;
   }
 
 
