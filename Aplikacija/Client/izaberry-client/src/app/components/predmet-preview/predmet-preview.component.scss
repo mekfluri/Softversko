@@ -1,70 +1,110 @@
-.komentar {
+.add-comment-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .add-comment-container input[type="text"] {
+    width: 50%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+  }
+  
+  .add-comment-container button.Dodajbutton {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #e2496a;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-comment-container button.Dodajbutton:hover {
+    background-color: #c1354e;
+  }
+  
+  .komentari-container {
+    margin-top: 20px;
+  }
+  
+  .komentar {
     display: flex;
     justify-content: start;
     align-items: center;
     animation: fadeIn 2s;
-}
-
-.komentar:hover {
+    width: 50%;
+    justify-self: center;
+    margin-left: 25%;
+  }
+  
+  .komentar:hover {
     cursor: pointer;
-}
-.oglasna {
-    padding: 20px;
-    display:flex;
+  }
+  
+  .komentar span {
+    font-weight: bold;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .komentar p {
+    margin: 0;
+    flex-grow: 1;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    width: 50%;
+    color: #29082b;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .komentar button {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #e2496a;
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .komentar button:hover {
+    background-color: #c1354e;
+  }
+  
+  .komentar button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(226, 73, 95, 0.6);
+  }
+  
+  .button-center {
+    display: flex;
     justify-content: center;
-    align-items: center;
-}
-@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
-
-.body {
+  }
+  
+  
+  .body {
     background: linear-gradient(150deg, #fb7784, #29082b);
     display: flex;
     flex-direction: column;
     font-family: "Poppins", sans-serif;
     color: white;
     overflow: hidden;
-
-  
-}  button{
-    cursor: pointer;
   }
-.oglasnabtn{
-    background-color: transparent;
-    color: white;
-    font-weight: bolder;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-left: 5%;
-
-}
-.oglasnabtn:hover {
-    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.3);
-}
-
-input {
-    width: 50%;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 0px 10px 10px;
-    align-self: center;
-}
-
-input::placeholder {
-    color: #29082b;
-}
-
-input:focus::placeholder {
-    color: transparent;
-}
-
-input:focus {
-    outline: none;
-    box-shadow: 0px 0px 5px #29082b;
-}
-.Dodajbutton{
+  
+  button {
+    cursor: pointer;
     background-color: #e2496a;
     color: white;
     border: none;
@@ -73,9 +113,162 @@ input:focus {
     font-size: 16px;
     margin-left: 5%;
     box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.3);
-}
-
-.oglasna{
+  }
+  
+  .oglasnabtn {
+    background-color: transparent;
+    color: white;
+    font-weight: bolder;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 5%;
+  }
+  
+  .oglasnabtn:hover {
+    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.3);
+  }
+  
+  input {
+    width: 50%;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 0px 10px 10px;
+    align-self: center;
+  }
+  
+  input::placeholder {
+    color: #29082b;
+  }
+  
+  input:focus::placeholder {
+    color: transparent;
+  }
+  
+  input:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px #29082b;
+  }
+  
+  .oglasna {
+    padding: 20px;
     display: flex;
-   justify-content: end;
-}
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .add-ocena {
+    gap: 5%;
+  }
+  
+  .add-ocena label,
+  .add-ocena input,
+  .add-ocena button {
+    margin-bottom: 10px;
+  }
+  
+  .add-ocena {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .add-ocena label {
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .add-ocena input {
+    width: calc(50% - 10px);
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+  }
+  
+  .add-ocena button {
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #e2496a;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 10px;
+    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+  }
+  
+  .add-ocena button:hover {
+    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.3);
+  }
+  
+  .add-ocena input[type="number"]::-webkit-inner-spin-button,
+  .add-ocena input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .add-ocena input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  
+  h1 {
+    font-size: 400%;
+    font-style: italic;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 5px dotted #e89d58;
+  }
+  
+  h2 {
+    font-size: 150%;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    margin-top: 0.2%;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 5px dotted #e89d58;
+  }
+  
+  p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  p:hover {
+    transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
