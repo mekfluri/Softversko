@@ -23,6 +23,7 @@ export class LiteraturaOperationsComponent implements OnInit{
   literature: Literatura[] | null = null;
   predmeti: Predmet[] | null= null;
   predmet: Predmet | null = null;
+  literaturaToChange: Literatura | null = null;
 
    constructor(private StudentService: StudentiService, private LiteraturaService: LiteraturaService,private KomentarService: KomentariService,private PredmetiService: PredmetiService)
    {
@@ -106,4 +107,21 @@ export class LiteraturaOperationsComponent implements OnInit{
     this.litearturaArray = Object.values(response);
     console.log(this.litearturaArray);
    }
+
+   async idChange(event:Event){
+    let sId = (event.target as HTMLInputElement).value;
+    try {
+      const id = parseInt(sId);
+      this. literaturaToChange = this.literature!.find(p => p.id == id)!;
+       
+    }
+    catch(err: any) {
+      console.error(err);
+    }
+   }
+
+  
+      
+   
+
   }

@@ -1,29 +1,19 @@
 
 <div class="operations-container">
-    <div class="literatura literatura-list">
+    <div class="literatura-op literatura-list">
         <input (keyup)="idKeyUp($event)" type="number" placeholder="Id studneta">
         <button (click)="LiteraturaStudenta()" >Izlistaj literaturu studenta</button>
     </div>
 
-    <div class="literatura literatura-list">
+    <div class="literatura-op literatura-list">
         <input  (keyup)="idKeyUpPredmeta($event)" type="number" placeholder="Id predmeta">
-        <button  (click)="LiteraturaPredmeta()">Izlistaj komentare predmeta</button>
+        <button  (click)="LiteraturaPredmeta()">Izlistaj literaturu predmeta</button>
 
     </div>
 
  
    
-     <div class="kliteratura-op literatura-insertion">
-        <input  type="text" placeholder="ID literature za azuriranje">
-        <div  class="change-container">
-            
-            
-        </div>
-       
-        <button >Azuriraj</button>
-        
 
-    </div>
     <div class="literatura-op literatura-deletion">
         <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id literature za brisanje">
         <button (click)="deleteLiteratura()" >Obrisi literaturu</button>
@@ -31,15 +21,17 @@
     <div class="literatura-op literatura-preview">
         <button (click)="getLiteartura()">Izlistaj literaturu</button>
         <button (click)="cleanList()" >Ocisti listu</button>
-     
-        <div *ngIf="litearturaArray" class="literatura-container">
-            <div *ngFor="let lit of litearturaArray">
-                <p>{{lit.id}}  </p>
-            </div>
-        </div>
-        
-        
+    </div> 
        
-    </div>
 
 </div>
+
+<div class="lista">
+    <div *ngIf="litearturaArray" class="literatura-container">
+        <div *ngFor="let lit of litearturaArray">
+            <p>{{lit.id}} | {{ lit.filePath}}  </p>
+        </div>
+        <button (click)="cleanList()" >Close</button>
+    </div>
+    
+    </div>

@@ -1,9 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Komentar } from 'src/app/models/komentar.model';
 import { Student } from 'src/app/models/student.model';
 import { UserService } from 'src/app/services/user.service';
 import { Privilegije } from 'src/app/models/permission.model';
+import { StudentiService } from 'src/app/services/studenti.service';
+import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+
+//import { ConsoleReporter } from 'jasmine';
+
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -17,8 +22,14 @@ export class UserProfileComponent implements OnInit {
   editingBio: boolean = false;
   userId: number;
   localId: number;
+  showdiv: boolean = false;
+  showcontainer: boolean = false;
+  rezultat: string = "";
+  response!: { dbPath: ''; };
+  
 
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private authService: AuthService) {
+
+  constructor(private StudentiService: StudentiService, private route: ActivatedRoute, private router: Router, private userService: UserService, private authService: AuthService) {
     this.localId = this.authService.currentUserId();
     let userId = this.route.snapshot.paramMap.get("userId");
     if (userId) {
@@ -39,6 +50,30 @@ export class UserProfileComponent implements OnInit {
         state: err as Error
       });
     }
+    this.PostaviSliku();
+
+  }
+  async showPhoto(){
+    this.showdiv = true
+ 
+  }
+  
+  PostaviSliku()
+  {
+    
+      var rez = this.StudentiService.VratiSliku(this.student!.id);
+      rez.then((odgovor) => {
+      
+        //this.rezultat = encodeURIComponent(odgovor);
+        
+        this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
+        console.log(this.rezultat);
+
+        console.log(odgovor);
+      }).catch((error) => {
+        console.error('Greška prilikom dohvatanja slike:', error);
+      });
+ 
   }
 
   editBio() {
@@ -46,11 +81,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   async saveBio() {
+    
     if (this.student && this.student.bio) {
       this.student.bio = this.student.bio.trim();
       this.editingBio = false;
       try {
-        //await this.userService.updateStudentBio(this.student.id, this.student.bio);
+        await this.StudentiService.updateStudentBiografija(this.student.bio, this.student.id);
         console.log("Bio saved successfully");
       } catch (error) {
         console.error("Failed to save bio:", error);
@@ -58,12 +94,28 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  async prikaz()
+  {
+    this.showcontainer = false;
+    this.showdiv = true;
+  }
+
+
+  async ugasidiv(){
+    
+    this.showdiv = false;
+  }
+
+  
+
   cancelEditBio() {
     this.editingBio = false;
   }
 
-  showLiteratura() {
+  async show() {
  
+    this.showcontainer = true;
+    this.showdiv = false;
   }
   
 isActiveLink(link: string): boolean {
@@ -102,5 +154,39 @@ isActiveLink(link: string): boolean {
     }
     return false;
   }
+  uploadFinished = (event: { dbPath: ""; }) => { 
+    this.response = event; 
+    console.log(this.response);
+  }
+ async onCreate(){
+    this.student!.ProfilePhotoURL = this.response.dbPath;
+    console.log(this.student!.ProfilePhotoURL);
+    var kodiraj = encodeURIComponent(this.student!.ProfilePhotoURL);
+    console.log(kodiraj);
+    //da uzmem studentov id i da ga zapamtim zajedno sa putanjom
+    let updatovano = await this.StudentiService.UpdatePhoto(this.student!.id, kodiraj);
+   
+    var rez = this.StudentiService.VratiSliku(this.student!.id);
+      rez.then((odgovor) => {
+      
+        //this.rezultat = encodeURIComponent(odgovor);
+        
+        this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
+        console.log(this.rezultat);
+
+        console.log(odgovor);
+      }).catch((error) => {
+        console.error('Greška prilikom dohvatanja slike:', error);
+      });
+    
+  }
+
+  createImgPath()
+  {
+     
+   
+    
+  }
+   
 
 }

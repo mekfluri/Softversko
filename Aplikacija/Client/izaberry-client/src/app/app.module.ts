@@ -35,6 +35,8 @@ import { LiteraturaOperationsComponent } from './components/literatura-operation
 import { StudentOperationsComponent } from './components/student-operations/student-operations.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { PreferencaComponent } from './components/preferenca/preferenca.component';
+import { UploadComponent } from './components/upload/upload.component';
+import { MentorOperationsComponent } from './components/mentor-operations/mentor-operations.component';
 import { OcenaPreviewComponent } from './components/ocena-preview/ocena-preview.component';
 import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
 import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
@@ -67,6 +69,8 @@ import { KomentariUserComponent } from './components/komentari-user/komentari-us
     StudentOperationsComponent,
     PreferencesComponent,
     PreferencaComponent,
+    UploadComponent,
+    MentorOperationsComponent,
     OcenaPreviewComponent,
     LiteraturaUserComponent,
     KomentariUserComponent
