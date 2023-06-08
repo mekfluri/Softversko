@@ -38,7 +38,7 @@
         <div class="main-bd">
             <div class="left-side">
                 <div class="profile-side">
-                    <button class="btn" (click)="showPhoto()" >Edit photo</button>
+                    <button class="btn" (click)="prikaz()" >Edit photo</button>
                    
                     <p class="user-mail"><i class="fa fa-envelope" *ngIf="student.email"></i>{{ student.email }}</p>
                     <div class="user-bio">
@@ -62,10 +62,10 @@
             <div class="right-side">
                 <div class="nav">
                     <ul>
-                        <li routerLink="literatura-user" [class.user-literatura]="isActiveLink('literatura-user')" [class.active]="isActiveLink('literatura-user')">Literatura</li>
-                        <li routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')" [class.active]="isActiveLink('kalendar')">Kalendar</li>
-                        <li routerLink="komentari-user" [class.user-komentar]="isActiveLink('komentari-user')" [class.active]="isActiveLink('komentari-user')">Komentar</li>
-                        <li routerLink="preference" [class.user-preference]="isActiveLink('preference')" [class.active]="isActiveLink('preference')">Preference</li>
+                        <li (click)="show()" routerLink="literatura-user" [class.user-literatura]="isActiveLink('literatura-user')" [class.active]="isActiveLink('literatura-user')">Literatura</li>
+                        <li  (click)="show()" routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')" [class.active]="isActiveLink('kalendar')">Kalendar</li>
+                        <li  (click)="show()" routerLink="komentari-user" [class.user-komentar]="isActiveLink('komentari-user')" [class.active]="isActiveLink('komentari-user')">Komentar</li>
+                        <li  (click)="show()" routerLink="preference" [class.user-preference]="isActiveLink('preference')" [class.active]="isActiveLink('preference')">Preference</li>
                       </ul>
                       
                       

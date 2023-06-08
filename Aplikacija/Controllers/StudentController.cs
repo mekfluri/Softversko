@@ -138,7 +138,9 @@ public class StudentController : ControllerBase
                 semestar = student.Semestar,
                 email = student.Email,
                 perm = student.Privilegije,
-                preference = student.Preference
+                preference = student.Preference,
+                bio = student.Bio,
+                url = student.ProfileImageUrl
             });
         }
         catch (Exception ex)

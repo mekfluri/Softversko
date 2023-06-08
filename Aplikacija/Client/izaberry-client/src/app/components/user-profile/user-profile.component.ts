@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Privilegije } from 'src/app/models/permission.model';
 import { StudentiService } from 'src/app/services/studenti.service';
 import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+
 //import { ConsoleReporter } from 'jasmine';
 
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,8 +22,14 @@ export class UserProfileComponent implements OnInit {
   editingBio: boolean = false;
   userId: number;
   localId: number;
+  showdiv: boolean = false;
+  showcontainer: boolean = false;
+  rezultat: string = "";
+  response!: { dbPath: ''; };
+  
 
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private authService: AuthService) {
+
+  constructor(private StudentiService: StudentiService, private route: ActivatedRoute, private router: Router, private userService: UserService, private authService: AuthService) {
     this.localId = this.authService.currentUserId();
     let userId = this.route.snapshot.paramMap.get("userId");
     if (userId) {
@@ -43,17 +50,18 @@ export class UserProfileComponent implements OnInit {
         state: err as Error
       });
     }
+    this.PostaviSliku();
 
   }
   async showPhoto(){
     this.showdiv = true
-    this.showcontainer = false;
+ 
   }
   
   PostaviSliku()
   {
     
-      var rez = this.studentService.VratiSliku(this.student!.id);
+      var rez = this.StudentiService.VratiSliku(this.student!.id);
       rez.then((odgovor) => {
       
         //this.rezultat = encodeURIComponent(odgovor);
@@ -78,7 +86,7 @@ export class UserProfileComponent implements OnInit {
       this.student.bio = this.student.bio.trim();
       this.editingBio = false;
       try {
-        await this.studentService.updateStudentBiografija(this.student.bio, this.student.id);
+        await this.StudentiService.updateStudentBiografija(this.student.bio, this.student.id);
         console.log("Bio saved successfully");
       } catch (error) {
         console.error("Failed to save bio:", error);
@@ -86,8 +94,15 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  async prikaz()
+  {
+    this.showcontainer = false;
+    this.showdiv = true;
+  }
+
+
   async ugasidiv(){
-    this.showcontainer = true;
+    
     this.showdiv = false;
   }
 
@@ -97,7 +112,7 @@ export class UserProfileComponent implements OnInit {
     this.editingBio = false;
   }
 
-  showLiteratura() {
+  async show() {
  
     this.showcontainer = true;
     this.showdiv = false;
@@ -149,9 +164,9 @@ isActiveLink(link: string): boolean {
     var kodiraj = encodeURIComponent(this.student!.ProfilePhotoURL);
     console.log(kodiraj);
     //da uzmem studentov id i da ga zapamtim zajedno sa putanjom
-    let updatovano = await this.studentService.UpdatePhoto(this.student!.id, kodiraj);
+    let updatovano = await this.StudentiService.UpdatePhoto(this.student!.id, kodiraj);
    
-    var rez = this.studentService.VratiSliku(this.student!.id);
+    var rez = this.StudentiService.VratiSliku(this.student!.id);
       rez.then((odgovor) => {
       
         //this.rezultat = encodeURIComponent(odgovor);
