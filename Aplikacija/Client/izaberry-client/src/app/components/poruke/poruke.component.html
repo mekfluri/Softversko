@@ -1,0 +1,13 @@
+<h1>Vase neprocitane poruke</h1>
+
+<div class="comments-container" *ngIf="poruke">
+  <div *ngFor="let komentar of poruke" class="comment">
+    <div class="comment-content">
+      <label class="subject">Komentar za predmet: {{ komentar }}</label>
+      <div>
+        <label class="comment-text">{{ komentar.text }}</label>
+      </div>
+    </div>
+    <div class="berry"></div>
+  </div>
+</div>
