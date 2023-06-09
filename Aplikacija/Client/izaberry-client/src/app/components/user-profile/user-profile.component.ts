@@ -133,7 +133,7 @@ export class UserProfileComponent implements OnInit {
   redirectToZahtevi() {
     this.router.navigateByUrl("zahtevi");
   }
-
+/*
   async canShowButtons(): Promise<boolean> {
     const url = `http://localhost:5006/student/${this.authService.currentUserId()}`;
   
@@ -151,7 +151,7 @@ export class UserProfileComponent implements OnInit {
   
     return false;
   }
-  
+  */
 
   uploadFinished = (event: { dbPath: "" }) => {
     this.response = event;
