@@ -16,6 +16,7 @@ public class ChatController : ControllerBase
         this.Context = Context;
     }
 
+    [AllowAnonymous]
     [HttpPost("dodajChat/{prima}/{salje}")]
     public async Task<ActionResult> AddChat(int prima, int salje)
     {
@@ -29,9 +30,10 @@ public class ChatController : ControllerBase
         Context.Chats.Add(chat);
         await Context.SaveChangesAsync();
 
-        return Ok();
+        return Ok("nparavili smo chat");
     }
-
+    
+    [AllowAnonymous]
     [HttpDelete("ObirisChat/{id}")]
     public async Task<ActionResult> DeleteChat(int id)
     {
@@ -46,7 +48,8 @@ public class ChatController : ControllerBase
 
         return NoContent();
     }
-
+    
+    [AllowAnonymous]
     [HttpPut("DodajPorukuUChat/{porukaID}/{chatID}")]
     public async Task<ActionResult> AddPorukaToChat(int porukaID, int chatID)
     {
@@ -59,25 +62,50 @@ public class ChatController : ControllerBase
 
         return Ok();
     }
-    [HttpGet("VratiChatStudenta/{studentID}")]
-    public async Task<ActionResult> VratiChatStudenta(int studentID)
+
+    [AllowAnonymous]
+    [HttpGet("VratiChatStudenta/{student1}/{student2}")]
+    public async Task<ActionResult> VratiChatStudenta(int student1, int student2)
     {
-        Student student = await Context.Studenti.FindAsync(studentID);
-        if (student == null)
+        Student student11 = await Context.Studenti!.FindAsync(student1);
+        Student student22 = await Context.Studenti!.FindAsync(student2);  
+        if (student11 == null && student22 == null)
         {
             return NotFound();
         }
 
-        List<Chat> chats = await Context.Chats
-            .Include(c => c.StudentPosiljaoc)
-            .Include(c => c.StudentPrimaoc)
-            .Include(c => c.Poruke)
-            .Where(c => c.StudentPosiljaoc == student)
-            .ToListAsync();
+   List<Chat> chats = await Context.Chats
+    .Include(c => c.StudentPosiljaoc)
+    .Include(c => c.StudentPrimaoc)
+    .Include(c => c.Poruke)
+    .Where(c => (c.StudentPosiljaoc == student11 && c.StudentPrimaoc == student22) 
+        || (c.StudentPrimaoc == student11 && c.StudentPosiljaoc == student22))
+    .ToListAsync();
+
 
         return Ok(chats);
     }
+  
+   
+    [AllowAnonymous]
+    [HttpPut("PromeniStatus/{idporuke}")]
+    public async Task<ActionResult> PromeniStatus(int idporuke)
+    {
+        Poruka poruka = await Context.Poruke!.FindAsync(idporuke);
+      
+        if (poruka == null)
+        {
+            return NotFound();
+        }
 
+         poruka.procitana = true;
+         Context.Poruke.Update(poruka);
+         await Context.SaveChangesAsync();
+
+
+        return Ok(poruka.procitana);
+    }
+  
 
 }
 
