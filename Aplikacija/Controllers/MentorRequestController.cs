@@ -24,6 +24,38 @@ public class MentorRequestController : ControllerBase{
         return Ok(await dbContext.MentorZahtevi.Include(z => z.Student).Include(z => z.Predmet).ToListAsync());
     }
 
+    [HttpPost("accept/{requestId}")]
+    public async Task<ActionResult> AcceptRequest(int requestId) {
+        try {
+            var request = dbContext.MentorZahtevi
+            .Include(z => z.Student)
+            .ThenInclude(s => s.Modul)
+            .Include(z => z.Predmet)
+            .Where(z => z.Id == requestId).FirstOrDefault();
+            if(request == null) {
+                return NotFound("Request not found");
+            }
+            var mentor = new Mentor(
+                request.Student.Username,
+                request.Student.Email,
+                request.Student.Password,
+                request.Student.Salt,
+                request.Student.Modul!,
+                request.Student.Semestar
+            );
+            mentor.Predmeti = new List<Predmet>();
+            mentor.Predmeti.Add(request.Predmet);
+            dbContext.Mentori.Add(mentor);
+            await firebaseService.RemoveMentorRequestPhotos(request.Predmet.Id, request.Student.Id);
+            dbContext.MentorZahtevi.Remove(request);
+            await dbContext.SaveChangesAsync();
+            return Ok(mentor);
+        }
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
     [HttpPost("{userId}/{predmetId}")]
     public async Task<ActionResult> AddRequest(int userId, int predmetId) {
         if(!ModelState.IsValid){

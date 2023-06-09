@@ -4,6 +4,7 @@ import { MentorRequest } from '../models/mentor-request.model';
 import { environment } from 'src/environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { MentorRequestPreview } from '../models/mentor-req-backend.model';
+import { Mentor } from '../models/mentor.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,11 @@ export class MentorService {
 
   async getRequests(): Promise<MentorRequestPreview[]> {
     let resp$ = this.http.get<MentorRequestPreview[]>(`${environment.backend}/mentorRequest/all`);
+    return (await firstValueFrom(resp$));
+  }
+
+  async acceptRequest(id: number): Promise<Mentor> {
+    let resp$ = this.http.post<Mentor>(`${environment.backend}/mentorRequest/accept/${id}`, null);
     return (await firstValueFrom(resp$));
   }
 

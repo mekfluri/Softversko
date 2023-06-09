@@ -21,8 +21,8 @@ export class MentorOperationsComponent implements OnInit{
     this.router.navigate(["profile", (ev.target as HTMLParagraphElement).id]);
   }
 
-  odobriMentorstvo(ev: Event) {
-
+  async odobriMentorstvo(ev: Event) {
+    await this.mentorService.acceptRequest(parseInt((ev.target as HTMLButtonElement).id));
   }
 
   async odbijMentorstvo(ev: Event) {
