@@ -37,7 +37,7 @@ export class SignInComponent implements OnInit {
       let token = await this.authService.register(this.registerInfo);
       localStorage.setItem("authToken", token);
       let user = await this.userService.getUserByToken(token);
-      this.router.navigate(["profile"], { state: user! });
+      this.router.navigate(["profile", user!.id], { state: user! });
     }
     catch (err: any) {
       this.hasError = true;

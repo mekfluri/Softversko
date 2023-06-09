@@ -22,7 +22,7 @@ export class UserProfileComponent implements OnInit {
   localId: number;
   showdiv: boolean = false;
   showcontainer: boolean = false;
-  rezultat: string = "";
+  rezultat: string = "../../../assets/logoFinal.png";
   response!: { dbPath: '' };
 
   constructor(
@@ -51,16 +51,22 @@ export class UserProfileComponent implements OnInit {
         state: err as Error
       });
     }
+
     this.PostaviSliku();
+   
+    
   }
 
   async showPhoto() {
     this.showdiv = true;
   }
 
-  PostaviSliku() {
+  async PostaviSliku() {
     var rez = this.StudentiService.VratiSliku(this.student!.id);
-    rez
+    console.log(rez);
+    if(rez != null)
+    {
+      rez
       .then((odgovor) => {
         this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
         console.log(this.rezultat);
@@ -69,6 +75,8 @@ export class UserProfileComponent implements OnInit {
       .catch((error) => {
         console.error('Greška prilikom dohvatanja slike:', error);
       });
+    }
+  
   }
 
   editBio() {
