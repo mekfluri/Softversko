@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: "signup", component: SignInComponent },
   { path: "", component: MainComponent },
   { path: "zahtevi", component: ZahteviComponent },
-  { path: "poruke", component: PorukeComponent },
+ 
 
   { path: "dodajLiteraturu/:predmetId", component: DodajLiteraturuComponent },
   {
@@ -51,7 +51,10 @@ const routes: Routes = [
       },
       {
         path: "komentari-user", component: KomentariUserComponent
-      }, { path: "poruke", component: PorukeComponent }
+      },
+      {
+        path: "poruke", component: PorukeComponent 
+      }
     ]
   },
   {
