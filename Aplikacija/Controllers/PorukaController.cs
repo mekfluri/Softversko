@@ -15,6 +15,7 @@ public class PorukaController : ControllerBase
     {
         this.Context = Context;
     }
+    [AllowAnonymous]
     [HttpDelete("ObrisiPoruku/{messageId}")]
     public async Task<ActionResult> ObrisiPoruku(int messageId)
     {
@@ -29,7 +30,7 @@ public class PorukaController : ControllerBase
 
         return NoContent();
     }
-
+    [AllowAnonymous]
     [HttpPost("DodajPoruku/{studentID}/{text}")]
     public async Task<ActionResult> DodajPoruku(int studentID, string text)
     {
@@ -46,12 +47,13 @@ public class PorukaController : ControllerBase
 
         return Created($"{poruka.Id}", poruka);
     }
-
+     [AllowAnonymous]
     [HttpGet("VratiPorukeIzChata/{chatId}")]
     public async Task<ActionResult> VratiPorukeIzChata(int chatId)
     {
         var chat = await Context.Chats
             .Include(c => c.Poruke)
+            .ThenInclude(c=> c.Student)
             .FirstOrDefaultAsync(c => c.Id == chatId);
         if (chat == null)
         {
@@ -59,16 +61,16 @@ public class PorukaController : ControllerBase
         }
 
         var poruke = chat.Poruke;
-
         return Ok(poruke);
     }
-
+    [AllowAnonymous]
     [HttpGet("VratiNeprocitanePorukeStudenta/{studentId}")]
     public async Task<ActionResult<IEnumerable<Poruka>>> VratiNeprocitanePorukeStudenta(int studentId)
     {
         var poruke = await Context.Poruke
             .Include(p => p.Student)
             .Include(p => p.chat)
+            .ThenInclude(p=> p.StudentPosiljaoc)
             .Where(p => p.chat.StudentPrimaoc.Id == studentId && !p.procitana)
             .ToListAsync();
 

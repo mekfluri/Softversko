@@ -1,13 +1,26 @@
-<h1>Vase neprocitane poruke</h1>
+<h1 (click)="getUserComments()">Prikazi poruke</h1>
 
-<div class="comments-container" *ngIf="poruke">
-  <div *ngFor="let komentar of poruke" class="comment">
-    <div class="comment-content">
-      <label class="subject">Komentar za predmet: {{ komentar }}</label>
-      <div>
-        <label class="comment-text">{{ komentar.text }}</label>
-      </div>
-    </div>
-    <div class="berry"></div>
+<div class="poruke-container">
+  <div *ngFor="let poruka of poruke">
+     {{ poruka.chat.studentPosiljaoc.username}} : {{ poruka.text }} 
+     <button (click)="odgovori(poruka)"> Odgovori </button>
+     <button (click)="obrisi(poruka)"> Obrisi </button>
+
   </div>
-</div>
+
+  <div *ngIf="prikazi" class="chat">
+      <div *ngFor="let poruka of svePoruke">
+        {{poruka.student.username}} : {{poruka.text}} 
+
+      </div>
+    
+      <input (keyup)="idKeyUp($event)" type="text">
+      <button (click)="posalji()">Send</button>
+      <button (click)="sacuvaj()">Save</button>
+      
+    </div>
+    
+
+
+  </div>
+

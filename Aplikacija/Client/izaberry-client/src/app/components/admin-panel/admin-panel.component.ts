@@ -11,9 +11,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AdminPanelComponent implements OnInit {
 
+ 
+
   constructor(private authService: AuthService, private router: Router, private userService: UserService){}
 
   async ngOnInit(): Promise<void> {
+    
     let token = localStorage.getItem("authToken");
     if(!token) {
       this.router.navigateByUrl("admin/login");
@@ -35,4 +38,6 @@ export class AdminPanelComponent implements OnInit {
     localStorage.removeItem("authToken");
     this.router.navigateByUrl("");
   }
+
+  
 }

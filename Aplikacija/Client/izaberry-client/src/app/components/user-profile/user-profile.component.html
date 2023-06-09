@@ -21,7 +21,7 @@
 
     <div class="container" *ngIf="student">
         <div class="profile-header">
-
+          
             <div class="profile-img">
                 <img [src]="rezultat" width="100%" alt="Profile Image">
 
@@ -38,8 +38,8 @@
                 </div>
 
             </div>
-
-            <div class="profile-option" routerLink="poruke">
+           
+            <div class="profile-option" (click)="show()" routerLink="poruke" [class.poruke]="isActiveLink('poruke')" [class.active]="isActiveLink('poruke')">
                 <span class="notification">
                     <i class="fas fa-bell"></i>
                     <span class="alert-message">3</span>

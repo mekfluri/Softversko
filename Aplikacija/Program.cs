@@ -57,7 +57,7 @@ builder.Services.AddSwaggerGen(c => {
 
     
 builder.Services.AddDbContext<IzaberryMeDbContext>(opts => {
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("linuxDB"));
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("windowsDB"));
 });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(opts => opts.TokenValidationParameters = new(){

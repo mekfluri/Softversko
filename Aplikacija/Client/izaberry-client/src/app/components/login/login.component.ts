@@ -12,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
+  selectedValue:number=1;
 
   constructor(private router: Router, private authService: AuthService, private userService: UserService) {
     this.email = "";
@@ -29,12 +30,30 @@ export class LoginComponent implements OnInit {
 
   async loginRequest() {
     try {
-      let loginCredentials = new LoginModel(this.email, this.password);
-      let token = await this.authService.login(loginCredentials);
-      localStorage.setItem("authToken", token);
-      let user = await this.userService.getUserByToken(token);
-      //redirect na profil
-      this.router.navigate(["profile", user!.id]);
+      if(this.selectedValue == 1)
+      {
+       let loginCredentials = new LoginModel(this.email, this.password);
+       let token = await this.authService.login(loginCredentials);
+       localStorage.setItem("authToken", token);
+       
+       let user = await this.userService.getUserByToken(token);
+       //redirect na profil
+       this.router.navigate(["profile", user!.id]);
+      }
+      else if(this.selectedValue == 2)
+      {
+       let loginCredentials = new LoginModel(this.email, this.password);
+       let token = await this.authService.login(loginCredentials, true);
+       localStorage.setItem("authToken", token);
+       let user = await this.userService.getUserByToken(token);
+       this.router.navigate(["admin"], {
+         state: user!
+       });
+      } 
+     else{
+       console.log("mentor je ");
+     }
+    
     }
     catch(err: any) {
       alert((err as Error).message);
