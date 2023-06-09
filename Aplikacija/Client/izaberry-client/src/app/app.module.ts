@@ -41,6 +41,7 @@ import { OcenaPreviewComponent } from './components/ocena-preview/ocena-preview.
 import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
 import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
 import { MentorRequestComponent } from './components/mentor-request/mentor-request.component';
+import { MentorComponent } from './mentor/mentor.component';
 
 
 
@@ -75,7 +76,8 @@ import { MentorRequestComponent } from './components/mentor-request/mentor-reque
     OcenaPreviewComponent,
     LiteraturaUserComponent,
     KomentariUserComponent,
-    MentorRequestComponent
+    MentorRequestComponent,
+    MentorComponent
   ],
   imports: [
     BrowserModule,
