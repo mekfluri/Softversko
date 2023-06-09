@@ -16,7 +16,7 @@ public class Student : RegisterModel
     [JsonIgnore]
     public List<Note>? Notes { get; set; }
 
-    public string?? ProfileImageUrl { get; set; }
+    public string? ProfileImageUrl { get; set; }
 
     [JsonIgnore]
     public IList<Chat> Chats{get;set;}
