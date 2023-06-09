@@ -41,6 +41,8 @@ import { OcenaPreviewComponent } from './components/ocena-preview/ocena-preview.
 import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
 import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
 import { MentorRequestComponent } from './components/mentor-request/mentor-request.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { PorukeComponent } from './components/poruke/poruke.component';
 import { MentorComponent } from './mentor/mentor.component';
 
 
@@ -77,6 +79,8 @@ import { MentorComponent } from './mentor/mentor.component';
     LiteraturaUserComponent,
     KomentariUserComponent,
     MentorRequestComponent,
+    ChatComponent,
+    PorukeComponent,
     MentorComponent
   ],
   imports: [

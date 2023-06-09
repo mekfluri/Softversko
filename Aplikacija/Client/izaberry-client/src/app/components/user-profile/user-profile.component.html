@@ -1,24 +1,35 @@
 <div class="body">
     <div class="zaglavlje">
+        <div class="search">
+        <input type="text" [(ngModel)]="searchTerm" (input)="searchUsers()" placeholder="Pretrazi korisnika..."
+            class="search-input" />
+        <ul *ngIf="searchResults.length > 0" class="search-results">
+            <li [id]="result.id" *ngFor="let result of searchResults" (click)="selectUser($event)">
+                {{ result.username }}
+            </li>
+        </ul>
+    </div>
+
+
         <label (click)="redirectToHome()" class="labelMenu" style="color: #e2496a;">HOME</label>
-                <label (click)="redirectToOglasna()" class="labelMenu" style="color: #e2496a;">OGLASNA</label>
-                <label (click)="redirectToPredmeti()" class="labelMenu" style="color: #e2496a;">PREDMETI</label>
-                <label class="labelMenu" style="color: #e2496a;" (click)="redirectToZahtevi()">
-                 ZAHTEVI ZA LITERATURE
-                </label>
-       </div>
+        <label (click)="redirectToOglasna()" class="labelMenu" style="color: #e2496a;">OGLASNA</label>
+        <label (click)="redirectToPredmeti()" class="labelMenu" style="color: #e2496a;">PREDMETI</label>
+        <label class="labelMenu" style="color: #e2496a;" (click)="redirectToZahtevi()">
+            ZAHTEVI ZA LITERATURE
+        </label>
+    </div>
 
     <div class="container" *ngIf="student">
         <div class="profile-header">
           
             <div class="profile-img">
-                <img [src]= "rezultat" width="100%" alt="Profile Image">
-                
+                <img [src]="rezultat" width="100%" alt="Profile Image">
+
                 <div class="row">
-  <div class="offset-md-5 col-md-2">
-   
-  </div>
-</div>
+                    <div class="offset-md-5 col-md-2">
+
+                    </div>
+                </div>
             </div>
             <div class="profile-nav-info">
                 <h3 class="user-name" *ngIf="student && student.username">{{ student.username }}</h3>
@@ -28,24 +39,35 @@
 
             </div>
            
+            <div class="profile-option" (click)="show()" routerLink="poruke" [class.poruke]="isActiveLink('poruke')" [class.active]="isActiveLink('poruke')">
+                <span class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="alert-message">3</span>
+                </span>
+            </div>
+
+
+
+
         </div>
 
         <div class="main-bd">
             <div class="left-side">
                 <div class="profile-side">
                     <button class="btn" (click)="prikaz()" *ngIf="localId == userId">Edit photo</button>
-                   
+
                     <p class="user-mail"><i class="fa fa-envelope" *ngIf="student.email"></i>{{ student.email }}</p>
                     <div class="user-bio">
                         <h3>Biografija</h3>
                         <p>{{ student.bio }}</p>
                         <div *ngIf="(localId == userId) && editingBio">
                             <textarea [(ngModel)]="student.bio"></textarea>
-                   
+
                             <button class="editbtn" (click)="saveBio()">Save</button>
                             <button class="editbtn" (click)="cancelEditBio()">Cancel</button>
                         </div>
-                        <button *ngIf="localId == userId && !editingBio" class="editbtn" (click)="editBio()">Edit</button>
+                        <button *ngIf="localId == userId && !editingBio" class="editbtn"
+                            (click)="editBio()">Edit</button>
                     </div>
                     <div class="profile-btn" *ngIf="localId == userId">
 
@@ -57,31 +79,37 @@
             <div class="right-side">
                 <div class="nav">
                     <ul>
-                        <li (click)="show()" routerLink="literatura-user" [class.user-literatura]="isActiveLink('literatura-user')" [class.active]="isActiveLink('literatura-user')">Literatura</li>
-                        <li  (click)="show()" routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')" [class.active]="isActiveLink('kalendar')">Kalendar</li>
-                        <li  (click)="show()" routerLink="komentari-user" [class.user-komentar]="isActiveLink('komentari-user')" [class.active]="isActiveLink('komentari-user')">Komentar</li>
-                        <li  (click)="show()" routerLink="preference" [class.user-preference]="isActiveLink('preference')" [class.active]="isActiveLink('preference')">Preference</li>
-                      </ul>
-                      
-                      
+                        <li (click)="show()" routerLink="literatura-user"
+                            [class.user-literatura]="isActiveLink('literatura-user')"
+                            [class.active]="isActiveLink('literatura-user')">Literatura</li>
+                        <li (click)="show()" routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')"
+                            [class.active]="isActiveLink('kalendar')">Kalendar</li>
+                        <li (click)="show()" routerLink="komentari-user"
+                            [class.user-komentar]="isActiveLink('komentari-user')"
+                            [class.active]="isActiveLink('komentari-user')">Komentar</li>
+                        <li (click)="show()" routerLink="preference"
+                            [class.user-preference]="isActiveLink('preference')"
+                            [class.active]="isActiveLink('preference')">Preference</li>
+                    </ul>
+
+
                 </div>
                 <div *ngIf="showdiv" class="slika">
                     <label class="labela">Editovanje profilne fotografije:</label>
                     <br>
                     <label>1.korak:</label>
-                     <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
-                     <label>2.korak:</label>
-                     <button  type="button" class="btn btn-primary" (click)="onCreate()">Update photo</button>
-                     </div>
-            
+                    <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+                    <label>2.korak:</label>
+                    <button type="button" class="btn btn-primary" (click)="onCreate()">Update photo</button>
+                </div>
+
                 <div *ngIf="showcontainer" class="router-container">
-                                  
+
                     <router-outlet></router-outlet>
                 </div>
             </div>
         </div>
     </div>
-    
+
 
 </div>
-

@@ -61,6 +61,28 @@
 
 }
 
+.uloga{
+    align-self: center;
+    margin-left: 2%;
+    margin-top: 5%;
+    position: relative;
+
+}
+
+select {
+
+    width: 200px; /* Podesite željenu širinu */
+    height: 30px; /* Podesite željenu visinu */
+    font-size: 16px; /* Opciono: podesite željenu veličinu fonta */
+     /* Opciono: prilagodite razmak unutar select elementa */
+     font-family: "Poppins", sans-serif;
+  }
+
+  options{
+    font-family: "Poppins", sans-serif;
+  }
+  
+
 .loginDivYellow {
     display: flex;
     flex-direction: column;

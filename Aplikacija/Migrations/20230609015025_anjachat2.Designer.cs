@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models;
 
@@ -11,9 +12,11 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    partial class IzaberryMeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230609015025_anjachat2")]
+    partial class anjachat2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,37 +142,6 @@ namespace Aplikacija.Migrations
                     b.ToTable("Literatura");
                 });
 
-            modelBuilder.Entity("Models.MentorRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("IndeksPhoto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PredmetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PredmetPhoto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PredmetId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("MentorRequests");
-                });
-
             modelBuilder.Entity("Models.Modul", b =>
                 {
                     b.Property<int>("Id")
@@ -262,9 +234,6 @@ namespace Aplikacija.Migrations
 
                     b.Property<int?>("chatId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("procitana")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -366,6 +335,7 @@ namespace Aplikacija.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProfileImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salt")
@@ -529,25 +499,6 @@ namespace Aplikacija.Migrations
                         .HasForeignKey("StudentId");
 
                     b.Navigation("Mentor");
-
-                    b.Navigation("Predmet");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("Models.MentorRequest", b =>
-                {
-                    b.HasOne("Models.Predmet", "Predmet")
-                        .WithMany()
-                        .HasForeignKey("PredmetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Predmet");
 

@@ -10,6 +10,18 @@
     <div class="meniDiv">
         <div class="loginDiv">
             <div class="loginDivYellow">
+                
+                <div class="divLabel">
+
+                    
+                    <select   [(ngModel)]="selectedValue" name="uloga"> 
+                        <option value="1">Student</option>
+                        <option value="3">Mentor</option>
+                        <option value="2">Administrator</option>
+                    </select>
+
+                </div>
+                
                 <div class="divLabel">
                     <input (keyup)="emailKeyUp($event)" type="text" id="email" name="email" placeholder="Unesite email"
                         #email>

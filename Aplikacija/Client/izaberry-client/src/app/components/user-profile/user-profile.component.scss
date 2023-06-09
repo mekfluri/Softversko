@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0");
+
+
 
 * {
     padding: 0;
@@ -40,7 +44,6 @@
 }
 
 .zaglavlje {
-    
     top: 0;
     left: 0;
     right: 0;
@@ -49,12 +52,79 @@
     align-items: center;
     color: black;
     font-weight: 600;
-
     justify-content: end;
     padding: 0 1em;
     z-index: 2;
-}
+    position: relative;
+  }
+ 
+  
+  .zaglavlje input {
+    padding: 0.5em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+  }
+  
+  .zaglavlje ul {
+    list-style: none;
+    background: #fff;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    position: absolute;
+    top: calc(100% + 10px);
+    width: 11.7%;
+    max-height: 200px;
+    overflow-y: auto;
+    visibility: hidden;
+  }
+  
+  .zaglavlje input:focus + ul {
+    display: flex;
+    flex-direction: column;
+    visibility: visible;
+  }
+  
+  .zaglavlje li {
 
+    padding: 0.5em;
+    cursor: pointer;
+
+  }
+  .search{
+    display: flex;
+    flex-direction: column;
+  }
+  .search-results{
+      width: 200px;
+      display: flex;
+      border-width: 200px;
+      border:2px solid #333;
+  }
+  
+  .zaglavlje li:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .material-symbols-outlined {
+    font-family: "Material Symbols Outlined", sans-serif;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    vertical-align: middle;
+    overflow: hidden}
+  
+  
+  .search-input {
+    padding-right: 40px;
+    background-image: url('https://fonts.gstatic.com/s/i/materialiconsoutlined/person_search/v11/24px.svg');
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 24px 24px;
+  }
+  
   
 
 .editbtn {

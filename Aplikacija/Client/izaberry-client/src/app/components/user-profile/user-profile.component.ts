@@ -6,8 +6,12 @@ import { UserService } from 'src/app/services/user.service';
 import { Privilegije } from 'src/app/models/permission.model';
 import { StudentiService } from 'src/app/services/studenti.service';
 import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { debounceTime } from 'rxjs/operators';
+import { FormsModule } from '@angular/forms';
+
 
 import { AuthService } from 'src/app/services/auth.service';
+import { Modul } from 'src/app/models/modul.model';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +26,9 @@ export class UserProfileComponent implements OnInit {
   localId: number;
   showdiv: boolean = false;
   showcontainer: boolean = false;
-  rezultat: string = "";
+  rezultat: string = "../../../assets/logoFinal.png";
+  searchTerm: string = '';
+  searchResults: Student[] = [];
   response!: { dbPath: '' };
 
   constructor(
@@ -51,16 +57,22 @@ export class UserProfileComponent implements OnInit {
         state: err as Error
       });
     }
+
     this.PostaviSliku();
+   
+    
   }
 
   async showPhoto() {
     this.showdiv = true;
   }
 
-  PostaviSliku() {
+  async PostaviSliku() {
     var rez = this.StudentiService.VratiSliku(this.student!.id);
-    rez
+    console.log(rez);
+    if(rez != null)
+    {
+      rez
       .then((odgovor) => {
         this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
         console.log(this.rezultat);
@@ -69,6 +81,8 @@ export class UserProfileComponent implements OnInit {
       .catch((error) => {
         console.error('Greška prilikom dohvatanja slike:', error);
       });
+    }
+  
   }
 
   editBio() {
@@ -89,6 +103,52 @@ export class UserProfileComponent implements OnInit {
         console.error("Failed to save bio:", error);
       }
     }
+  }
+  searchUsers(): void {
+    if (this.searchTerm.trim() === '') {
+      this.searchResults = [];
+      return;
+    }
+
+  
+    this.http.get<any[]>('http://localhost:5006/student/vratiStudente')
+      .subscribe(
+        (response) => {
+         
+          const filteredStudents = response.filter((student: any) => {
+            return (
+              student.username.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
+              student.email.toLowerCase().startsWith(this.searchTerm.toLowerCase())
+            );
+          });
+        console.log(filteredStudents);
+          this.searchResults = filteredStudents.map((student: any) => {
+            const modul = student.modul ? new Modul(student.modul.id, student.modul.naziv) : null;
+            return new Student(
+              student.id,
+              student.username,
+              modul as Modul, 
+              student.semestar,
+              student.email,
+              student.perm,
+              student.bio,
+              student.ProfilePhotoURL
+            );
+          });
+        },
+        (error) => {
+          console.error('Error fetching users:', error);
+        }
+      );
+      console.log(this.searchResults);
+  }
+  
+  
+
+  selectUser(event:Event): void {
+    let id=parseInt((event.target as HTMLElement).id);
+    console.log(id);
+    this.router.navigate(["profile",id]);
   }
 
   async prikaz() {
@@ -133,22 +193,15 @@ export class UserProfileComponent implements OnInit {
   redirectToZahtevi() {
     this.router.navigateByUrl("zahtevi");
   }
-/*
-  async canShowButtons(): Promise<boolean> {
-    const url = `http://localhost:5006/student/${this.authService.currentUserId()}`;
-  
-    try {
-      const user = await this.http.get<Student | undefined>(url).toPromise();
-      if (user) {
-        return (
-          user.perm === Privilegije.ADMIN ||
-          user.perm === Privilegije.MENTOR
-        );
-      }
-    } catch (error) {
-      console.error('Error occurred while fetching data:', error);
+/* 
+
+  canShowButtons(): boolean {
+    if (this.userService.user) {
+      return (
+        this.userService.user.perm === Privilegije.ADMIN ||
+        this.userService.user.perm === Privilegije.MENTOR
+      );
     }
-  
     return false;
   }
   */

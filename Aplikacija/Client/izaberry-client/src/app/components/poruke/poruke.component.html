@@ -1,0 +1,26 @@
+<h1 (click)="getUserComments()">Prikazi poruke</h1>
+
+<div class="poruke-container">
+  <div *ngFor="let poruka of poruke">
+     {{ poruka.chat.studentPosiljaoc.username}} : {{ poruka.text }} 
+     <button (click)="odgovori(poruka)"> Odgovori </button>
+     <button (click)="obrisi(poruka)"> Obrisi </button>
+
+  </div>
+
+  <div *ngIf="prikazi" class="chat">
+      <div *ngFor="let poruka of svePoruke">
+        {{poruka.student.username}} : {{poruka.text}} 
+
+      </div>
+    
+      <input (keyup)="idKeyUp($event)" type="text">
+      <button (click)="posalji()">Send</button>
+      <button (click)="sacuvaj()">Save</button>
+      
+    </div>
+    
+
+
+  </div>
+

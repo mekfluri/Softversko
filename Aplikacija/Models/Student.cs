@@ -19,6 +19,9 @@ public class Student : RegisterModel
     public string? ProfileImageUrl { get; set; }
 
     [JsonIgnore]
+    public IList<Chat> Chats{get;set;}
+
+    [JsonIgnore]
    
 
     public Privilegije Privilegije { get; set; }
@@ -36,6 +39,7 @@ public class Student : RegisterModel
         Privilegije = Privilegije.STUDENT;
         Literatura = new List<Literatura>();
         Notes = new List<Note>();
+        Chats=new List<Chat>();
        
         Kalendar = new Kalendar();
         Salt = salt;
