@@ -57,7 +57,7 @@ builder.Services.AddSwaggerGen(c => {
 
     
 builder.Services.AddDbContext<IzaberryMeDbContext>(opts => {
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("windowsDB"));
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("linuxDB"));
 });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(opts => opts.TokenValidationParameters = new(){
@@ -73,6 +73,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 });
 
 builder.Services.AddScoped<AuthService, AuthService>();
+builder.Services.AddScoped<FirebaseService, FirebaseService>();
 
 var app = builder.Build();
 

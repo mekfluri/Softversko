@@ -8,6 +8,7 @@ import { firstValueFrom } from 'rxjs';
 import { SignInModel } from '../models/sign-in.model';
 import { UserService } from './user.service';
 import { Student } from '../models/student.model';
+import { Privilegije } from '../models/permission.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,15 @@ export class AuthService {
   private jwtService: JwtHelperService;
   constructor(private http: HttpClient, private userService: UserService) {
     this.jwtService = new JwtHelperService();
+  }
+
+  currentUserPermissions(): Privilegije {
+    let token = localStorage.getItem("authToken");
+    if(token) {
+      let decoded = this.jwtService.decodeToken(token);
+      return parseInt(decoded.perm) as Privilegije;
+    }
+    return 1;
   }
 
   currentUserId(): number {

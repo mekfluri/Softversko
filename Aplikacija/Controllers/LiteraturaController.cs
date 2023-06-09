@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aplikacija.Controllers;
@@ -9,10 +10,12 @@ namespace Aplikacija.Controllers;
 public class LiteraturaController : ControllerBase
 {
     public IzaberryMeDbContext Context { get; set; }
+    private FirebaseService firebaseService { get; set; }
 
-    public LiteraturaController(IzaberryMeDbContext context)
+    public LiteraturaController(IzaberryMeDbContext context, FirebaseService firebaseService)
     {
         Context = context;
+        this.firebaseService = firebaseService;
     }
 
     [AllowAnonymous]
@@ -134,6 +137,10 @@ public class LiteraturaController : ControllerBase
     {
         try
         {
+            /*
+            var fileContent = System.IO.File.ReadAllBytes("/home/urosh/stikeri.pdf");
+            var download = await firebaseService.UploadLiteratura(1, 2, fileContent, "stikeri.pdf");
+            */
             return Ok(await Context.Literature.ToListAsync());
         }
         catch (Exception e)

@@ -133,7 +133,7 @@ export class UserProfileComponent implements OnInit {
   redirectToZahtevi() {
     this.router.navigateByUrl("zahtevi");
   }
- 
+/* 
 
   canShowButtons(): boolean {
     if (this.userService.user) {
@@ -144,7 +144,7 @@ export class UserProfileComponent implements OnInit {
     }
     return false;
   }
-  
+  */
 
   uploadFinished = (event: { dbPath: "" }) => {
     this.response = event;

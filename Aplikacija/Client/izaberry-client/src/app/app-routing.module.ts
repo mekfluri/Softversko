@@ -28,7 +28,8 @@ import { UploadComponent } from './components/upload/upload.component';
 import { MentorOperationsComponent } from './components/mentor-operations/mentor-operations.component';
 import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
 import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
-import { PorukeComponent } from './components/poruke/poruke.component';
+import { PorukeComponent } from './components/poruke/poruke.component';import { MentorRequestComponent } from './components/mentor-request/mentor-request.component';
+
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignInComponent },
@@ -113,6 +114,7 @@ const routes: Routes = [
     ]
   },
   { path: "error", component: ErrorComponent },
+  { path: "mentor-request", component: MentorRequestComponent}
 ];
 
 export const routingConfig: ExtraOptions = {

@@ -1,26 +1,30 @@
+<div class="mentor-op mentor-request-list" *ngIf="zahtevi">
+    <h1>Lista zahteva</h1>
+    <div *ngFor="let zahtev of zahtevi" class="mentor-request-preview">
+        <p (click)="studentProfile($event)" [id]="zahtev.student!.id">Student: {{zahtev.student!.username}}</p>
+        <p>Predmet: {{zahtev.predmet!.naziv}}</p>
+        <img [src]="zahtev.indeksPhoto" width="100px">
+        <img [src]="zahtev.predmetPhoto" width="100px"><br>
+        <button (click)="odobriMentorstvo($event)" [id]="zahtev.id">Odobri</button>
+        <button (click)="odbijMentorstvo($event)" [id]="zahtev.id">Odbij</button>
+    </div>
+</div>
 <div class="operations-container">
     <div class="mentor-op mentor-insertion">
-        <button >Dodaj mentora</button>
+        <button>Dodaj mentora</button>
     </div>
     <div class="mentor-op mentor-deletion">
-        <input  type="number" placeholder="Id mentora za brisanje">
-        <button >Obrisi mentora</button>
+        <input type="number" placeholder="Id mentora za brisanje">
+        <button>Obrisi mentora</button>
     </div>
     <div class="mentor-op mentor-update">
-       <label>Azuriranje mentora:</label>
-        <input  type="number" placeholder="Id mentora">
-       
+        <label>Azuriranje mentora:</label>
+        <input type="number" placeholder="Id mentora">
+
     </div>
     <div class="mentor-op mentor-preview">
-        <button >Izlistaj mentore </button>
-        <button >Ocisti listu</button>
-       
-        </div>
+        <button>Izlistaj mentore </button>
+        <button>Ocisti listu</button>
+
     </div>
-        <div class="lista">
-        <div  class="mentor-container">
-            
-        
-            </div>
-   
 </div>
