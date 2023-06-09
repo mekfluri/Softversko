@@ -21,7 +21,7 @@ export class DodajLiteraturuComponent implements OnInit {
     private predmetiService: PredmetiService,
     private userService: UserService,
     private elementRef: ElementRef,
-    private AuthService:AuthService
+    private AuthService: AuthService
   ) { }
   async ngOnInit(): Promise<void> {
     if (this.userService.user == null) {
@@ -39,6 +39,11 @@ export class DodajLiteraturuComponent implements OnInit {
     } else {
 
     }
+  }
+
+  fileChange(event: Event) {
+    let target = event.target as HTMLInputElement;
+    let file = target.files![0];
   }
   redirectToLogin() {
     this.router.navigateByUrl('login');

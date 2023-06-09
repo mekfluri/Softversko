@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models;
 
@@ -11,9 +12,11 @@ using Models;
 namespace Aplikacija.Migrations
 {
     [DbContext(typeof(IzaberryMeDbContext))]
-    partial class IzaberryMeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230608190808_mentorMig1")]
+    partial class mentorMig1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,29 +24,6 @@ namespace Aplikacija.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Models.Chat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("StudentPosiljaocId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentPrimaocId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentPosiljaocId");
-
-                    b.HasIndex("StudentPrimaocId");
-
-                    b.ToTable("Chat");
-                });
 
             modelBuilder.Entity("Models.Datum", b =>
                 {
@@ -245,36 +225,6 @@ namespace Aplikacija.Migrations
                     b.ToTable("Ocene");
                 });
 
-            modelBuilder.Entity("Models.Poruka", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("chatId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("procitana")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("chatId");
-
-                    b.ToTable("Poruka");
-                });
-
             modelBuilder.Entity("Models.Predmet", b =>
                 {
                     b.Property<int>("Id")
@@ -365,9 +315,6 @@ namespace Aplikacija.Migrations
                     b.Property<int>("Privilegije")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProfileImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Salt")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -452,25 +399,6 @@ namespace Aplikacija.Migrations
                     b.HasBaseType("Models.Mentor");
 
                     b.ToTable("Administrator");
-                });
-
-            modelBuilder.Entity("Models.Chat", b =>
-                {
-                    b.HasOne("Models.Student", "StudentPosiljaoc")
-                        .WithMany("Chats")
-                        .HasForeignKey("StudentPosiljaocId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Models.Student", "StudentPrimaoc")
-                        .WithMany()
-                        .HasForeignKey("StudentPrimaocId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("StudentPosiljaoc");
-
-                    b.Navigation("StudentPrimaoc");
                 });
 
             modelBuilder.Entity("Models.Datum", b =>
@@ -572,23 +500,6 @@ namespace Aplikacija.Migrations
                         .HasForeignKey("PredmetId");
                 });
 
-            modelBuilder.Entity("Models.Poruka", b =>
-                {
-                    b.HasOne("Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Chat", "chat")
-                        .WithMany("Poruke")
-                        .HasForeignKey("chatId");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("chat");
-                });
-
             modelBuilder.Entity("Models.Predmet", b =>
                 {
                     b.HasOne("Models.Mentor", null)
@@ -678,11 +589,6 @@ namespace Aplikacija.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Models.Chat", b =>
-                {
-                    b.Navigation("Poruke");
-                });
-
             modelBuilder.Entity("Models.Kalendar", b =>
                 {
                     b.Navigation("MarkiraniDatumi");
@@ -704,8 +610,6 @@ namespace Aplikacija.Migrations
 
             modelBuilder.Entity("Models.Student", b =>
                 {
-                    b.Navigation("Chats");
-
                     b.Navigation("Kalendar")
                         .IsRequired();
 

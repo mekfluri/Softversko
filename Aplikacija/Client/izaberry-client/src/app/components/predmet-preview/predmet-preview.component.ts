@@ -68,6 +68,12 @@ export class PredmetPreviewComponent implements OnInit {
     this.router.navigate(['/literatura', p], { state: { predmetId: this.predmetId } });
   }
   
-  
+  gotoMentorRequest() {
+    this.router.navigate(["mentor-request"], {
+      state: {
+        predmetId: this.predmet?.id
+      }
+    });
+  }
 
 }

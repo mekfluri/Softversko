@@ -17,6 +17,6 @@
 
 <h2>Literatura koju želite da dodate</h2>
 <label for="literatura">Literatura:</label>
-<input type="text" id="literatura" name="literatura" >
+<input (change)="fileChange($event)" type="file" id="literatura" name="literatura" >
 <button type="button" (click)="redirectToZahtevi()">Pošalji zahtev</button>
 </body>

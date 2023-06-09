@@ -28,12 +28,15 @@ import { UploadComponent } from './components/upload/upload.component';
 import { MentorOperationsComponent } from './components/mentor-operations/mentor-operations.component';
 import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
 import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
+import { PorukeComponent } from './components/poruke/poruke.component';import { MentorRequestComponent } from './components/mentor-request/mentor-request.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignInComponent },
   { path: "", component: MainComponent },
   { path: "zahtevi", component: ZahteviComponent },
+  { path: "poruke", component: PorukeComponent },
+
   { path: "dodajLiteraturu/:predmetId", component: DodajLiteraturuComponent },
   {
     path: "profile/:userId", component: UserProfileComponent, children: [
@@ -48,7 +51,7 @@ const routes: Routes = [
       },
       {
         path: "komentari-user", component: KomentariUserComponent
-      }
+      }, { path: "poruke", component: PorukeComponent }
     ]
   },
   {
@@ -59,11 +62,11 @@ const routes: Routes = [
       {
         path: "preference", component: PreferencesComponent
       }
-   
+
     ]
   },
 
-  {  path: "upload", component: UploadComponent},
+  { path: "upload", component: UploadComponent },
   { path: "oglasna", component: OglasnaComponent },
   {
     path: 'literatura/:predmetId',
@@ -103,7 +106,7 @@ const routes: Routes = [
         component: StudentOperationsComponent
       },
       {
-        path:"mentor-op",
+        path: "mentor-op",
         component: MentorOperationsComponent
       }
 
@@ -111,6 +114,7 @@ const routes: Routes = [
     ]
   },
   { path: "error", component: ErrorComponent },
+  { path: "mentor-request", component: MentorRequestComponent}
 ];
 
 export const routingConfig: ExtraOptions = {

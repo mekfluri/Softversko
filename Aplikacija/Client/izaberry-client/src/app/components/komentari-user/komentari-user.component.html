@@ -1,7 +1,7 @@
 <div class="comments-container" *ngIf="komentari">
     <div *ngFor="let komentar of komentari" class="comment">
       <div class="comment-content">
-        <label class="subject">Komentar za predmet: {{ komentar }}</label>
+        <label class="subject">Komentar za predmet: {{ komentar.predmet.naziv }}</label>
       <div>
     
       </div>

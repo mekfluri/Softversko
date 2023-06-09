@@ -3,7 +3,7 @@
         <label (click)="redirectToHome()" class="labelMenu" style="color: #e2496a;">HOME</label>
                 <label (click)="redirectToOglasna()" class="labelMenu" style="color: #e2496a;">OGLASNA</label>
                 <label (click)="redirectToPredmeti()" class="labelMenu" style="color: #e2496a;">PREDMETI</label>
-                <label class="labelMenu" *ngIf="canShowButtons()" style="color: #e2496a;" (click)="redirectToZahtevi()">
+                <label class="labelMenu" style="color: #e2496a;" (click)="redirectToZahtevi()">
                  ZAHTEVI ZA LITERATURE
                 </label>
        </div>
@@ -29,6 +29,16 @@
                 </div>
 
             </div>
+            
+            <div class="profile-option" routerLink="poruke">
+                <span class="notification">
+                  <i class="fas fa-bell"></i>
+                  <span class="alert-message">3</span>
+                </span>
+              </div>
+              
+              
+              
            
         </div>
 

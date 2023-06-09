@@ -141,25 +141,18 @@ export class UserProfileComponent implements OnInit {
   redirectToZahtevi() {
     this.router.navigateByUrl("zahtevi");
   }
+/* 
 
-  async canShowButtons(): Promise<boolean> {
-    const url = `http://localhost:5006/student/${this.authService.currentUserId()}`;
-  
-    try {
-      const user = await this.http.get<Student | undefined>(url).toPromise();
-      if (user) {
-        return (
-          user.perm === Privilegije.ADMIN ||
-          user.perm === Privilegije.MENTOR
-        );
-      }
-    } catch (error) {
-      console.error('Error occurred while fetching data:', error);
+  canShowButtons(): boolean {
+    if (this.userService.user) {
+      return (
+        this.userService.user.perm === Privilegije.ADMIN ||
+        this.userService.user.perm === Privilegije.MENTOR
+      );
     }
-  
     return false;
   }
-  
+  */
 
   uploadFinished = (event: { dbPath: "" }) => {
     this.response = event;

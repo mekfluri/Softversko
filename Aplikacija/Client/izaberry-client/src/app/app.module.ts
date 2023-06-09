@@ -40,6 +40,9 @@ import { MentorOperationsComponent } from './components/mentor-operations/mentor
 import { OcenaPreviewComponent } from './components/ocena-preview/ocena-preview.component';
 import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
 import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
+import { MentorRequestComponent } from './components/mentor-request/mentor-request.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { PorukeComponent } from './components/poruke/poruke.component';
 
 
 
@@ -73,7 +76,10 @@ import { KomentariUserComponent } from './components/komentari-user/komentari-us
     MentorOperationsComponent,
     OcenaPreviewComponent,
     LiteraturaUserComponent,
-    KomentariUserComponent
+    KomentariUserComponent,
+    MentorRequestComponent,
+    ChatComponent,
+    PorukeComponent
   ],
   imports: [
     BrowserModule,

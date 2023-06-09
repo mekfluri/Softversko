@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Models;
 
 public class IzaberryMeDbContext : DbContext
@@ -13,8 +15,12 @@ public class IzaberryMeDbContext : DbContext
     public DbSet<Modul> Moduli { get; set; }
     public DbSet<Literatura> Literature { get; set; }
     public DbSet<Mentor> Mentori { get; set; }
+    public DbSet<MentorRequest> MentorZahtevi { get; set; }
     public DbSet<Note> Notes { get; set; }
     public DbSet<Zahtev> Zahtevi { get; set; }
+
+    public DbSet<Chat> Chats { get; set; }
+    public DbSet<Poruka> Poruke { get; set; }
 
     public DbSet<Admin> Administratori { get; set; }
     public IzaberryMeDbContext(DbContextOptions<IzaberryMeDbContext> opts) : base(opts) { }
@@ -32,6 +38,18 @@ public class IzaberryMeDbContext : DbContext
      .WithOne(z => z.Literatura)
      .HasForeignKey<Zahtev>(z => z.Id);
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Chat>()
+            .HasOne(c => c.StudentPosiljaoc)
+            .WithMany(s => s.Chats)
+            .HasForeignKey(c => c.StudentPosiljaocId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Chat>()
+            .HasOne(c => c.StudentPrimaoc)
+            .WithMany()
+            .HasForeignKey(c => c.StudentPrimaocId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 
 }
