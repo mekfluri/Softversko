@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { MentorRequestPreview } from '../models/mentor-req-backend.model';
 import { Mentor } from '../models/mentor.model';
+import { Predmet } from '../models/predmet.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,11 @@ export class MentorService {
 
   async deleteRequest(id: number) {
     let resp$ = this.http.delete(`${environment.backend}/mentorRequest/${id}`);
+    return (await firstValueFrom(resp$));
+  }
+
+  async getPredmeti(id: number): Promise<any> {
+    let resp$ = this.http.get(`${environment.backend}/mentor/predmeti/${id}`);
     return (await firstValueFrom(resp$));
   }
 }

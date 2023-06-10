@@ -19,6 +19,18 @@ export class AuthService {
     this.jwtService = new JwtHelperService();
   }
 
+  isMentor(): boolean {
+    let token = localStorage.getItem("authToken");
+    console.log(token);
+    if(token != null){
+      let decoded = this.jwtService.decodeToken(token);
+      if((decoded.perm as Privilegije) >= Privilegije.MENTOR) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   currentUserPermissions(): Privilegije {
     let token = localStorage.getItem("authToken");
     if(token) {
@@ -37,17 +49,12 @@ export class AuthService {
     else return -1;
   }
 
-  async login(credentials: LoginModel, admin?: boolean): Promise<string> {
+  async login(credentials: LoginModel, role: string): Promise<string> {
     let headers = new HttpHeaders()
       .set("Content-Type", "application/json")
       .set("Accept", "text/plain");
 
-    let url = environment.backend;
-    if (admin) {
-      url += "/admin";
-    }
-
-    let token$ = this.http.post(`${url}/login`, credentials, {
+    let token$ = this.http.post(`${environment.backend}/login/${role}`, credentials, {
       headers,
       responseType: "text",
     });
