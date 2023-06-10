@@ -58,4 +58,25 @@ public class LoginController : ControllerBase
         string token = authService.GenerateJWT(mentor);
         return Ok(token);
     }
+
+    [AllowAnonymous]
+    [HttpPost("admin")]
+    public async Task<ActionResult> Login([FromBody]LoginModel loginInfo) {
+        if(!ModelState.IsValid) {
+            return BadRequest(ModelState);
+        }
+        
+        var admin = dbContext.Administratori.FirstOrDefault(a => a.Email == loginInfo.Email);
+        if(admin == null) {
+            return BadRequest("Admin ne postoji!");
+        }
+
+        var passwordHash = BCrypt.Net.BCrypt.HashPassword(loginInfo.Password, admin.Salt);
+        if(passwordHash != admin.Password){
+            return BadRequest("Invalid credentials");
+        }
+
+        string token = authService.GenerateJWT(admin);
+        return Ok(token);
+    }
 }

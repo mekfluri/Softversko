@@ -17,12 +17,10 @@ public class AdminController : ControllerBase{
         this.authService = authService;
     }
 
-    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult> GetAllAdmins() {
         return Ok(await dbContext.Administratori.ToListAsync());
     }
-    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<ActionResult> Register([FromBody]RegisterModel registerInfo) {
         if(!ModelState.IsValid) {
