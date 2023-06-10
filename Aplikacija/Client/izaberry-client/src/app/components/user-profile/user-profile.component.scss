@@ -30,11 +30,7 @@ input{
    height: 95%;
    width: 95%;
 }
-.poruka{
-    background-color: #e2496a;
-    padding:15%;
-    height: 50%;
-}
+
 
 .dm{
     border: 0;
@@ -53,22 +49,7 @@ input{
     box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.3)
 }
 
-.btn{
-    border: 0;
-    padding: 10px;
-    width: 100%;
-    border-radius: 20px;
-    background: #e2496a;
-    color: #fff;
-    font-family: "Bree Serif";
-    font-size: 1rem;
-    margin: 5px 2px;
-    cursor: pointer;
-    outline: none;
-    margin-bottom: 10px;
-    transition: background 0.3s ease-in-out;
-    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.3)
-}
+
 
 .zaglavlje {
     top: 0;
@@ -143,7 +124,55 @@ input{
     vertical-align: middle;
     overflow: hidden}
   
-  
+    .poruka {
+        background-color:#ccc;
+        width: 50%;
+        justify-self: center;
+        margin-left: 25%;
+        margin-top: 10%;
+        padding: 20px;
+        height: 50%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .poruka h1 {
+        color: #fff;
+        font-size: 32px;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      
+      .poruka p {
+        color: #fff;
+        font-size: 20px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      
+     .kreirajPorukubtn {
+        background-color: #e2496a;
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        padding: 10px 30px;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s ease;
+      }
+      
+      .kreirajPorukubtn:hover {
+        background-color: #d33853;
+      }
+      
+      
+      
   .search-input {
     padding-right: 40px;
     background-image: url('https://fonts.gstatic.com/s/i/materialiconsoutlined/person_search/v11/24px.svg');
@@ -231,8 +260,20 @@ input{
 
 .profile-nav-info .address {
     display: flex;
+    display: flex;
+    justify-self: center;
     font-weight: bold;
     color: #777;
+}
+.btn{
+    background-color: #e2496a;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 5%;
+    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.3);
 }
 
 .profile-nav-info .address p {

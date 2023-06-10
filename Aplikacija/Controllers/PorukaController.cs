@@ -47,13 +47,13 @@ public class PorukaController : ControllerBase
 
         return Created($"{poruka.Id}", poruka);
     }
-     [AllowAnonymous]
+    [AllowAnonymous]
     [HttpGet("VratiPorukeIzChata/{chatId}")]
     public async Task<ActionResult> VratiPorukeIzChata(int chatId)
     {
         var chat = await Context.Chats
             .Include(c => c.Poruke)
-            .ThenInclude(c=> c.Student)
+            .ThenInclude(c => c.Student)
             .FirstOrDefaultAsync(c => c.Id == chatId);
         if (chat == null)
         {
@@ -70,13 +70,48 @@ public class PorukaController : ControllerBase
         var poruke = await Context.Poruke
             .Include(p => p.Student)
             .Include(p => p.chat)
-            .ThenInclude(p=> p.StudentPosiljaoc)
+            .ThenInclude(p => p.StudentPosiljaoc)
             .Where(p => p.Student!.Id != studentId && !p.procitana && (p.chat.StudentPosiljaocId == studentId || p.chat.StudentPrimaocId == studentId))
             .ToListAsync();
 
         return Ok(poruke);
     }
+    [AllowAnonymous]
+    [HttpGet("VratiPoslednjuDodatuPoruku")]
+    public async Task<ActionResult<Poruka>> VratiPoslednjuDodatuPoruku()
+    {
+        var poruka = await Context.Poruke
+            .Include(p => p.Student)
+            .Include(p => p.chat)
+            .ThenInclude(c => c.StudentPosiljaoc)
+            .OrderByDescending(p => p.Id)
+            .FirstOrDefaultAsync();
 
+        if (poruka == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(poruka);
+    }
+
+
+        [AllowAnonymous]
+        [HttpPut("OznaciPorukuKaoProcitanu/{porukaId}")]
+        public async Task<ActionResult> OznaciPorukuKaoProcitanu(int porukaId)
+        {
+            var poruka = await Context.Poruke.FindAsync(porukaId);
+            if (poruka == null)
+            {
+                return NotFound();
+            }
+
+            poruka.procitana = true;
+            Context.Poruke.Update(poruka);
+            await Context.SaveChangesAsync();
+
+            return Ok();
+        }
 
 
 

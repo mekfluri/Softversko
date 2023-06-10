@@ -42,9 +42,13 @@ export class PorukaService {
         );
     });
   }
+  getNeprocitanePorukeCount(userId: number) {
+    const url = `${environment.backend}/chat/VratiNeprocitanePorukeStudenta/${userId}`;
+    return this.http.get<number>(url);
+  }
   
  
-  async PosaljiPoruku(chatid: number, idporuke:number): Promise<any>{
+  async PosaljiPoruku(chatid: number, idporuke: number): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.put(`${environment.backend}/chat/DodajPorukuUChat/${idporuke}/${chatid}`, {})
         .subscribe(
@@ -53,7 +57,39 @@ export class PorukaService {
             resolve(response);
           },
           (error) => {
-            console.error('Greška prilikom slanja poruke:', error);
+            reject(error);
+          },
+          () => {
+            // Handle the completion of the HTTP request
+          }
+        );
+    });
+  }
+  async VratiPoslednjuDodatuPoruku(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${environment.backend}/chat/VratiPoslednjuDodatuPoruku`)
+        .subscribe(
+          (response: any) => {
+            console.log(response);
+            resolve(response);
+          },
+          (error) => {
+            console.error('Greška prilikom dobavljanja poslednje dodate poruke:', error);
+            reject(error);
+          }
+        );
+    });
+  }
+
+  async OznaciPorukuKaoProcitanu(porukaId: number): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.put(`${environment.backend}/chat/OznaciPorukuKaoProcitanu/${porukaId}`, {})
+        .subscribe(
+          (response: any) => {
+            console.log(response);
+            resolve(response);
+          },
+          (error) => {
             reject(error);
           }
         );

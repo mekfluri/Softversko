@@ -43,8 +43,8 @@
             <div *ngIf="localId == userId" class="profile-option" (click)="show()" routerLink="poruke" [class.poruke]="isActiveLink('poruke')" [class.active]="isActiveLink('poruke')">
                 <span class="notification">
                     <i class="fas fa-bell"></i>
-                    <span class="alert-message">3</span>
-                </span>
+                    <span class="alert-message">{{ unreadMessageCount }}</span>
+                  </span>
             </div>
 
 
@@ -114,9 +114,9 @@
 
                 <div *ngIf="prikaziPoruku" >
                     <div class="poruka">
-                    <input (keyup)="idKeyUp($event)" type="text">
+                    <input (keyup)="idKeyUp($event)" type="text" [(ngModel)]="text" >
                     <br>
-                     <button (click)="kreirajPoruku()" > Kreiraj poruku </button>
+                     <button (click)="kreirajPoruku()" class="kreirajPorukubtn"> Pošalji poruku </button>
                      </div>
 
                 </div>
