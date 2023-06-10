@@ -56,7 +56,7 @@ export class MentorRequestComponent {
 
   showError(message: string) {
     this.isError = true;
-    this.message = message;
+    this.message = "Greska prilikom slanja zahteva";
     this.clearMessage();
   }
 
@@ -69,6 +69,6 @@ export class MentorRequestComponent {
     setTimeout(() => {
       this.message = null;
       this.isError = false;
-    }, 1000);
+    }, 3000);
   }
 }
