@@ -6,12 +6,13 @@
      <button (click)="odgovori(poruka)"> Odgovori </button>
      <button (click)="obrisi(poruka)"> Obrisi </button>
 
+    
+
   </div>
 
-  <div *ngIf="prikazi" class="chat">
-      <div *ngFor="let poruka of svePoruke">
-        {{poruka.student.username}} : {{poruka.text}} 
 
+  <div class="chat" #divContainer>
+    
       </div>
     
       <input (keyup)="idKeyUp($event)" type="text">
@@ -22,5 +23,5 @@
     
 
 
-  </div>
+  
 
