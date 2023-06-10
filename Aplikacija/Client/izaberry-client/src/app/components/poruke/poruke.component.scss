@@ -5,11 +5,33 @@
   }
   
  .chat{
+  display: flex;
+  flex-direction: column;
   background-color: #ff718d;
-  height: 100px;
-  width: 100px;
+  height: 100%;
+  width: 100%;
+  justify-content: space-around;
  }
 
+ .div-levo{
+  align-self: flex-start;
+ }
+
+ .ZaPoruku{
+  
+  width: 10%;
+
+ }
+
+ .div-desno{
+  align-self: flex-end;
+ }
+ .poruke-container{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+ }
 
   .comment {
     position: relative;

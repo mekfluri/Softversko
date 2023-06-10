@@ -64,12 +64,12 @@ public class ChatController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpGet("VratiChatStudenta/{student1}/{student2}")]
-    public async Task<ActionResult> VratiChatStudenta(int student1, int student2)
+    [HttpGet("VratiChatStudenta/{studentid}")]
+    public async Task<ActionResult> VratiChatStudenta(int studentid)
     {
-        Student student11 = await Context.Studenti!.FindAsync(student1);
-        Student student22 = await Context.Studenti!.FindAsync(student2);  
-        if (student11 == null && student22 == null)
+        Student student11 = await Context.Studenti!.FindAsync(studentid);
+         
+        if (student11 == null)
         {
             return NotFound();
         }
@@ -78,8 +78,7 @@ public class ChatController : ControllerBase
     .Include(c => c.StudentPosiljaoc)
     .Include(c => c.StudentPrimaoc)
     .Include(c => c.Poruke)
-    .Where(c => (c.StudentPosiljaoc == student11 && c.StudentPrimaoc == student22) 
-        || (c.StudentPrimaoc == student11 && c.StudentPosiljaoc == student22))
+    .Where(c => (c.StudentPosiljaocId == studentid || c.StudentPrimaocId == studentid))
     .ToListAsync();
 
 

@@ -43,7 +43,6 @@ import { KomentariUserComponent } from './components/komentari-user/komentari-us
 import { MentorRequestComponent } from './components/mentor-request/mentor-request.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { PorukeComponent } from './components/poruke/poruke.component';
-import { MentorComponent } from './components/mentor/mentor.component';
 
 
 
@@ -81,7 +80,6 @@ import { MentorComponent } from './components/mentor/mentor.component';
     MentorRequestComponent,
     ChatComponent,
     PorukeComponent,
-    MentorComponent
   ],
   imports: [
     BrowserModule,

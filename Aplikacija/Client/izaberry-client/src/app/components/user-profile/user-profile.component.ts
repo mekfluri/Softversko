@@ -8,10 +8,13 @@ import { StudentiService } from 'src/app/services/studenti.service';
 import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { debounceTime } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 import { AuthService } from 'src/app/services/auth.service';
 import { Modul } from 'src/app/models/modul.model';
+import { environment } from 'src/environments/environment';
+import { Chat } from 'src/app/models/chat.model';
 
 @Component({
   selector: 'app-user-profile',
@@ -30,6 +33,8 @@ export class UserProfileComponent implements OnInit {
   searchTerm: string = '';
   searchResults: Student[] = [];
   response!: { dbPath: '' };
+  chat: Chat[] | null = null;
+  caskanja: Student[] | null = null;
 
   constructor(
     private StudentiService: StudentiService,
@@ -233,5 +238,35 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  createImgPath() { }
+  prikazi() {
+      
+    this.caskanja = [];
+    this.http
+    .get<Chat[]>(`${environment.backend}/chat/VratiChatStudenta/${this.userId}`)
+    .subscribe(
+      (response) => {
+          
+     
+          response.forEach(p=>{
+            if(p.studentPosiljaoc.id == this.userId)
+            {
+              this.caskanja?.push(p.studentPrimaoc);
+            }
+            else
+            {
+               this.caskanja?.push(p.studentPosiljaoc);
+            }
+          })
+        
+           
+      },
+      (error) => {
+        console.error('Error fetching user comments:', error);
+        
+      }
+    );
+    
+     console.log(this.caskanja);
+
+  }
 }

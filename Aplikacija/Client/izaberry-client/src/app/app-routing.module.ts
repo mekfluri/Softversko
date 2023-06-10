@@ -29,7 +29,7 @@ import { MentorOperationsComponent } from './components/mentor-operations/mentor
 import { LiteraturaUserComponent } from './components/literatura-user/literatura-user.component';
 import { KomentariUserComponent } from './components/komentari-user/komentari-user.component';
 import { PorukeComponent } from './components/poruke/poruke.component';import { MentorRequestComponent } from './components/mentor-request/mentor-request.component';
-import { MentorComponent } from './components/mentor/mentor.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -55,6 +55,9 @@ const routes: Routes = [
       },
       {
         path: "poruke", component: PorukeComponent 
+      },
+      {
+        path: "chat", component: ChatComponent
       }
     ]
   },
@@ -119,7 +122,6 @@ const routes: Routes = [
   },
   { path: "error", component: ErrorComponent },
   { path: "mentor-request", component: MentorRequestComponent},
-  { path: "mentor", component: MentorComponent},
 ];
 
 export const routingConfig: ExtraOptions = {

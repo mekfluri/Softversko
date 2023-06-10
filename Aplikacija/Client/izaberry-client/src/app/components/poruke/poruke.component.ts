@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Poruka } from 'src/app/models/poruke.model';
@@ -7,6 +7,7 @@ import { Student } from 'src/app/models/student.model';
 import { StudentiService } from 'src/app/services/studenti.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { first, firstValueFrom, Observable } from 'rxjs';
+import { createElement } from '@fullcalendar/core/preact';
 
 @Component({
   selector: 'app-poruke',
@@ -14,6 +15,8 @@ import { first, firstValueFrom, Observable } from 'rxjs';
   styleUrls: ['./poruke.component.scss']
 })
 export class PorukeComponent implements OnInit {
+  @ViewChild('divContainer') divContainer!: ElementRef;
+
   poruke: Poruka[] | null = null;
   student: Student | null = null;
   userId: number =0;
@@ -22,6 +25,9 @@ export class PorukeComponent implements OnInit {
   text: string = "";
   chat: number =0;
   idporuke: number =0;
+  primalacDiv: any[] = [];
+  posiljalacDiv: any[] = [];
+  poruka: Poruka | null = null;
 
   constructor(private authService: AuthService,private StudentService: StudentiService,private http: HttpClient, private route: ActivatedRoute) {
     const studentId = this.route.snapshot.paramMap.get('studentId');
@@ -54,6 +60,7 @@ export class PorukeComponent implements OnInit {
               if(element.student.id != this.userId){
                  this.poruke?.push(element);
                  console.log(element);
+                 
               }
               console.log(this.poruke);
              
@@ -68,6 +75,32 @@ export class PorukeComponent implements OnInit {
       );
   }
 
+  createDiv() : void
+  {
+
+    const container = this.divContainer.nativeElement;
+    container.innerHTML = '';
+
+      for(let poruka of this.svePoruke!){
+        const div = document.createElement('div');
+        
+        if(poruka.student.id == this.userId)
+        {
+          div.className = 'div-levo';
+        }
+        else{
+          div.className = 'div-desno';
+        }
+        
+        //div.innerHTML = poruka.text;
+        container.appendChild(div);
+        const divZaPoruku = document.createElement('div');
+        divZaPoruku.classList.add("ZaPoruku");
+        divZaPoruku.textContent =poruka.text;
+        div.appendChild(divZaPoruku);
+      }
+  }
+
  async odgovori(poruka: Poruka){
      this.prikazi = true;
      this.chat = poruka.chat.id;
@@ -77,7 +110,7 @@ export class PorukeComponent implements OnInit {
        (response) => {
            this.svePoruke = response;
            console.log(this.svePoruke);
-
+           this.createDiv();
         
        },
        (error) => {
@@ -88,7 +121,7 @@ export class PorukeComponent implements OnInit {
 
       //dodaj da je poruka procitana (idporuke)
         
-   await this.http.put(`${environment.backend}/chat/PromeniStatus/${poruka.id}`, {})
+  /* await this.http.put(`${environment.backend}/chat/PromeniStatus/${poruka.id}`, {})
    .subscribe(
      (response: any) => {
        console.log(response);
@@ -98,7 +131,7 @@ export class PorukeComponent implements OnInit {
      (error) => {
        console.error('Greška prilikom slanja poruke:', error);
      }
-   );
+   );*/
       
 
  }
@@ -159,6 +192,21 @@ export class PorukeComponent implements OnInit {
   }
 
 
+   createDivLevo(poruka:Poruka)
+   {
+       const divJedan = document.createElement("div");
+       divJedan.className = "Poruka"
+       divJedan.innerHTML = poruka.student.username;
+
+
+   }
+
+   createDivDesno(poruka:Poruka)
+   {
+    const divJedan = document.createElement("div");
+    divJedan.className = "Poruka"
+    divJedan.innerHTML = poruka.student.username;
+   }
 }
 
 
