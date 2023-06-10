@@ -29,9 +29,11 @@
     <div class="search-container">
       <input type="text" name="naziv" placeholder="Naziv predmeta za pretragu">
       <select name="tag">
+        <option disabled selected>Izaberi tag</option>
         <option *ngFor="let tag of tagovi" [value]="tag">{{tag.naziv}}</option>
       </select>
       <select name="semestar">
+        <option disabled selected>Izaberi semestar</option>
         <option value="1">1</option>
         <option value="1">2</option>
         <option value="1">3</option>
