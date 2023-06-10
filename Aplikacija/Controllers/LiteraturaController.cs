@@ -41,7 +41,14 @@ public async Task<ActionResult> LiteraturaPredmeta(int predmetId)
             })
             .ToListAsync();
 
-        return Ok(literatura);
+        return Ok(literatura.Select(l => new {
+                student = l.Student,
+                predmet = l.Predmet,
+                id = l.Id,
+                mentor = l.Mentor,
+                naziv = l.Naziv,
+                filePath = l.filePath
+            }));
     }
     catch (Exception ex)
     {

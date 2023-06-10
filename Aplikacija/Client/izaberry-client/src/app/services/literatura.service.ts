@@ -32,7 +32,6 @@ export class LiteraturaService {
   async getForMentor(mentorId: number): Promise<Zahtev[]> {
     let resp$ = this.http.get<Zahtev[]>(`${environment.backend}/zahtevi/mentor/${mentorId}`);
     let result = await firstValueFrom(resp$);
-    console.log(result);
     return result;
   }
 
@@ -64,13 +63,10 @@ export class LiteraturaService {
     return firstValueFrom(resp$);
   }
 
-  async PredmetLiteratura(id: number)
+  async PredmetLiteratura(id: number): Promise<Literatura[]>
   {
     let literature$ = this.http.get<Literatura[]>(`${environment.backend}/literatura/predmet/${id}`);
     let literatura = await firstValueFrom(literature$);
-    console.log(literatura);
     return literatura;
   }
-
-
 }
