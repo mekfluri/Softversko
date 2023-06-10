@@ -233,5 +233,9 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  createImgPath() { }
+  prikazi() {
+      //da mi vrati sve cetove 
+      
+
+  }
 }
