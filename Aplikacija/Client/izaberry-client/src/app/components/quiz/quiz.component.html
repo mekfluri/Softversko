@@ -1,10 +1,9 @@
 <div class="body">
-  <div class="new-prefs">
+  <div class="new-prefs" *ngIf="!isLoggedIn">
     <button (click)="addPreference()">Dodaj novu preferencu</button>
     <div class="new-prefs-list">
       <app-preferenca [preferenca]="pref" *ngFor="let pref of preference" [tagovi]="tagovi"></app-preferenca>
     </div>
-    <button (click)="saveNewPreferences()">Sacuvaj nove preference</button>
   </div>
   <button (click)="doQuiz()">Izvrsi preporuku po preferencama</button>
   <div *ngIf="recommendations">
