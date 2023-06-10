@@ -19,6 +19,21 @@ public class LiteraturaController : ControllerBase
     }
 
     [AllowAnonymous]
+    [HttpGet("predmet/{predmetId}")]
+    public async Task<ActionResult> LiteraturaPredmeta(int predmetId){
+        try {
+            var literatura = await Context.Literature
+            .Include(l => l.Student)
+            .Include(l => l.Mentor)
+            .Include(l => l.Predmet)
+            .Where(l => l.Predmet.Id == predmetId).ToListAsync();
+            return Ok(literatura);
+        }
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+    [AllowAnonymous]
     [HttpGet("vratiPoslednjuDodatu")]
     public async Task<ActionResult> vratiPoslednjuDodatu()
     {
@@ -52,16 +67,21 @@ public class LiteraturaController : ControllerBase
 
 
     [HttpPost("dodajLiteraturu/{studentID}/{predmetID}")]
-    public async Task<ActionResult> dodajLiteraturu(string filePath, int studentID, int predmetID)
+    public async Task<ActionResult> dodajLiteraturu(int studentID, int predmetID)
     {
         Literatura literatura = new Literatura();
-        Student student = await Context.Studenti.Where(x => x.Id == studentID).FirstOrDefaultAsync();
-        Predmet predmet = await Context.Predmeti.Where(x => x.Id == predmetID).FirstOrDefaultAsync();
+        Student? student = await Context.Studenti.Where(x => x.Id == studentID).FirstOrDefaultAsync();
+        Predmet? predmet = await Context.Predmeti.Where(x => x.Id == predmetID).FirstOrDefaultAsync();
         if (student == null || predmet == null)
-            return BadRequest("");
-        literatura.filePath = filePath;
+            return BadRequest();
+        
+        var form = await Request.ReadFormAsync();
+        var file = form.Files[0];
+        var downloadUrl = await firebaseService.UploadLiteratura(predmetID, studentID, file, file.FileName);
         literatura.Student = student;
         literatura.Predmet = predmet;
+        literatura.filePath = downloadUrl;
+        literatura.Naziv = file.FileName;
 
 
         try
@@ -117,13 +137,12 @@ public class LiteraturaController : ControllerBase
     {
         try
         {
-            var student = Context.Studenti.Where(s => s.Id == id).First();
+            var student = Context.Studenti.Include(s => s.Literatura).ThenInclude(l => l.Predmet).Where(s => s.Id == id).First();
             if (student == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-            var literatura = await Context.Literature.Where(k => k.Student!.Id == id).ToListAsync();
-            return Ok(literatura);
+            return Ok(student.Literatura);
         }
         catch (Exception ex)
         {

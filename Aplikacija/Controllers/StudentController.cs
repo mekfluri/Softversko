@@ -93,6 +93,7 @@ public class StudentController : ControllerBase
         .Include(s => s.Preference)
         .ThenInclude(p => p.Tag)
         .Include(s => s.Modul)
+        .Include(s => s.Literatura)
         .First();
         if(student == null){
           return NotFound("Student nije pronadjen!");
@@ -104,7 +105,8 @@ public class StudentController : ControllerBase
           email = student.Email,
           modul = student.Modul,
           preference = student.Preference,
-          semestar = student.Semestar
+          semestar = student.Semestar,
+          literatura = student.Literatura
         });
       }
       catch(Exception ex){

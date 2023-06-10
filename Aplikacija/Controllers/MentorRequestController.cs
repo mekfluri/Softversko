@@ -43,9 +43,12 @@ public class MentorRequestController : ControllerBase{
                 request.Student.Modul!,
                 request.Student.Semestar
             );
+            dbContext.Mentori.Add(mentor);
+            await dbContext.SaveChangesAsync();
             mentor.Predmeti = new List<Predmet>();
             mentor.Predmeti.Add(request.Predmet);
-            dbContext.Mentori.Add(mentor);
+            dbContext.Mentori.Update(mentor);
+            await dbContext.SaveChangesAsync();
             await firebaseService.RemoveMentorRequestPhotos(request.Predmet.Id, request.Student.Id);
             dbContext.MentorZahtevi.Remove(request);
             await dbContext.SaveChangesAsync();

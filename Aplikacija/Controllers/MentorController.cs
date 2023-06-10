@@ -17,6 +17,52 @@ public class MentorController : ControllerBase
         this.authService = authService;
     }
 
+    [HttpGet("addpred/{mId}/{pId}")]
+    public async Task<ActionResult> addPredmet(int mId, int pId) {
+        var mentor = Context.Mentori.Find(mId);
+        var predmet = Context.Predmeti.Find(pId);
+        if(mentor.Predmeti == null) {
+            mentor.Predmeti = new List<Predmet>();
+        }
+        mentor.Predmeti.Add(predmet);
+        Context.Mentori.Update(mentor);
+        await Context.SaveChangesAsync();
+        return Ok(mentor);
+    }
+    [HttpGet("predmeti/{id}")]
+    public async Task<ActionResult> GetPredmeti(int id) {
+        try {
+            var mentor = await Context.Mentori.Include(m => m.Predmeti).Where(m => m.Id == id).FirstOrDefaultAsync();
+            if(mentor == null) {
+                return NotFound("Mentor nije pronadjen");
+            }
+            return Ok(new {mentor.Predmeti});
+        }
+        catch(Exception ex){ 
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public async Task<ActionResult> Login([FromBody]LoginModel loginInfo) {
+        if(!ModelState.IsValid) {
+            return BadRequest(ModelState);
+        }
+        
+        var mentor = Context.Mentori.FirstOrDefault(a => a.Email == loginInfo.Email);
+        if(mentor == null) {
+            return BadRequest("mentor ne postoji!");
+        }
+
+        var passwordHash = BCrypt.Net.BCrypt.HashPassword(loginInfo.Password, mentor.Salt);
+        if(passwordHash != mentor.Password){
+            return BadRequest("Invalid credentials");
+        }
+
+        string token = authService.GenerateJWT(mentor);
+        return Ok(token);
+    }
     [HttpPost("DodajMentora")]
     public async Task<ActionResult> dodajMentora([FromBody] Mentor mentor)
     {
@@ -37,7 +83,7 @@ public class MentorController : ControllerBase
     {
         try
         {
-            return Ok(await Context.Mentori!.ToListAsync());
+            return Ok(await Context.Mentori!.Include(m => m.Predmeti).ToListAsync());
 
         }
         catch (Exception e)

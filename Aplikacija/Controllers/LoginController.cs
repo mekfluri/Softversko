@@ -17,7 +17,7 @@ public class LoginController : ControllerBase
         this.dbContext = dbContext;
     }
 
-    [HttpPost]
+    [HttpPost("student")]
     public async Task<ActionResult<string>> LoginUser([FromBody]LoginModel loginInfo){
         if(!ModelState.IsValid){
             return BadRequest(ModelState);
@@ -35,6 +35,27 @@ public class LoginController : ControllerBase
         }
 
         string token = authService.GenerateJWT(student);
+        return Ok(token);
+    }
+
+    [HttpPost("mentor")]
+    public async Task<ActionResult> LoginMentor([FromBody]LoginModel loginInfo) {
+        if(!ModelState.IsValid){
+            return BadRequest(ModelState);
+        }
+        var mentor = await dbContext.Mentori.Where((mentor) => 
+            mentor.Email == loginInfo.Email
+        ).FirstOrDefaultAsync();
+        if(mentor == null) {
+            return BadRequest("Mentor ne postoji");
+        }
+
+        var passwordHash = BCrypt.Net.BCrypt.HashPassword(loginInfo.Password, mentor.Salt);
+        if(passwordHash != mentor.Password){
+            return BadRequest("Invalid credentials");
+        }
+
+        string token = authService.GenerateJWT(mentor);
         return Ok(token);
     }
 }

@@ -5,48 +5,109 @@ namespace Aplikacija.Controllers;
 
 
 [ApiController]
-[Authorize]
 [Route("/zahtevi")]
 public class ZahtevController : ControllerBase
 {
 
     public IzaberryMeDbContext Context { get; set; }
+    private FirebaseService firebaseService { get; set; }
 
-    public ZahtevController(IzaberryMeDbContext context)
+    public ZahtevController(IzaberryMeDbContext context, FirebaseService firebaseService)
     {
         Context = context;
+        this.firebaseService = firebaseService;
     }
-    [HttpPost("dodajZahtev/{literaturaID}")]
-    public async Task<ActionResult> dodajZahtev(int literaturaID)
-    {
-        Literatura literatura = await Context.Literature.FindAsync(literaturaID);
-        if (literatura == null)
-            return NotFound("Ne postoji ova literatura");
 
-        Zahtev zahtev = new Zahtev();
-        zahtev.Literatura = literatura;
+    [HttpGet("mentor/{mentorId}")]
+    public async Task<ActionResult> Zahtevi(int mentorId) {
+        try {
+            var mentor = await Context.Mentori.Include(m => m.Predmeti).Where(m => m.Id == mentorId).FirstOrDefaultAsync();
+            if(mentor == null) {
+                return NotFound("Mentor nije pronadjen");
+            }
+            var zahtevi = new List<LiteraturaZahtev>();
+            foreach(Predmet p in mentor.Predmeti) {
+                var predmetZahtevi = await Context.Zahtevi.Include(z => z.Student).Include(z => z.Predmet).Where(z => z.Predmet!.Id == p.Id).ToListAsync();
+                if(predmetZahtevi != null) {
+                    zahtevi.AddRange(predmetZahtevi);
+                }
+            }
+            return Ok(zahtevi);
+        }
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
 
-        try
-        {
-            Context.Zahtevi.Add(zahtev);
+    [HttpPost("odobri/{zahtevId}/{mentorId}")]
+    public async Task<ActionResult> OdobriLiteraturu(int zahtevId, int mentorId){
+        try {
+            var zahtev = await Context.Zahtevi.Include(z => z.Student).Include(z => z.Predmet).Where(z => z.Id == zahtevId).FirstOrDefaultAsync();
+            var mentor = await Context.Mentori.FindAsync(mentorId);
+            if(zahtev == null){
+                return NotFound("Zahtev nije pronadjen");
+            }
+            if(mentor == null) {
+                return NotFound("Mentor nije pronadjen");
+            }
+            Literatura literatura = new Literatura(
+                0, zahtev.Student!, mentor, zahtev.FileUrl!, zahtev.Predmet!
+            );
+            literatura.Naziv = zahtev.Naziv;
+            Context.Literature.Add(literatura);
             await Context.SaveChangesAsync();
+            Context.Zahtevi.Remove(zahtev);
+            await Context.SaveChangesAsync();
+            return Ok(literatura);
+        }
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
 
-            return Ok(zahtev);
+    [HttpDelete("odbij/{zahtevId}")]
+    public async Task<ActionResult> OdbijLiteraturu(int zahtevId) {
+        try {
+            var zahtev = Context.Zahtevi.Find(zahtevId);
+            if(zahtev == null){
+                return NotFound("Zahtev ne postoji");
+            }
+            Context.Zahtevi.Remove(zahtev);
+            await Context.SaveChangesAsync();
+            return Ok();
         }
-        catch (Exception e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        catch(Exception ex){
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
+    }
+    [HttpPost("dodajZahtev/{predmetId}/{userId}")]
+    public async Task<ActionResult> dodajZahtev(int predmetId, int userId)
+    {
+        Student? student = await Context.Studenti.Where(x => x.Id == userId).FirstOrDefaultAsync();
+        Predmet? predmet = await Context.Predmeti.Where(x => x.Id == predmetId).FirstOrDefaultAsync();
+        if (student == null || predmet == null)
+            return BadRequest();
+        
+        var form = await Request.ReadFormAsync();
+        var file = form.Files[0];
+        var downloadUrl = await firebaseService.UploadLiteratura(predmetId, userId, file, file.FileName);
+        LiteraturaZahtev zahtev = new LiteraturaZahtev(
+            student,
+            predmet,
+            downloadUrl
+        );
+        zahtev.Naziv = file.FileName;
+        Context.Zahtevi.Add(zahtev);
+        await Context.SaveChangesAsync();
+        return Ok(zahtev);
     }
 
     [HttpGet("vratiZahteve")]
-    public async Task<ActionResult<IEnumerable<Zahtev>>> vratiZahteve()
+    public async Task<ActionResult<IEnumerable<LiteraturaZahtev>>> vratiZahteve()
     {
         try
         {
             var zahtevi = await Context.Zahtevi
-                .Include(x => x.Literatura)
-                .ThenInclude(x => x.Student)
                 .ToListAsync();
 
             return Ok(zahtevi);
@@ -57,7 +118,7 @@ public class ZahtevController : ControllerBase
         }
     }
     [HttpDelete("ObrisiZahteve/{id}")]
-    public async Task<ActionResult<Zahtev>> ObrisiZahtev(int id)
+    public async Task<ActionResult<LiteraturaZahtev>> ObrisiZahtev(int id)
     {
         try
         {
@@ -86,7 +147,6 @@ public class ZahtevController : ControllerBase
                 return NotFound("Ne postoji zahtev sa zadatim identifikatorom");
             }
 
-            zahtev.Odobren = true;
 
             Context.Zahtevi.Update(zahtev);
             await Context.SaveChangesAsync();
