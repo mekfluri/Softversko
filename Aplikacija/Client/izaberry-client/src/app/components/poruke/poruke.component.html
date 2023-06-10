@@ -5,10 +5,11 @@
  <div class="poruke-container">
   
    <div *ngIf="prikazicet"  class="border">
-      <h1>Prikazi poruke</h1> 
+      <h1>Nepročitane poruke</h1> 
       <div  *ngFor="let poruka of poruke">
        
-     {{ poruka.chat.studentPosiljaoc.email}} : {{ poruka.text }} 
+         {{ poruka.chat.studentPrimaoc?.email || poruka.chat.studentPosiljaoc?.email }}
+    : {{ poruka.text }} 
      <div class="poruka">
      <button  class="btn" (click)="odgovori(poruka)"> Odgovori </button>
      <button  class="btn"  (click)="obrisi(poruka)"> Obrisi </button>
@@ -23,10 +24,10 @@
       </div>
     
     
-      <input (keyup)="idKeyUp($event)" type="text">
+      <input (keyup)="idKeyUp($event)" type="text" [(ngModel)]="text">
       
-      <button class="btn" (click)="posalji()">Send</button>
-      <button class="btn" (click)="sacuvaj()">Save</button>      
+      <button class="btn" (click)="kreirajPoruku()">Send</button>
+          
           
    </div>
     </div>

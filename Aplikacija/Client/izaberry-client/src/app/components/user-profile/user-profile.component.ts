@@ -35,10 +35,11 @@ export class UserProfileComponent implements OnInit {
   searchResults: Student[] = [];
   response!: { dbPath: '' };
   idchata: number = 0;
-  idporuke: number =0;
+  idporuke: number = 0;
   prikaziPoruku: boolean = false;
-  text:string = "";
- 
+  text: string = "";
+  unreadMessageCount: number=0;
+
 
   constructor(
     private PorukaService: PorukaService,
@@ -58,11 +59,25 @@ export class UserProfileComponent implements OnInit {
     }
     this.student = null;
   }
+  fetchPorukeCount() {
+    const userId = this.authService.currentUserId();
+    const url = `${environment.backend}/chat/VratiNeprocitanePorukeStudenta/${userId}`;
+
+    this.http.get<any[]>(url).subscribe(
+      (response) => {
+        this.unreadMessageCount = response.length;
+      },
+      (error) => {
+        console.log('Error retrieving unread message count:', error);
+      }
+    );
+  }
 
   async ngOnInit(): Promise<void> {
     try {
       this.student = await this.userService.getUserById(this.userId);
-      
+      this.fetchPorukeCount();
+
     } catch (err: any) {
       this.router.navigate(["error"], {
         state: err as Error
@@ -70,8 +85,8 @@ export class UserProfileComponent implements OnInit {
     }
 
     this.PostaviSliku();
-   
-    
+
+
   }
 
   async showPhoto() {
@@ -81,19 +96,18 @@ export class UserProfileComponent implements OnInit {
   async PostaviSliku() {
     var rez = this.StudentiService.VratiSliku(this.student!.id);
     console.log(rez);
-    if(rez != null)
-    {
+    if (rez != null) {
       rez
-      .then((odgovor) => {
-        this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
-        console.log(this.rezultat);
-        console.log(odgovor);
-      })
-      .catch((error) => {
-        console.error('Greška prilikom dohvatanja slike:', error);
-      });
+        .then((odgovor) => {
+          this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
+          console.log(this.rezultat);
+          console.log(odgovor);
+        })
+        .catch((error) => {
+          console.error('Greška prilikom dohvatanja slike:', error);
+        });
     }
-  
+
   }
 
   editBio() {
@@ -121,24 +135,24 @@ export class UserProfileComponent implements OnInit {
       return;
     }
 
-  
+
     this.http.get<any[]>('http://localhost:5006/student/vratiStudente')
       .subscribe(
         (response) => {
-         
+
           const filteredStudents = response.filter((student: any) => {
             return (
               student.username.toLowerCase().startsWith(this.searchTerm.toLowerCase()) ||
               student.email.toLowerCase().startsWith(this.searchTerm.toLowerCase())
             );
           });
-        console.log(filteredStudents);
+          console.log(filteredStudents);
           this.searchResults = filteredStudents.map((student: any) => {
             const modul = student.modul ? new Modul(student.modul.id, student.modul.naziv) : null;
             return new Student(
               student.id,
               student.username,
-              modul as Modul, 
+              modul as Modul,
               student.semestar,
               student.email,
               student.perm,
@@ -151,10 +165,10 @@ export class UserProfileComponent implements OnInit {
           console.error('Error fetching users:', error);
         }
       );
-      console.log(this.searchResults);
+    console.log(this.searchResults);
   }
-  
-  
+
+
 
   selectUser(event: Event): void {
     let id = parseInt((event.target as HTMLElement).id);
@@ -165,8 +179,8 @@ export class UserProfileComponent implements OnInit {
       location.reload();
     });
   }
-  
-  
+
+
 
   async prikaz() {
     this.showcontainer = false;
@@ -210,18 +224,18 @@ export class UserProfileComponent implements OnInit {
   redirectToZahtevi() {
     this.router.navigateByUrl("zahtevi");
   }
-/* 
-
-  canShowButtons(): boolean {
-    if (this.userService.user) {
-      return (
-        this.userService.user.perm === Privilegije.ADMIN ||
-        this.userService.user.perm === Privilegije.MENTOR
-      );
+  /* 
+  
+    canShowButtons(): boolean {
+      if (this.userService.user) {
+        return (
+          this.userService.user.perm === Privilegije.ADMIN ||
+          this.userService.user.perm === Privilegije.MENTOR
+        );
+      }
+      return false;
     }
-    return false;
-  }
-  */
+    */
 
   uploadFinished = (event: { dbPath: "" }) => {
     this.response = event;
@@ -250,50 +264,46 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  
 
-  async idKeyUp(event: Event){
-    this.text =  (event.target as HTMLInputElement).value;
 
-}
-
-  async posaljiPoruku(){
-  
-    this.prikaziPoruku = true;
-    await this.PorukaService.Provera(this.userId, this.localId)
-        .then((rezultat) => {
-             console.log(rezultat);
-             this.idchata = rezultat.id;
-             
-         })
-          .catch((error) => {
-              console.error('Greška prilikom poziva funkcije Provera:', error);
-         });
+  async idKeyUp(event: Event) {
+    this.text = (event.target as HTMLInputElement).value;
 
   }
 
-  async kreirajPoruku(){
-    await this.PorukaService.KreirajPoruku(this.localId, this.text)
-      .then((rezultat)=>{
-            console.log(rezultat.id);
-            this.idporuke = rezultat.id;
-    })
-      .catch((error) => {
-             console.error('Greška prilikom poziva funkcije KreirajPoruku:', error);
-     });
+  async posaljiPoruku() {
+    this.prikaziPoruku = true;
+    try {
+      const rezultat = await this.PorukaService.Provera(this.userId, this.localId);
+      console.log(rezultat);
+      this.idchata = rezultat.id;
+    } catch (error) {
+      console.error('Greška prilikom poziva funkcije Provera:', error);
+    };
+  }
+
+
+  async kreirajPoruku() {
+    try {
+      const rezultat = await this.PorukaService.KreirajPoruku(this.localId, this.text);
+      console.log(rezultat.id);
+      this.idporuke = rezultat.id;
+    } catch (error) {
+      console.error('Greška prilikom poziva funkcije KreirajPoruku:', error);
+    } finally {
+      this.text = '';
+    }
   
-
     console.log(this.idporuke);
-    await this.PorukaService.PosaljiPoruku(this.idchata, this.idporuke)
-        .then((rezultat)=>{
-            console.log(rezultat);
-           
-    })
-     .catch((error) => {
-         console.error('Greška prilikom poziva funkcije KreirajPoruku:', error);
-    });
-}
-
+    
+    try {
+      const rezultat = await this.PorukaService.PosaljiPoruku(this.idchata, this.idporuke);
+      console.log(rezultat);
+    } catch (error) {
+      console.error('Greška prilikom poziva funkcije PosaljiPoruku:', error);
+    }
+  }
+  
 
 }
 
