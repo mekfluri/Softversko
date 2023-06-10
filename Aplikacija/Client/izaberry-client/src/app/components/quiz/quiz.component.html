@@ -1,36 +1,16 @@
-<body>
-  <div *ngIf="student" class="by-preferences">
-    <button>Izvrsi preporuku po preferencama</button>
+<div class="body">
+  <div class="new-prefs">
+    <button (click)="addPreference()">Dodaj novu preferencu</button>
+    <div class="new-prefs-list">
+      <app-preferenca [preferenca]="pref" *ngFor="let pref of preference" [tagovi]="tagovi"></app-preferenca>
+    </div>
+    <button (click)="saveNewPreferences()">Sacuvaj nove preference</button>
   </div>
-  <div class="toolbar">
-    <select id="predmet1" class="predmeti" ngModel="selectedPredmet" (change)="updateText()">
-      <option value="KOMUNIKACIJE I INFORMACIONE TEHNOLOGIJE">Komunikacije i informacione tehnologije</option>
-      <option value="ELEKTROENERGETIKA">Elektroenergetika</option>
-      <option value="ELEKTRONSKE KOMPONENTE I MIKROSISTEMI">Elektronske komponente i mikrosistemi</option>
-      <option value="RACUNARSTVO I INFORMATIKA">Racunarstvo i informatika</option>
-      <option value="UPRAVLJANJE SISTEMIMA">Upravljanje sistemima</option>
-    </select>
-
-    < <select id="brojevi" class="brojevi" ngModel="selectedBroj" (change)="updateText()">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      </select>
-  </div>
-
-  <div class="scrollableContainer">
-    <div *ngFor="let pitanje of pitanje1; let i = index">
-      <div class="subDiv">
-        <div class="pitanjeDiv">
-          <p>Pitanje {{i+1}}: {{pitanje}}</p>
-        </div>
-        <div class="odgovoriDiv">
-          <div class="odgovorDiv" *ngFor="let odgovor of odgovori1[i]">
-            <p>{{odgovor}}</p>
-          </div>
-        </div>
-      </div>
+  <button (click)="doQuiz()">Izvrsi preporuku po preferencama</button>
+  <div *ngIf="recommendations">
+    <div class="predmet" *ngFor="let item of recommendations">
+      <h1 [id]="item.key" (click)="gotoPredmet($event)">{{item.value!.first!.naziv}}</h1>
+      <p>{{item.value!.second}}</p>
     </div>
   </div>
-</body>
+</div>
