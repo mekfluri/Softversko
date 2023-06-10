@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Modul } from 'src/app/models/modul.model';
+import { MessageResponse } from 'src/app/models/response.model';
 import { ModuleService } from 'src/app/services/module.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { ModuleService } from 'src/app/services/module.service';
 export class ModulOperationsComponent {
   moduli: Modul[] | null = null;
   currentModule: Modul = new Modul(0, "");
+  response: MessageResponse = new MessageResponse();
 
   constructor(private modulService: ModuleService){}
 
@@ -22,12 +24,30 @@ export class ModulOperationsComponent {
   }
 
   async createModule() {
-    await this.modulService.createModule(this.currentModule);
+    try {
+      await this.modulService.createModule(this.currentModule);
+      this.response.message = "Uspesno dodat modul";
+      this.response.showResponse();
+    }
+    catch(err: any){
+      this.response.isError = true;
+      this.response.message = "Neuspesno dodavanje modula";
+      this.response.showResponse();
+    }
   }
 
   //TODO: brisanje ne radi
   async deleteModule() {
-    await this.modulService.deleteModule(this.currentModule);
+    try {
+      await this.modulService.deleteModule(this.currentModule);
+      this.response.message = "Uspesno brisanje modula";
+      this.response.showResponse();
+    }
+    catch(err: any){
+      this.response.isError = true;
+      this.response.message = "Neuspesno brisanje modula";
+      this.response.showResponse();
+    }
   }
 
   async getModules() {
