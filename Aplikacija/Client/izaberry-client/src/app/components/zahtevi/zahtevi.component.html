@@ -15,28 +15,14 @@
     </div>
   
     <h1>LISTA ZAHTEVA KOJI JOS UVEK NISU ODOBRENI:</h1>
-    <div id="zahtevi">
-      <ng-container *ngFor="let zahtev of zahtevi">
-        <div class="zahtev" *ngIf="!zahtev.odobren">
-          {{ zahtev.property1 }}
-          <div class="infodiv">
-            <label *ngIf="zahtev.literatura && zahtev.literatura.student">
-              Student koji salje zahtev: {{ zahtev.literatura.student?.username }}
-            </label>
-            <label>Naziv literature: {{ zahtev.literatura?.filePath }}</label>
-          </div>
-          <div class="odobridiv"></div>
-          <button class="btnOdobri" *ngIf="canShowButtons()" type="button" (click)="dodaj(zahtev)">
-            <span class="material-icons">check</span> Odobri
-          </button>
-          <button class="btnOdbije" *ngIf="canShowButtons()" type="button" (click)="odbij(zahtev)">
-            <span class="material-icons">close</span> Odbij
-          </button>
-        </div>
-      </ng-container>
+    <div id="zahtevi" *ngIf="zahtevi">
+      <div *ngFor="let zahtev of zahtevi" class="zahtev">
+        <p>Predmet:{{zahtev.predmet.naziv}}</p>
+        <p>Student:{{zahtev.student.username}}</p>
+        <a [href]="zahtev.fileUrl" target="_blank">Link ka literaturi</a>
+        <button [id]="zahtev.id" (click)="odobriLiteraturu($event)">Odobri literaturu</button>
+        <button [id]="zahtev.id" (click)="odbijLiteraturu($event)">Odbij literaturu</button>
+      </div>
     </div>
-    
-    
-      
   </body>
   

@@ -5,6 +5,8 @@ import { Privilegije } from 'src/app/models/permission.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { Zahtev } from 'src/app/models/zahtev.model';
+import { LiteraturaService } from 'src/app/services/literatura.service';
 
 @Component({
   selector: 'app-zahtevi',
@@ -12,76 +14,37 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./zahtevi.component.scss']
 })
 export class ZahteviComponent implements OnInit {
-  zahtevi: any[] = []; 
+  zahtevi: Zahtev[] = []; 
 
   constructor(
     private predmetiService: PredmetiService,
     private userService: UserService,
     private http: HttpClient,
     private router: Router,
-    private aut:AuthService
-  ) { }
-
-  ngOnInit() {
-    this.fetchZahtevi();
-  }
-
-  async fetchZahtevi(): Promise<void> {
-    console.log("usosam");
-    try {
-      const response = await this.predmetiService.vratiZahteve();
-      if (response !== null) {
-        this.zahtevi = response;
-        console.log(this.zahtevi);
-      } else {
-        console.error('Error fetching zahtevi: Response is null');
-      }
-    } catch (error) {
-      console.error('Error fetching zahtevi:', error);
+    private authService:AuthService,
+    private literaturaService: LiteraturaService
+  ) { 
+    if(!this.authService.isMentor()) {
+      let err = new Error();
+      err.message = "Nemate privilegije da vidite ovu stranicu";
+      this.router.navigate(["error"], {
+        state: err as Error
+      });
     }
   }
 
-  canShowButtons(): boolean {
-    if (this.userService.user) {
-      return (
-        this.userService.user.perm === Privilegije.ADMIN ||
-        this.userService.user.perm === Privilegije.MENTOR
-      );
-    }
-    return false;
+  async ngOnInit(): Promise<void> {
+    this.zahtevi = await this.literaturaService.getForMentor(this.authService.currentUserId());
+    console.log(this.zahtevi);
   }
 
-  async dodaj(zahtev: any) {
-    zahtev.odobreno = true;
-
-    const id = zahtev.id;
-    try {
-      await this.http.put(`http://localhost:5006/zahtevi/izmeniZahtev/${id}`, zahtev).toPromise();
-      console.log('Zahtev uspesno izmenjen');
-      this.fetchZahtevi();
-    } catch (error) {
-      console.error('Greska:', error);
-    }
+  async odobriLiteraturu(ev: Event) {
+    await this.literaturaService.odobriZahtev(parseInt((ev.target as HTMLButtonElement).id), this.authService.currentUserId());
   }
 
-  async odbij(zahtev: any) {
-    const id = zahtev.id;
-    const literaturaId = zahtev.literatura.id;
-    console.log(literaturaId);
-
-    try {
-      await this.http.delete(`http://localhost:5006/zahtevi/ObrisiZahteve/${id}`).toPromise();
-      await this.http.delete(`http://localhost:5006/literatura/obrisiLiteraturu/${literaturaId}`).toPromise();
-
-      const index = this.zahtevi.indexOf(zahtev);
-      if (index !== -1) {
-        this.zahtevi.splice(index, 1);
-      }
-    } catch (error) {
-      console.error('Error deleting zahtev or literatura:', error);
-    }
+  async odbijLiteraturu(ev: Event){
+    await this.literaturaService.odbijZahtev(parseInt((ev.target as HTMLButtonElement).id));
   }
-
 
   redirectToLogin() {
     this.router.navigateByUrl('login');
@@ -93,7 +56,7 @@ export class ZahteviComponent implements OnInit {
     this.router.navigateByUrl('');
   }
   redirectToProfil() {
-    this.router.navigate(["profile", this.aut.currentUserId()]);
+    this.router.navigate(["profile", this.authService.currentUserId()]);
   }
   redirectToQuiz() {
     this.router.navigateByUrl('kviz');
