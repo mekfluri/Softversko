@@ -5,14 +5,21 @@
 namespace Aplikacija.Migrations
 {
     /// <inheritdoc />
-    public partial class novamigAnja : Migration
+    public partial class litnaziv : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "ProfileImageUrl",
-                table: "Student",
+                name: "Naziv",
+                table: "LiteraturaZahtev",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Naziv",
+                table: "Literatura",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
@@ -22,8 +29,12 @@ namespace Aplikacija.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ProfileImageUrl",
-                table: "Student");
+                name: "Naziv",
+                table: "LiteraturaZahtev");
+
+            migrationBuilder.DropColumn(
+                name: "Naziv",
+                table: "Literatura");
         }
     }
 }

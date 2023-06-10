@@ -10,7 +10,6 @@ public class Student : RegisterModel
     [JsonIgnore]
     public List<Komentar>? Komentari { get; set; }
 
-    [JsonIgnore]
     public List<Literatura>? Literatura { get; set; }
 
     [JsonIgnore]

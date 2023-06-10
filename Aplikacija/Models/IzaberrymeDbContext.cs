@@ -17,7 +17,7 @@ public class IzaberryMeDbContext : DbContext
     public DbSet<Mentor> Mentori { get; set; }
     public DbSet<MentorRequest> MentorZahtevi { get; set; }
     public DbSet<Note> Notes { get; set; }
-    public DbSet<Zahtev> Zahtevi { get; set; }
+    public DbSet<LiteraturaZahtev> Zahtevi { get; set; }
 
     public DbSet<Chat> Chats { get; set; }
     public DbSet<Poruka> Poruke { get; set; }
@@ -31,13 +31,6 @@ public class IzaberryMeDbContext : DbContext
         .HasOne<Kalendar>((s) => s.Kalendar)
         .WithOne(ad => ad.Student)
         .HasForeignKey<Kalendar>(k => k.Id);
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<Literatura>()
-     .HasOne<Zahtev>(l => l.Zahtev)
-     .WithOne(z => z.Literatura)
-     .HasForeignKey<Zahtev>(z => z.Id);
-        base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Chat>()
             .HasOne(c => c.StudentPosiljaoc)
@@ -50,6 +43,7 @@ public class IzaberryMeDbContext : DbContext
             .WithMany()
             .HasForeignKey(c => c.StudentPrimaocId)
             .OnDelete(DeleteBehavior.Restrict);
+    base.OnModelCreating(modelBuilder);
     }
 
 }

@@ -1,28 +1,26 @@
 namespace Models;
 
-[Table("Zahtev")]
-public class Zahtev
+[Table("LiteraturaZahtev")]
+public class LiteraturaZahtev
 {
     [Key]
     public int Id { get; set; }
 
+    public Student? Student { get; set; }
 
-    public Mentor? Mentor { get; set; }
+    public Predmet? Predmet { get; set; }
 
-    public Literatura Literatura { get; set; }
+    public string? FileUrl { get; set; }
+    public string Naziv { get; set; }
 
-    public bool Odobren { get; set; }
-    public Zahtev()
+    public LiteraturaZahtev()
     {
-        this.Odobren = false;
     }
 
-    public Zahtev(Literatura literatura)
+    public LiteraturaZahtev(Student? student, Predmet? predmet, string? fileUrl)
     {
-       
-        this.Literatura = literatura;
-        this.Odobren = false;
+        this.Student = student;
+        Predmet = predmet;
+        FileUrl = fileUrl;
     }
-
-
 }
