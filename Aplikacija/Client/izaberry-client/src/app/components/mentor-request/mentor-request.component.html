@@ -4,4 +4,7 @@
     <label for="predmetPage">Slika potpisa polozenog ispita</label>
     <input (change)="predmetPage($event)" type="file" name="predmetPage">
     <button (click)="sendRequest()">Posalji zahtev</button>
+    <div *ngIf="message" [ngClass]="{'error' : isError == true}">
+        {{message}}
+    </div>
 </div>

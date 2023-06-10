@@ -13,6 +13,8 @@ export class MentorRequestComponent {
   predmetId: number = 0;
   userId: number = 0;
   mentorRequest: MentorRequest;
+  message: string | null = null;
+  isError: boolean = false;
 
   constructor(private router: Router, private authService: AuthService, private mentorService: MentorService) {
     let state = this.router.getCurrentNavigation()?.extras.state;
@@ -43,6 +45,30 @@ export class MentorRequestComponent {
   }
 
   async sendRequest() {
-    await this.mentorService.createRequest(this.mentorRequest);
+    try {
+      await this.mentorService.createRequest(this.mentorRequest);
+      this.showSuccess();
+    }
+    catch(err: any) {
+      this.showError((err as Error).message);
+    }
+  }
+
+  showError(message: string) {
+    this.isError = true;
+    this.message = message;
+    this.clearMessage();
+  }
+
+  showSuccess() {
+    this.message = "Uspesno ste poslali zahtev za mentorstvo!";
+    this.clearMessage();
+  }
+
+  clearMessage() {
+    setTimeout(() => {
+      this.message = null;
+      this.isError = false;
+    }, 1000);
   }
 }
