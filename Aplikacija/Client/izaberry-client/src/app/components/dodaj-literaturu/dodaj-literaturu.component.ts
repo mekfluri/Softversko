@@ -4,6 +4,7 @@ import { PredmetiService } from 'src/app/services/predmeti.service';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LiteraturaService } from 'src/app/services/literatura.service';
+import { MessageResponse } from 'src/app/models/response.model';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class DodajLiteraturuComponent implements OnInit {
   dokumentDivs: any[] = [];
   slikeDivs: any[] = [];
   file: File | null = null;
+  response: MessageResponse = new MessageResponse();
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -34,7 +36,6 @@ export class DodajLiteraturuComponent implements OnInit {
 
 
     }
-    console.log(this.userService.user);
     const state = this.route.snapshot.paramMap.get('predmetId');
     if (state) {
       this.predmetId = parseInt(state, 10);
@@ -68,7 +69,16 @@ export class DodajLiteraturuComponent implements OnInit {
     this.router.navigateByUrl('predmeti');
   }
   async redirectToZahtevi() {
-    await this.literaturaService.addRequest(this.predmetId, this.userService.user?.id!, this.file!);
+    try {
+      await this.literaturaService.addRequest(this.predmetId, this.userService.user?.id!, this.file!);
+      this.response.message = "Uspesno poslat zahtev!";
+      this.response.showResponse();
+    }
+    catch(err: any){
+      this.response.isError = true;
+      this.response.message = "Greska pri slanju zahteva!"
+      this.response.showResponse();
+    }
   }
 
   isLoggedIn(): boolean {
