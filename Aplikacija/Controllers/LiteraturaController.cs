@@ -18,21 +18,37 @@ public class LiteraturaController : ControllerBase
         this.firebaseService = firebaseService;
     }
 
-    [AllowAnonymous]
-    [HttpGet("predmet/{predmetId}")]
-    public async Task<ActionResult> LiteraturaPredmeta(int predmetId){
-        try {
-            var literatura = await Context.Literature
+   [AllowAnonymous]
+[HttpGet("predmet/{predmetId}")]
+public async Task<ActionResult> LiteraturaPredmeta(int predmetId)
+{
+    try
+    {
+        var literatura = await Context.Literature
             .Include(l => l.Student)
             .Include(l => l.Mentor)
             .Include(l => l.Predmet)
-            .Where(l => l.Predmet.Id == predmetId).ToListAsync();
-            return Ok(literatura);
-        }
-        catch(Exception ex){
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        }
+            .Where(l => l.Predmet.Id == predmetId)
+            .Select(l => new 
+            {
+                l.Student,
+                l.Predmet,
+                l.Mentor,
+                l.filePath,
+                l.Id,
+                l.Naziv,
+             
+            })
+            .ToListAsync();
+
+        return Ok(literatura);
     }
+    catch (Exception ex)
+    {
+        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+    }
+}
+
     [AllowAnonymous]
     [HttpGet("vratiPoslednjuDodatu")]
     public async Task<ActionResult> vratiPoslednjuDodatu()
