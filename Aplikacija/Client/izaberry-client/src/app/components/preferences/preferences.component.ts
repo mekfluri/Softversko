@@ -34,8 +34,8 @@ export class PreferencesComponent implements OnInit{
         state: err
       });
     }
-    console.log("user id = " + userId);
   }
+
   async ngOnInit(): Promise<void> {
     this.student = await this.userService.getUserById(this.userId);
     this.tagovi = await this.tagService.getAllTags();
