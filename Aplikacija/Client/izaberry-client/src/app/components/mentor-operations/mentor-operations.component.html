@@ -7,6 +7,9 @@
         <img [src]="zahtev.predmetPhoto" width="100px"><br>
         <button (click)="odobriMentorstvo($event)" [id]="zahtev.id">Odobri</button>
         <button (click)="odbijMentorstvo($event)" [id]="zahtev.id">Odbij</button>
+        <div *ngIf="response.message" [class.error]="response.isError">
+            {{response.message}}
+        </div>
     </div>
 </div>
 <div class="operations-container">
@@ -25,6 +28,5 @@
     <div class="mentor-op mentor-preview">
         <button>Izlistaj mentore </button>
         <button>Ocisti listu</button>
-
     </div>
 </div>
