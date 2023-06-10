@@ -6,7 +6,8 @@
         <ul *ngIf="searchResults.length > 0" class="search-results">
             <li [id]="result.id" *ngFor="let result of searchResults" (click)="selectUser($event)">
                 {{ result.username }}
-            </li>
+              </li>
+              
         </ul>
     </div>
 

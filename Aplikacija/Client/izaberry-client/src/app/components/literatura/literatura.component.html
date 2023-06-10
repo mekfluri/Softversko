@@ -21,14 +21,45 @@
   </div>
 
   <div id="literatura">LITERATURA</div>
-
-  <div class="container" *ngIf="literature">
-    <div *ngFor="let literatura of literature">
-      <p>Autor: {{literatura.student!.username}}</p>
-      <p>Odobrio: {{literatura.mentor!.username}}</p>
-      <span *ngIf="literatura.naziv">Naziv: {{literatura.naziv}}</span>
-      <a [href]="literatura.filePath" target="_blank">Download</a>
+  <div style="display: flex; flex-direction: row;">
+    <div class="slikelbl">
+      <label>Slike:</label>
+    </div>
+    <div class="doklbl">
+      <label>Dokumenti:</label>
     </div>
   </div>
+  
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div id="slike" class="col">
+          <ng-container *ngFor="let literatura of literature">
+            <div class="literaturaslike" *ngIf="isImage(literatura.naziv)">
+              <label>Autor: {{literatura.student.username}}</label>
+              <label>Odobrio: {{literatura.mentor.username}}</label>
+              <label *ngIf="literatura.naziv">Naziv: {{literatura.naziv}}</label>
+              <img [src]="literatura.filePath" alt="Slika" />
+              <a [href]="literatura.filePath" target="_blank">Download</a>
+            </div>
+          </ng-container>
+        </div>
+        <div id="dokumenti" class="col">
+          <ng-container *ngFor="let literatura of literature">
+            <div class="literaturadok" *ngIf="isDocument(literatura.naziv)">
+              <label>Autor: {{literatura.student.username}}</label>
+              <label>Odobrio: {{literatura.mentor.username}}</label>
+              <label *ngIf="literatura.naziv">Naziv: {{literatura.naziv}}</label>
+              <a [href]="literatura.filePath" target="_blank">Download</a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <!-- ... -->
+  </body>
 
 </body>

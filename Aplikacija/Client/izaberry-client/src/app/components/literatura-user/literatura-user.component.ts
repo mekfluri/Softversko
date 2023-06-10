@@ -32,4 +32,16 @@ export class LiteraturaUserComponent implements OnInit {
     this.userId = parseInt(secondParam!);
     this.literature = await this.literaturaService.StudentLiteratura(this.userId);
   }
+
+  isPdfFile(naziv: string): boolean {
+    return naziv.toLowerCase().endsWith('.pdf');
+  }
+
+  isJpgFile(naziv: string): boolean {
+    return naziv.toLowerCase().endsWith('.jpg');
+  }
+
+  isPngFile(naziv: string): boolean {
+    return naziv.toLowerCase().endsWith('.png');
+  }
 }

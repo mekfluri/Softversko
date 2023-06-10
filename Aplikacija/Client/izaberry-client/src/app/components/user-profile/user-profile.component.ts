@@ -150,11 +150,17 @@ export class UserProfileComponent implements OnInit {
   
   
 
-  selectUser(event:Event): void {
-    let id=parseInt((event.target as HTMLElement).id);
+  selectUser(event: Event): void {
+    let id = parseInt((event.target as HTMLElement).id);
     console.log(id);
-    this.router.navigate(["profile",id]);
+    const profileUrl = `/profile/${id}`;
+    console.log(profileUrl);
+    this.router.navigate([profileUrl]).then(() => {
+      location.reload();
+    });
   }
+  
+  
 
   async prikaz() {
     this.showcontainer = false;

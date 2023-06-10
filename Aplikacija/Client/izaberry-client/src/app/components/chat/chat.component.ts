@@ -93,7 +93,7 @@ export class ChatComponent implements OnInit{
           div.className = 'div-desno';
         }
         
-        //div.innerHTML = poruka.text;
+      
         container.appendChild(div);
         const divZaPoruku = document.createElement('div');
         divZaPoruku.classList.add("ZaPoruku");

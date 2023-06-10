@@ -1,13 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
 body {
-    background: linear-gradient(150deg, #fb7784, #29082b);
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    font-family: "Poppins", sans-serif;
-
-    overflow: hidden;
+  background: linear-gradient(150deg, #fb7784, #29082b);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
 }
 
 .toolbar {
@@ -15,36 +12,32 @@ body {
   padding: 10px;
   display: flex;
   justify-content: end;
-  color:white;
+  color: white;
   padding: 10px 50px;
 }
-.labelMenu{
-    
-    color: white;
-    background-color: transparent;
-    border: none;
-   padding: 10px 50px;
-   width: auto;
-   font-size: 90%;
+
+.labelMenu {
+  color: white;
+  background-color: transparent;
+  border: none;
+  padding: 10px 50px;
+  width: auto;
+  font-size: 90%;
   display: flex;
   flex-direction: row;
   gap: 10%;
-
 }
-.lblPROFIL
-{
-   
-     color: white;
-     background-color: transparent;
-     border: none;
-    padding: 10px 50px;
-    width: auto;
-    font-size: 90%;
-   display: flex;
-   flex-direction: row;
-   gap: 10%;
- 
 
+.lblPROFIL {
+  color: white;
+  background-color: transparent;
+  border: none;
+  padding: 10px 50px;
+  width: auto;
+  font-size: 90%;
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
 }
 
 .toolbar button {
@@ -57,60 +50,183 @@ body {
   font-size: 16px;
   cursor: pointer;
 }
-#literatura {
-    font-size: 24px;
-    font-weight: bolder;
-    background: linear-gradient(to bottom, #ffe187, #e89d58);
-    padding: 10px;
-    color:#29082b ;
-    display: flex;
-    justify-content: center;
-    font-style: italic;
 
-  }
+button {
+  cursor: pointer;
+}
 
 .container {
   display: flex;
-  justify-content: space-between;
-  padding: 20px;
 }
 
-.content {
-  background-color: #f0f0f0;
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex-basis: 50%;
   padding: 10px;
-  border-radius: 5px;
 }
 
-.left-content {
-  flex-basis: 48%;
+label {
+  font-size: 80%;
 }
-.your-document-div-class {
-    background-color: transparent;
-     border: none;
-    width: auto;
-    font-size: 90%;
-   display: flex;
-   flex-direction: row;
-   justify-content: space-around;
-   gap: 10%;
-   
-  }
 
-  
- .downloadbutton{
-    width: 100%;
-    display: flex;
-    justify-self: end;
-    margin-left: 200px;
-    font-size: large;
- }
+a {
+  width: 70%;
+  font-size: small;
+  display: flex;
+  justify-self: center;
+  margin-left: 5%;
+}
 
-  
+#slike {
+  float: left;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #fff;
+}
 
-.right-content {
-  flex-basis: 48%;
+#slike::-webkit-scrollbar {
+  width: 12px;
+}
+
+#slike::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+#slike::-webkit-scrollbar-thumb {
+  background-color: #333;
+}
+
+.literaturaslike {
   display: flex;
   flex-direction: column;
-}  button{
-  cursor: pointer;
+  justify-content: center;
+  margin-top: 1%;
+  background-color: white;
+  width: 25%;
+  height: 50%;
+  margin-right: 5%;
+  border-radius: 20px;
+}
+.doklbl{
+ width: 50%;
+  font-size: 200%;
+  color: white;
+}
+.slikelbl{
+  width: 50%;
+  font-size: 200%;
+  color: white;
+}
+.literaturaslike .element {
+  font-size: 12px;
+}
+
+#dokumenti {
+  float: right;
+  width: 50%;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #fff;
+}
+
+#dokumenti::-webkit-scrollbar {
+  width: 12px;
+}
+
+#dokumenti::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+#dokumenti::-webkit-scrollbar-thumb {
+  background-color: #333;
+}
+
+
+
+.literaturadok {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 15px;
+  background-color: white;
+  width: 25%;
+  height: 25%;
+  margin-right: 5%;
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+#slike{
+  display: flex;
+  justify-self: center;
+}
+
+.literaturadok .element {
+  font-size: 12px;
+}
+
+.literaturadok a {
+  display: inline-block;
+  margin-top: 5px;
+  color: white;
+  background-color: #70c1b3;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.literaturadok h2 {
+  color: white;
+}
+
+#slike img {
+  max-width: 50%;
+  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+  display: flex;
+  justify-self: center;
+  margin-left: 30%;
+}
+
+#slike a,
+#dokumenti a {
+  display: inline-block;
+  margin-top: 5px;
+  color: white;
+  background-color: #70c1b3;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+#slike h2,
+#dokumenti h2 {
+  color: white;
+}
+
+#literatura {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  margin-bottom: 10px;
+  color: white;
+  display: flex;
+  justify-self: center;
+  font-size: 200%;
+  font-weight: bolder;
+  display: flex;
+  font-style: italic;
 }
