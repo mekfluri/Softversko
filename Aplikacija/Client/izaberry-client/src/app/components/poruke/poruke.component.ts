@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild,Renderer2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Poruka } from 'src/app/models/poruke.model';
@@ -20,21 +20,20 @@ export class PorukeComponent implements OnInit {
   poruke: Poruka[] | null = null;
   student: Student | null = null;
   userId: number =0;
-  prikazi:boolean = false;
+  showChatContainer: boolean = false;
   svePoruke: Poruka[] | null = null;
   text: string = "";
   chat: number =0;
   idporuke: number =0;
-  primalacDiv: any[] = [];
-  posiljalacDiv: any[] = [];
   poruka: Poruka | null = null;
+  prikazicet: boolean = false;
 
-  constructor(private authService: AuthService,private StudentService: StudentiService,private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private authService: AuthService,private StudentService: StudentiService,private http: HttpClient, private route: ActivatedRoute,private renderer: Renderer2) {
     const studentId = this.route.snapshot.paramMap.get('studentId');
     if (studentId) {
       const userId = parseInt(studentId);
       console.log("zovem");
-      //this.getUserComments(userId);
+      
     }
   }
 
@@ -45,12 +44,15 @@ export class PorukeComponent implements OnInit {
   } else {
     this.userId = this.authService.currentUserId();
   }
+
+
     
+  this.getUserComments();
   }
 
  async getUserComments() {
     
-
+   this.prikazicet = true;
     this.http
       .get<Poruka[]>(`${environment.backend}/chat/VratiNeprocitanePorukeStudenta/${this.userId}`)
       .subscribe(
@@ -82,27 +84,28 @@ export class PorukeComponent implements OnInit {
     container.innerHTML = '';
 
       for(let poruka of this.svePoruke!){
-        const div = document.createElement('div');
+        const div = this.renderer.createElement('div');
         
         if(poruka.student.id == this.userId)
         {
-          div.className = 'div-levo';
+          this.renderer.addClass(div, 'div-levo');
         }
         else{
-          div.className = 'div-desno';
+          this.renderer.addClass(div, 'div-desno');
         }
         
-        //div.innerHTML = poruka.text;
-        container.appendChild(div);
-        const divZaPoruku = document.createElement('div');
-        divZaPoruku.classList.add("ZaPoruku");
-        divZaPoruku.textContent =poruka.text;
-        div.appendChild(divZaPoruku);
+        const divZaPoruku = this.renderer.createElement('div');
+        this.renderer.addClass(divZaPoruku, 'ZaPoruku');
+        this.renderer.setProperty(divZaPoruku, 'textContent', poruka.text);
+    
+        this.renderer.appendChild(div, divZaPoruku);
+        this.renderer.appendChild(container, div);
       }
   }
 
  async odgovori(poruka: Poruka){
-     this.prikazi = true;
+  this.showChatContainer= true;
+    this.prikazicet = false;
      this.chat = poruka.chat.id;
      this.http
      .get<Poruka[]>(`${environment.backend}/chat/VratiPorukeIzChata/${this.chat!}`)
@@ -119,9 +122,9 @@ export class PorukeComponent implements OnInit {
        }
      );
 
-      //dodaj da je poruka procitana (idporuke)
-        
-  /* await this.http.put(`${environment.backend}/chat/PromeniStatus/${poruka.id}`, {})
+      
+        //ova funkcija radi kako treba al mene nervira jer svaki put mi izbrise procitanuy poruku tako da sam je zakomentarisala da mi ne brise
+   /*await this.http.put(`${environment.backend}/chat/PromeniStatus/${poruka.id}`, {})
    .subscribe(
      (response: any) => {
        console.log(response);
@@ -146,7 +149,7 @@ export class PorukeComponent implements OnInit {
   await this.http.post(`${environment.backend}/chat/DodajPoruku/${this.userId}/${this.text}`, {})
    .subscribe(
      (response: any) => {
-       console.log(response.id);
+       console.log(response);
        this.idporuke = response.id;
        console.log(this.idporuke);
         
@@ -157,6 +160,7 @@ export class PorukeComponent implements OnInit {
    );
  
    console.log(this.idporuke); 
+
 
   }
 
@@ -174,6 +178,21 @@ export class PorukeComponent implements OnInit {
        console.error('Greška prilikom slanja poruke:', error);
      }
    );
+
+  await this.http
+     .get<Poruka[]>(`${environment.backend}/chat/VratiPorukeIzChata/${this.chat!}`)
+     .subscribe(
+       (response) => {
+           this.svePoruke = response;
+           console.log(this.svePoruke);
+           this.createDiv();
+        
+       },
+       (error) => {
+         console.error('Error fetching user comments:', error);
+         
+       }
+     );
   
   }
 
@@ -189,24 +208,12 @@ export class PorukeComponent implements OnInit {
         console.error('Greška prilikom slanja poruke:', error);
       }
     ); 
+
+    this.getUserComments();
   }
 
 
-   createDivLevo(poruka:Poruka)
-   {
-       const divJedan = document.createElement("div");
-       divJedan.className = "Poruka"
-       divJedan.innerHTML = poruka.student.username;
-
-
-   }
-
-   createDivDesno(poruka:Poruka)
-   {
-    const divJedan = document.createElement("div");
-    divJedan.className = "Poruka"
-    divJedan.innerHTML = poruka.student.username;
-   }
+   
 }
 
 

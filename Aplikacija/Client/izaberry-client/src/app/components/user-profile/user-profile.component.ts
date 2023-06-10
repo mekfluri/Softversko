@@ -9,6 +9,7 @@ import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/ht
 import { debounceTime } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PorukaService } from 'src/app/services/poruka.service';
 
 
 import { AuthService } from 'src/app/services/auth.service';
@@ -33,10 +34,14 @@ export class UserProfileComponent implements OnInit {
   searchTerm: string = '';
   searchResults: Student[] = [];
   response!: { dbPath: '' };
-  chat: Chat[] | null = null;
-  caskanja: Student[] | null = null;
+  idchata: number = 0;
+  idporuke: number =0;
+  prikaziPoruku: boolean = false;
+  text:string = "";
+ 
 
   constructor(
+    private PorukaService: PorukaService,
     private StudentiService: StudentiService,
     private route: ActivatedRoute,
     private router: Router,
@@ -57,6 +62,7 @@ export class UserProfileComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.student = await this.userService.getUserById(this.userId);
+      
     } catch (err: any) {
       this.router.navigate(["error"], {
         state: err as Error
@@ -244,35 +250,51 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  prikazi() {
-      
-    this.caskanja = [];
-    this.http
-    .get<Chat[]>(`${environment.backend}/chat/VratiChatStudenta/${this.userId}`)
-    .subscribe(
-      (response) => {
-          
-     
-          response.forEach(p=>{
-            if(p.studentPosiljaoc.id == this.userId)
-            {
-              this.caskanja?.push(p.studentPrimaoc);
-            }
-            else
-            {
-               this.caskanja?.push(p.studentPosiljaoc);
-            }
-          })
-        
-           
-      },
-      (error) => {
-        console.error('Error fetching user comments:', error);
-        
-      }
-    );
-    
-     console.log(this.caskanja);
+  
+
+  async idKeyUp(event: Event){
+    this.text =  (event.target as HTMLInputElement).value;
+
+}
+
+  async posaljiPoruku(){
+  
+    this.prikaziPoruku = true;
+    await this.PorukaService.Provera(this.userId, this.localId)
+        .then((rezultat) => {
+             console.log(rezultat);
+             this.idchata = rezultat.id;
+             
+         })
+          .catch((error) => {
+              console.error('Greška prilikom poziva funkcije Provera:', error);
+         });
 
   }
+
+  async kreirajPoruku(){
+    await this.PorukaService.KreirajPoruku(this.localId, this.text)
+      .then((rezultat)=>{
+            console.log(rezultat.id);
+            this.idporuke = rezultat.id;
+    })
+      .catch((error) => {
+             console.error('Greška prilikom poziva funkcije KreirajPoruku:', error);
+     });
+  
+
+    console.log(this.idporuke);
+    await this.PorukaService.PosaljiPoruku(this.idchata, this.idporuke)
+        .then((rezultat)=>{
+            console.log(rezultat);
+           
+    })
+     .catch((error) => {
+         console.error('Greška prilikom poziva funkcije KreirajPoruku:', error);
+    });
 }
+
+
+}
+
+

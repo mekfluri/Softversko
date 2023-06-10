@@ -71,7 +71,7 @@ public class PorukaController : ControllerBase
             .Include(p => p.Student)
             .Include(p => p.chat)
             .ThenInclude(p=> p.StudentPosiljaoc)
-            .Where(p => p.chat.StudentPrimaoc.Id == studentId && !p.procitana)
+            .Where(p => p.Student!.Id != studentId && !p.procitana && (p.chat.StudentPosiljaocId == studentId || p.chat.StudentPrimaocId == studentId))
             .ToListAsync();
 
         return Ok(poruke);

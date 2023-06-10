@@ -20,6 +20,15 @@ public class ChatController : ControllerBase
     [HttpPost("dodajChat/{prima}/{salje}")]
     public async Task<ActionResult> AddChat(int prima, int salje)
     {
+        var postoji = await Context.Chats.Where(p=> ((p.StudentPosiljaocId == prima && p.StudentPrimaocId == salje) || (p.StudentPosiljaocId == salje && p.StudentPrimaocId == prima))).FirstOrDefaultAsync();
+
+        if(postoji != null)
+        {
+           return Ok(postoji);
+        }
+        else
+        {
+           
         Student sp = await Context.Studenti.Where(p => p.Id == prima).FirstOrDefaultAsync();
         Student ss = await Context.Studenti.Where(p => p.Id == salje).FirstOrDefaultAsync();
 
@@ -30,9 +39,13 @@ public class ChatController : ControllerBase
         Context.Chats.Add(chat);
         await Context.SaveChangesAsync();
 
-        return Ok("nparavili smo chat");
+        return Ok(chat);
+        }
+
     }
+
     
+
     [AllowAnonymous]
     [HttpDelete("ObirisChat/{id}")]
     public async Task<ActionResult> DeleteChat(int id)
@@ -53,6 +66,7 @@ public class ChatController : ControllerBase
     [HttpPut("DodajPorukuUChat/{porukaID}/{chatID}")]
     public async Task<ActionResult> AddPorukaToChat(int porukaID, int chatID)
     {
+        
         var poruka = await Context.Poruke.Where(p => p.Id == porukaID).FirstOrDefaultAsync();
         var chat = await Context.Chats.Where(c => c.Id == chatID).FirstOrDefaultAsync();
         chat?.Poruke.Add(poruka);
@@ -60,7 +74,7 @@ public class ChatController : ControllerBase
         Context.Chats.Update(chat);
         await Context.SaveChangesAsync();
 
-        return Ok();
+        return Ok("uspesno ste poslali poruku");
     }
 
     [AllowAnonymous]
