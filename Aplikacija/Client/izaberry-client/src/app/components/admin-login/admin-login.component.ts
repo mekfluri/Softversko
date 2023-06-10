@@ -32,7 +32,7 @@ export class AdminLoginComponent {
   async loginRequest() {
     try {
       let loginCredentials = new LoginModel(this.email, this.password);
-      let token = await this.authService.login(loginCredentials, true);
+      let token = await this.authService.login(loginCredentials, "admin");
       localStorage.setItem("authToken", token);
       let user = await this.userService.getUserByToken(token);
       this.router.navigate(["admin"], {
