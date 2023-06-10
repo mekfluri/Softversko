@@ -40,7 +40,7 @@
 
             </div>
            
-            <div class="profile-option" (click)="show()" routerLink="poruke" [class.poruke]="isActiveLink('poruke')" [class.active]="isActiveLink('poruke')">
+            <div *ngIf="localId == userId" class="profile-option" (click)="show()" routerLink="poruke" [class.poruke]="isActiveLink('poruke')" [class.active]="isActiveLink('poruke')">
                 <span class="notification">
                     <i class="fas fa-bell"></i>
                     <span class="alert-message">3</span>
@@ -78,8 +78,10 @@
 
                          
                     </div>
-                    <div > <button class="dm" (click)="prikazi()"> DM </button>  </div>
+                  
+                    <div > <button  *ngIf="localId != userId" class="dm" (click)="posaljiPoruku()"> Posalji poruku </button>  </div>
                 </div>
+                   
             </div>
             <div class="right-side">
                 <div class="nav">
@@ -99,9 +101,7 @@
 
 
                 </div>
-                <div *ngFor="let caskanje of caskanja">
-                    {{ caskanje.username }}
-                  </div>
+               
 
                 <div *ngIf="showdiv" class="slika">
                     <label class="labela">Editovanje profilne fotografije:</label>
@@ -110,6 +110,15 @@
                     <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
                     <label>2.korak:</label>
                     <button type="button" class="btn btn-primary" (click)="onCreate()">Update photo</button>
+                </div>
+
+                <div *ngIf="prikaziPoruku" >
+                    <div class="poruka">
+                    <input (keyup)="idKeyUp($event)" type="text">
+                    <br>
+                     <button (click)="kreirajPoruku()" > Kreiraj poruku </button>
+                     </div>
+
                 </div>
 
                 <div *ngIf="showcontainer" class="router-container">
