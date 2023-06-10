@@ -27,7 +27,14 @@ public class LiteraturaController : ControllerBase
             .Include(l => l.Mentor)
             .Include(l => l.Predmet)
             .Where(l => l.Predmet.Id == predmetId).ToListAsync();
-            return Ok(literatura);
+            return Ok(literatura.Select(l => new {
+                student = l.Student,
+                predmet = l.Predmet,
+                id = l.Id,
+                mentor = l.Mentor,
+                naziv = l.Naziv,
+                filePath = l.filePath
+            }));
         }
         catch(Exception ex){
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);

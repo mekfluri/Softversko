@@ -24,8 +24,8 @@
 
   <div class="container" *ngIf="literature">
     <div *ngFor="let literatura of literature">
-      <p>Autor: {{literatura.student.username}}</p>
-      <p>Odobrio: {{literatura.mentor.username}}</p>
+      <p>Autor: {{literatura.student!.username}}</p>
+      <p>Odobrio: {{literatura.mentor!.username}}</p>
       <span *ngIf="literatura.naziv">Naziv: {{literatura.naziv}}</span>
       <a [href]="literatura.filePath" target="_blank">Download</a>
     </div>
