@@ -34,7 +34,7 @@ public class FirebaseService
         Setup();
     }
 
-    public async Task<string> UploadLiteratura(int predmetId, int userId, byte[]? bytes, string fileName)
+    public async Task<string> UploadLiteratura(int predmetId, int userId, IFormFile file, string fileName)
     {
         if (client == null)
         {
@@ -45,7 +45,8 @@ public class FirebaseService
             user = await client.SignInWithEmailAndPasswordAsync(authEmail, authPassword);
         }
 
-        MemoryStream stream = new MemoryStream(bytes!);
+
+        MemoryStream stream = ReadFile(file);
 
         var task = new FirebaseStorage(bucket, new FirebaseStorageOptions
         {
