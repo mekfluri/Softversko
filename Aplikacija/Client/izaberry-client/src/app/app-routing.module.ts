@@ -61,18 +61,6 @@ const routes: Routes = [
       }
     ]
   },
-  {
-    path: "me", component: UserProfileComponent, children: [
-      {
-        path: "kalendar", component: KalendarComponent
-      },
-      {
-        path: "preference", component: PreferencesComponent
-      }
-
-    ]
-  },
-
   { path: "upload", component: UploadComponent },
   { path: "oglasna", component: OglasnaComponent },
   {
@@ -83,7 +71,6 @@ const routes: Routes = [
   { path: "predmeti", component: PredmetiComponent },
   { path: "predmet", component: PredmetPreviewComponent },
   { path: "kviz", component: QuizComponent },
-  { path: "admin/login", component: AdminLoginComponent },
   {
     path: "admin",
     component: AdminPanelComponent,
