@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModel } from 'src/app/models/login.model';
+import { Privilegije } from 'src/app/models/permission.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,14 +13,14 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
-  selectedValue:number=1;
+  selectedValue: string = "student";
 
   constructor(private router: Router, private authService: AuthService, private userService: UserService) {
     this.email = "";
     this.password = "";
   }
   async ngOnInit(): Promise<void> {
-    if(localStorage.getItem("authToken") != null) {
+    if (localStorage.getItem("authToken") != null) {
       this.router.navigateByUrl("profile");
     }
   }
@@ -30,33 +31,26 @@ export class LoginComponent implements OnInit {
 
   async loginRequest() {
     try {
-      if(this.selectedValue == 1)
-      {
-       let loginCredentials = new LoginModel(this.email, this.password);
-       let token = await this.authService.login(loginCredentials);
-       localStorage.setItem("authToken", token);
-       
-       let user = await this.userService.getUserByToken(token);
-       //redirect na profil
-       this.router.navigate(["profile", user!.id]);
+      let loginCredentials = new LoginModel(this.email, this.password);
+      let token = await this.authService.login(loginCredentials, this.selectedValue);
+      localStorage.setItem("authToken", token);
+
+      let user = await this.userService.getUserByToken(token);
+      switch(user!.perm){
+        case Privilegije.STUDENT:
+          this.router.navigate(["profile", user!.id]);
+          break;
+        case Privilegije.ADMIN:
+          this.router.navigate(["admin"]);
+          break;
+        case Privilegije.MENTOR:
+          this.router.navigate(["zahtevi"]);
       }
-      else if(this.selectedValue == 2)
-      {
-       let loginCredentials = new LoginModel(this.email, this.password);
-       let token = await this.authService.login(loginCredentials, true);
-       localStorage.setItem("authToken", token);
-       let user = await this.userService.getUserByToken(token);
-       this.router.navigate(["admin"], {
-         state: user!
-       });
-      } 
-     else{
-       console.log("mentor je ");
-     }
-    
     }
-    catch(err: any) {
-      alert((err as Error).message);
+    catch (err: any) {
+      this.router.navigate(["error"], {
+        state: err as Error
+      });
     }
   }
   emailKeyUp(event: KeyboardEvent) {
@@ -66,7 +60,7 @@ export class LoginComponent implements OnInit {
     this.password = (event.target as HTMLInputElement).value;
   }
 
- 
+
   redirectToOglasna() {
     this.router.navigateByUrl("oglasna");
   }
