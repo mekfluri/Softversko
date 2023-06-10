@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Modul } from 'src/app/models/modul.model';
 import { Predmet, PredmetDto } from 'src/app/models/predmet.model';
+import { MessageResponse } from 'src/app/models/response.model';
 import { Tag } from 'src/app/models/tag.model';
 import { ModuleService } from 'src/app/services/module.service';
 import { PredmetiService } from 'src/app/services/predmeti.service';
@@ -24,6 +25,7 @@ export class PredmetOperationsComponent implements OnInit{
   tagovi: Tag[] | null = null;
   moduli: string[] | null = null;
   semestri: Array<number> = Array(8).fill(0).map((val, idx) => idx+ 1);
+  response: MessageResponse = new MessageResponse();
 
   constructor(private predmetService: PredmetiService, private tagService: TagService, private modulService: ModuleService){
     this.predmet = new Predmet();
@@ -82,8 +84,16 @@ export class PredmetOperationsComponent implements OnInit{
   }
 
   async dodajPredmet(){
-    console.log(this.predmet);
-    console.log(await this.predmetService.create(this.predmet as PredmetDto));
+    try {
+      await this.predmetService.create(this.predmet as PredmetDto);
+      this.response.message = "Uspesno dodat predmet!";
+      this.response.showResponse();
+    }
+    catch(err: any){
+      this.response.isError = true;
+      this.response.message = "Neuspesno dodat predmet!";
+      this.response.showResponse();
+    }
   }
 
   cleanPredmeti() {
@@ -101,7 +111,16 @@ export class PredmetOperationsComponent implements OnInit{
     this.predmet.id = parseInt((event.target as HTMLInputElement).value);
   }
   async deletePredmet() {
-    console.log(await this.predmetService.delete(this.predmet.id));
+    try {
+      await this.predmetService.delete(this.predmet.id);
+      this.response.message = "Uspesno obrisan predmet";
+      this.response.showResponse();
+    }
+    catch(err: any){
+      this.response.isError = true;
+      this.response.message = "Uspesno obrisan predmet";
+      this.response.showResponse();
+    }
   }
 
   async updatePredmet(){

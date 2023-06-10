@@ -1,5 +1,6 @@
 <div class="pref-container">
     <select (change)="tagChange($event)" name="tag">
+        <option disabled selected>Izaberi tag</option>
         <option [id]="tag.id" *ngFor="let tag of tagovi">
             {{ tag.naziv }}
         </option>

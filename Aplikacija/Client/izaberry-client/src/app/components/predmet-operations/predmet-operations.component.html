@@ -1,3 +1,6 @@
+<div *ngIf="response.message" [class.error]="response.isError">
+    {{response.message}}
+</div>
 <div class="container">
     <div class="predmet-op predmet-insertion">
        <button (click)="otvoriDiv()"> Dodaj predmet</button>
@@ -27,6 +30,7 @@
       </div>
       <div class="deo">
         <select (change)="modulChange($event)" name="moduli">
+            <option disabled selected value="">Izaberite modul</option>
             <option *ngFor="let modul of moduli">
                 {{modul}}
             </option>
@@ -34,6 +38,7 @@
         </div>
         <div class="deo">
         <select (change)="semestarChange($event)" name="semestri">
+            <option disabled selected value="">Izaberite semestar</option>
             <option *ngFor="let semestar of semestri">
                 {{semestar}}
             </option>

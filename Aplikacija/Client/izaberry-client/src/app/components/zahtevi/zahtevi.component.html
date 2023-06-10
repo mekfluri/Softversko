@@ -1,28 +1,28 @@
 <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
 
 <body>
-    <div class="toolbar">
-      <label (click)="redirectToHome()" class="labelMenu">HOME</label>
-      <label (click)="redirectToOglasna()" class="labelMenu">OGLASNA</label>
-      <button (click)="redirectToLogin()" class="btnLOGIN" *ngIf="!isLoggedIn()">LOGIN</button>
-      <label (click)="redirectToProfil()" class="lblPROFIL" *ngIf="isLoggedIn()">
-        <span class="material-symbols-outlined">
-          account_circle
-        </span>PROFIL
-      </label>
+  <div class="toolbar">
+    <label (click)="redirectToHome()" class="labelMenu">HOME</label>
+    <label (click)="redirectToOglasna()" class="labelMenu">OGLASNA</label>
+    <button (click)="redirectToLogin()" class="btnLOGIN" *ngIf="!isLoggedIn()">LOGIN</button>
+    <label (click)="redirectToProfil()" class="lblPROFIL" *ngIf="isLoggedIn()">
+      <span class="material-symbols-outlined">
+        account_circle
+      </span>PROFIL
+    </label>
+  </div>
+
+  <h1>LISTA ZAHTEVA KOJI JOS UVEK NISU ODOBRENI:</h1>
+  <div id="zahtevi" *ngIf="zahtevi">
+    <div *ngFor="let zahtev of zahtevi" class="zahtev">
+      <p>Predmet:{{zahtev.predmet.naziv}}</p>
+      <p>Student:{{zahtev.student.username}}</p>
+      <a [href]="zahtev.fileUrl" target="_blank">Link ka literaturi</a>
+      <button [id]="zahtev.id" (click)="odobriLiteraturu($event)">Odobri literaturu</button>
+      <button [id]="zahtev.id" (click)="odbijLiteraturu($event)">Odbij literaturu</button>
     </div>
-  
-    <h1>LISTA ZAHTEVA KOJI JOS UVEK NISU ODOBRENI:</h1>
-    <div id="zahtevi" *ngIf="zahtevi">
-      <div *ngFor="let zahtev of zahtevi" class="zahtev">
-        <p>Predmet:{{zahtev.predmet.naziv}}</p>
-        <p>Student:{{zahtev.student.username}}</p>
-        <a [href]="zahtev.fileUrl" target="_blank">Link ka literaturi</a>
-        <button [id]="zahtev.id" (click)="odobriLiteraturu($event)">Odobri literaturu</button>
-        <button [id]="zahtev.id" (click)="odbijLiteraturu($event)">Odbij literaturu</button>
-      </div>
-    </div>
-  </body>
-  
+  </div>
+</body>

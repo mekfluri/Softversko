@@ -22,12 +22,10 @@ export class TagOperationsComponent implements OnInit{
 
   async createTag() {
     let response = await this.tagService.createTag(this.currentTag);
-    console.log(response);
   }
 
   async deleteTag() {
     let response = await this.tagService.deleteTag(this.currentTag);
-    console.log(response);
   }
 
   cleanTags() {

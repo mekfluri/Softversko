@@ -6,12 +6,11 @@
 
 
 
-body {
+.body {
     background: linear-gradient(150deg, #fb7784, #29082b);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100vh;
     font-family: "Poppins", sans-serif;
     color: white;
     overflow-y: scroll;
@@ -123,4 +122,8 @@ select {
     }
 
 
+}
+
+.predmet {
+    border: 1px solid black;
 }

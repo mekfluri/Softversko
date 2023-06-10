@@ -1,34 +1,25 @@
+<div *ngIf="response.message" [class.error]="response.isError">
+    {{response.message}}
+</div>
 <div class="operations-container">
-    
-    
     <div class="modul-op modul-insertion">
-        
         <input class="unesi" (keyup)="modulKeyUp($event)" type="text" placeholder="Naziv novog modula">
         <button (click)="createModule()">Dodaj modul</button>
     </div>
     <div class="modul-op modul-deletion">
-       
         <input class="unesi" (keyup)="idKeyUp($event)" type="number" placeholder="Id modula za brisanje">
         <button (click)="deleteModule()">Obrisi modul</button>
     </div>
     <div class="modul-op modul-preview">
-
-
         <button (click)="getModules()">Izlistaj module</button>
         <button (click)="cleanModules()">Ocisti listu</button>
-       
-       
+    </div>
+</div>
+<div class="lista">
+    <div *ngIf="moduli" class="modul-container">
+        <div *ngFor="let modul of moduli">
+            <p>{{modul.id}} | {{modul.naziv}}</p>
         </div>
+        <button (click)="cleanModules()">Close</button>
     </div>
-    <div class="lista">
-        <div *ngIf="moduli" class="modul-container">
-            <div *ngFor="let modul of moduli">
-                <p>{{modul.id}} | {{modul.naziv}}</p>
-            </div>
-            <button  (click)="cleanModules()">Close</button> 
-    </div>
-
-
-      
-    
 </div>

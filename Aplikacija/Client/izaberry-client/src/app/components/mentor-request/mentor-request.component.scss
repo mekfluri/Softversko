@@ -35,6 +35,10 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.error {
+  background-color: red;
+}
+
 button {
   width: 200px;
   padding: 12px;
