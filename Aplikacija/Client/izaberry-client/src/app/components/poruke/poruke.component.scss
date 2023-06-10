@@ -4,34 +4,43 @@
     justify-content: center;
   }
   
- .chat{
-  display: flex;
-  flex-direction: column;
-  background-color: #ff718d;
-  height: 100%;
+  .chat {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    height: 50%;
+    width: 50%;
+
+  }
+  .div-desno{
+    background-color: #333;
+
+  }
+  .div-levo{
+    background-color:red;
+    display: flex;
+    justify-self: end;
+    }
+
+
+
+ div.ZaPoruku {
   width: 100%;
-  justify-content: space-around;
- }
+  padding: 5px;
+  background-color: #ff718d;
+  color: #fff;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
 
- .div-levo{
-  align-self: flex-start;
- }
 
- .ZaPoruku{
-  
-  width: 10%;
-
- }
-
- .div-desno{
-  align-self: flex-end;
- }
  .poruke-container{
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
  }
+
 
   .comment {
     position: relative;
@@ -46,7 +55,10 @@
   }
   body{
     margin-left: 10%;
-    width: 80%;
+    width: 50%;
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
   }
   .comment-content {
     display: flex;
@@ -55,7 +67,10 @@
     justify-content: center;
     height: 100%;
   }
-  
+  div{
+    display: flex;
+    flex-direction: column;
+  }
   .subject {
     font-size: 18px;
     font-weight: bold;
@@ -81,5 +96,11 @@
     background: linear-gradient(to right, #ff718d, #ffce53);
     border-radius: 50% 50% 0 0;
     z-index: -1;
+  }
+  input{
+    width: 49%;
+  }
+  button{
+    width: 50%;
   }
   

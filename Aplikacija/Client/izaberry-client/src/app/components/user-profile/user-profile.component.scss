@@ -94,9 +94,9 @@
     width: 11.7%;
     max-height: 200px;
     overflow-y: auto;
-    visibility: hidden;
+
   }
-  
+
   .zaglavlje input:focus + ul {
     display: flex;
     flex-direction: column;

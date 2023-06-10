@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Literatura } from 'src/app/models/literatura.model';
 import { LiteraturaService } from 'src/app/services/literatura.service';
 import { PredmetiService } from 'src/app/services/predmeti.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-literatura',
@@ -19,7 +20,8 @@ export class LiteraturaComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private predmetiService: PredmetiService,
-    private literaturaService: LiteraturaService
+    private literaturaService: LiteraturaService,
+    private auth:AuthService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -27,7 +29,7 @@ export class LiteraturaComponent implements OnInit {
     if (state) {
       this.predmetId = parseInt(state, 10);
     } else {
-      // Handle case where predmetId is not available
+   
     }
     this.literature = await this.literaturaService.PredmetLiteratura(this.predmetId);
   }
@@ -35,25 +37,43 @@ export class LiteraturaComponent implements OnInit {
   redirectToLogin() {
     this.router.navigateByUrl('login');
   }
+
   redirectToOglasna() {
     this.router.navigateByUrl('oglasna');
   }
+
   redirectToHome() {
     this.router.navigateByUrl('');
   }
+
   redirectToProfil() {
-    this.router.navigateByUrl('profile');
+    this.router.navigateByUrl('profile/' + this.auth.currentUserId());
+
   }
+
   redirectToQuiz() {
     this.router.navigateByUrl('kviz');
   }
+
   redirectToPredmeti() {
     this.router.navigateByUrl('predmeti');
   }
+
   redirectToDodaj() {
     this.router.navigateByUrl(`dodajLiteraturu/${this.predmetId}`);
   }
+
   isLoggedIn(): boolean {
     return localStorage.getItem('authToken') !== null;
+  }
+
+  isImage(filename: string): boolean {
+    const extension = filename.split('.').pop()?.toLowerCase();
+    return extension === 'jpg' || extension === 'png';
+  }
+
+  isDocument(filename: string): boolean {
+    const extension = filename.split('.').pop()?.toLowerCase();
+    return extension === 'txt' || extension === 'pdf' || extension === 'doc';
   }
 }
