@@ -51,7 +51,7 @@ class Predmet extends PredmetDto {
         return srednjaOcena;
     }
 
-    overallOcena(): number {
+    public overallOcena(): number {
         let srednjaOcena = this.srednjaOcena();
         let key: keyof Ocena;
         let overall: number = 0;
