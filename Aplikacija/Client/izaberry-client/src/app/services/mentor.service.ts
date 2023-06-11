@@ -41,4 +41,8 @@ export class MentorService {
     let resp$ = this.http.get(`${environment.backend}/mentor/predmeti/${id}`);
     return (await firstValueFrom(resp$));
   }
+
+  async addMentorPredmet(mentorId: number, predmetId: number){
+    await this.http.get(`${environment.backend}/mentor/addpred/${mentorId}/${predmetId}`);
+  }
 }

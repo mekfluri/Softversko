@@ -96,9 +96,9 @@ export class PredmetiService {
     return resp;
   }
 
-  async addOcena(predmetId: number, ocena: Partial<Ocena>) {
-    let ocena$ = this.http.put(`${environment.backend}/predmeti/dodajOcenu/${predmetId}`, ocena);
-    return firstValueFrom(ocena$);
+  async addOcena(predmetId: number, ocena: Ocena): Promise<Ocena> {
+    let ocena$ = this.http.put<Ocena>(`${environment.backend}/predmeti/dodajOcenu/${predmetId}`, ocena);
+    return await firstValueFrom(ocena$);
   }
 
   async create(predmet: PredmetDto) {
