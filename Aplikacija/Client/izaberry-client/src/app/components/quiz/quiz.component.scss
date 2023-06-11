@@ -2,7 +2,9 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
 
-
+body {
+    background: linear-gradient(150deg, #fb7784, #29082b);
+}
 
 
 
@@ -11,9 +13,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow-y: scroll;
     font-family: "Poppins", sans-serif;
     color: white;
     overflow-y: scroll;
+}
+
+.preporuka-dugme {
+    background-color: white;
 }
 button{
     cursor: pointer;

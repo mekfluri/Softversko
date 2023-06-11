@@ -18,11 +18,15 @@
   <h1>LISTA ZAHTEVA KOJI JOS UVEK NISU ODOBRENI:</h1>
   <div id="zahtevi" *ngIf="zahtevi">
     <div *ngFor="let zahtev of zahtevi" class="zahtev">
-      <p>Predmet:{{zahtev.predmet.naziv}}</p>
-      <p>Student:{{zahtev.student.username}}</p>
-      <a [href]="zahtev.fileUrl" target="_blank">Link ka literaturi</a>
-      <button [id]="zahtev.id" (click)="odobriLiteraturu($event)">Odobri literaturu</button>
-      <button [id]="zahtev.id" (click)="odbijLiteraturu($event)">Odbij literaturu</button>
+      <div class="levi">
+        <p>Predmet:{{zahtev.predmet.naziv}}</p>
+        <p>Student:{{zahtev.student.username}}</p>
+        <a [href]="zahtev.fileUrl" target="_blank">Link ka literaturi</a>
+      </div>
+      <div class="desni">
+        <button class="btnOdobri" [id]="zahtev.id" (click)="odobriLiteraturu($event)">Odobri literaturu</button>
+        <button class="btnOdbije" [id]="zahtev.id" (click)="odbijLiteraturu($event)">Odbij literaturu</button>
+      </div>
     </div>
   </div>
 </body>

@@ -5,11 +5,11 @@
       <app-preferenca [preferenca]="pref" *ngFor="let pref of preference" [tagovi]="tagovi"></app-preferenca>
     </div>
   </div>
-  <button (click)="doQuiz()">Izvrsi preporuku po preferencama</button>
+  <button class="preporuka-dugme" (click)="doQuiz()">Izvrsi preporuku po preferencama</button>
   <div *ngIf="recommendations">
     <div class="predmet" *ngFor="let item of recommendations">
       <h1 [id]="item.key" (click)="gotoPredmet($event)">{{item.value!.first!.naziv}}</h1>
-      <p>{{item.value!.second}}</p>
+      <p> Compatibility score: {{item.value!.second}}</p>
     </div>
   </div>
 </div>

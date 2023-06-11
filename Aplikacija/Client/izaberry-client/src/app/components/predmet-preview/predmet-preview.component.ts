@@ -19,6 +19,7 @@ export class PredmetPreviewComponent implements OnInit {
   isLoggedIn: string | null = null;
   commentBox: string = "";
   ocena: Ocena = new Ocena();
+  overallOcena: number = 0;
   private predmetId: number = 0;
 
   constructor(private router: Router, private predmetiService: PredmetiService, public userService: UserService,
@@ -31,13 +32,17 @@ export class PredmetPreviewComponent implements OnInit {
   }
 
   async addOcena() {
-    console.log(await this.predmetiService.addOcena(this.predmetId, {
-      angazovanjeProfesora: this.ocena.angazovanjeProfesora,
-      dostupnostMaterijala: this.ocena.dostupnostMaterijala,
-      laboratorijskeVezbe: this.ocena.laboratorijskeVezbe,
-      prakticnoZnanje: this.ocena.prakticnoZnanje,
-      tezinaPredmeta: this.ocena.tezinaPredmeta
-    }));
+    let ocena = await this.predmetiService.addOcena(this.predmetId, new Ocena(
+      0,
+      this.ocena.dostupnostMaterijala,
+      this.ocena.angazovanjeProfesora,
+      this.ocena.laboratorijskeVezbe,
+      this.ocena.tezinaPredmeta,
+      this.ocena.prakticnoZnanje));
+    if(this.predmet?.ocene == null) {
+      this.predmet!.ocene = new Array<Ocena>();
+    }
+    this.predmet?.ocene.push(ocena);
   }
 
   async ngOnInit(): Promise<void> {

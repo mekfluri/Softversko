@@ -1,108 +1,115 @@
-
 body {
-    background: linear-gradient(150deg, #fb7784, #29082b);
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    font-family: "Poppins", sans-serif;
+  background: linear-gradient(150deg, #fb7784, #29082b);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
 
-    overflow: hidden;
+  overflow: hidden;
 }
-.zahtev{
-    display: flex;
-    flex-direction: row;
-    margin: 10px;
-    padding: 10px;
-    background-color: lightgray;
-    height: 30%;
-    width: 80%;
-  }
-  .infodiv{
-    background-color: pink;
-    width: 95%;
-    display: flex;
-    flex-direction: column;
-    gap: 20%;
-  }
-  .odobridiv{
-    background-color: antiquewhite;
-    width: 5%;
-    background-color: lightgray;
-  }
-  button{
-    cursor: pointer;
-  }
-  .toolbar {
-    background-color: #333;
-    padding: 10px;
-    display: flex;
-    justify-content: end;
-    color:white;
-    padding: 10px 50px;
-  }
-  .labelMenu{
-      
-      color: white;
-      background-color: transparent;
-      border: none;
-     padding: 10px 50px;
-     width: auto;
-     font-size: 90%;
-    display: flex;
-    flex-direction: row;
-    gap: 10%;
-  
-  }
-  .lblPROFIL
-  {
-     
-       color: white;
-       background-color: transparent;
-       border: none;
-      padding: 10px 50px;
-      width: auto;
-      font-size: 90%;
-     display: flex;
-     flex-direction: row;
-     gap: 10%;
-   
-  
-  }
-  #zahtevi {
-    overflow-y: auto;
-    height: 550px;
-  }
-  
-  
-  .toolbar button {
-    background-color: #555;
-    border: none;
-    border-radius: 20px;
-    color: white;
-    padding: 8px 16px;
-    margin-right: 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  .btnOdobri {
-    background-color: green;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    margin-right: 8px;
-  }
-  
-  .btnOdbije {
-    background-color: red;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-  }
-  
-  .material-icons {
-    vertical-align: middle;
-    margin-right: 4px;
-  }
-  
+
+.zahtev {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  padding: 10px;
+  background-color: lightgray;
+  height: min-content;
+  width: 80%;
+}
+
+.levi {
+  background-color: pink;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.desni {
+  margin-left: 2%;
+  display:flex;
+  background-color: antiquewhite;
+  width: 20%;
+  background-color: lightgray;
+}
+
+button {
+  cursor: pointer;
+}
+
+.toolbar {
+  background-color: #333;
+  padding: 10px;
+  display: flex;
+  justify-content: end;
+  color: white;
+  padding: 10px 50px;
+}
+
+.labelMenu {
+
+  color: white;
+  background-color: transparent;
+  border: none;
+  padding: 10px 50px;
+  width: auto;
+  font-size: 90%;
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+
+}
+
+.lblPROFIL {
+
+  color: white;
+  background-color: transparent;
+  border: none;
+  padding: 10px 50px;
+  width: auto;
+  font-size: 90%;
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+
+
+}
+
+#zahtevi {
+  overflow-y: auto;
+  height: 550px;
+}
+
+
+.toolbar button {
+  background-color: #555;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 8px 16px;
+  margin-right: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btnOdobri {
+  background-color: green;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.btnOdbije {
+  background-color: red;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+}
+
+.material-icons {
+  vertical-align: middle;
+  margin-right: 4px;
+}

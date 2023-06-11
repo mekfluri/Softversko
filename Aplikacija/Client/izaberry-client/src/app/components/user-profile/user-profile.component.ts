@@ -39,6 +39,7 @@ export class UserProfileComponent implements OnInit {
   prikaziPoruku: boolean = false;
   text: string = "";
   unreadMessageCount: number=0;
+  isLoggedIn: boolean = false;
 
 
   constructor(
@@ -58,6 +59,7 @@ export class UserProfileComponent implements OnInit {
       this.userId = this.authService.currentUserId();
     }
     this.student = null;
+    this.isLoggedIn = this.authService.currentUserId() != -1;
   }
   fetchPorukeCount() {
     const userId = this.authService.currentUserId();

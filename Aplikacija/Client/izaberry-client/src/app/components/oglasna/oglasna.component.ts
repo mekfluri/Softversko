@@ -16,12 +16,14 @@ export class OglasnaComponent implements OnInit {
   i: number = 0;
   notes: Note[] = [];
   id: number = 0;
+  isLoggedIn: boolean = false;
 
   ngOnInit(): void {
     this.retrieveAllNotes();
   }
 
   constructor(private http: HttpClient, private userService: UserService, private AuthService: AuthService) {
+    this.isLoggedIn = this.AuthService.currentUserId() != -1;
   }
   async retrieveAllNotes() {
     try {
