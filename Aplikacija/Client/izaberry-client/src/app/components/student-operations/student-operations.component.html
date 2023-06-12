@@ -1,82 +1,76 @@
 <div class="operations-container">
-  
-        
+
+
     <div class="studnet-op predmet-deletion">
-        
-        <input (keyup)="deletionKeyUp($event)"type="number" placeholder="Id studenta ">
-        <button (click)="deleteStudent()" >Obrisi studenta</button>
+
+        <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id studenta ">
+        <button (click)="deleteStudent()">Obrisi studenta</button>
     </div>
     <div class="studnet-op predmet-update">
         <input (keyup)="idChange($event)" type="text" placeholder="azuriraj id">
-       
-        
-        
+
+
+
 
     </div>
 
     <div class="studnet-op student-preview">
-    
+
         <button (click)="getStudenti()">Prikazi sve studente</button>
-        <button  (click)="cleanList()">Obrisi listu</button>
-        
-        
-    </div>
-  
-  </div>
-  <div class="lista">
-    <div *ngIf="studentiArray" class="studenti-container">
-    <div *ngFor="let kom of studentiArray">
-        <p>
-            id: {{kom.id}} <br>
-            username: {{kom.username}} <br>
-            semestar: {{kom.semestar}} <br>
-            bio: {{kom.bio}} <br>
-            modul: {{kom.modul.naziv}}
-          </p>
-          <br>
-         <div class="dugme">
-          <button  (click)="cleanList()">Close</button>
-         </div>
-  </div>
-    
-  </div>
-  <div *ngIf="StudentToChange" class="change-container">
-    <div class="deo">        
-    <label>Novi username</label>
-    <input (keyup)="textKeyUp($event)" type="text" placeholder="Novi username"
-        [value]="StudentToChange ? StudentToChange.username: ''">
-   
-    <button (click)="UpdateStudent()">Azuriraj</button>
-    </div>
-    <div class="deo">
-    <label>Novi semestar</label>
-    <input (keyup)="textKeyUpSem($event)" type="number" placeholder="Novi broj semestra"
-        [value]="StudentToChange ? StudentToChange.semestar: ''">
-    
-    <button (click)="UpdateStudentSemestar()">Azuriraj</button>
-    </div>
-    <div class="deo">
-    <label>Novi opis biografije</label>
-    <input (keyup)="textKeyUpBio($event)" type="text" placeholder="Novi opis biografije"
-    [value]="StudentToChange ? StudentToChange.bio: ''">
-   
-    <button (click)="UpdateStudentModul()">Azuriraj</button>
-    </div>
-  <div class="deo">
-    <label>Novi modul</label>
-    <select *ngIf="StudentToChange" (change)="modulChange($event)" name="moduli" multiple>
-        <option *ngFor="let mod of moduli">
-            {{mod.naziv}}
-        </option>
-    </select>
-    <button (click)="UpdateStudentModul()">Azuriraj</button>
+        <button (click)="cleanList()">Obrisi listu</button>
 
-    
-  </div>
-  <button (click)="zatvori()">Close</button>
 
-   
+    </div>
 
 </div>
+<div class="lista">
+    <div *ngIf="studentiArray" class="studenti-container">
+        <div *ngFor="let kom of studentiArray">
+            <p>ID: {{kom.id}}</p>
+            <p>Username: {{kom.username}}</p>
+            <p>Semestar: {{kom.semestar}}</p>
+            <p>Biografija: {{kom.bio}}</p>
+            <p *ngIf="kom.modul">Modul: {{kom.modul.naziv}}</p>
+        </div>
+        <div class="dugme">
+            <button (click)="cleanList()">Close</button>
+        </div>
+
+    </div>
+    <div *ngIf="StudentToChange" class="change-container">
+        <div class="deo">
+            <label>Novi username</label>
+            <input (keyup)="textKeyUp($event)" type="text" placeholder="Novi username"
+                [value]="StudentToChange ? StudentToChange.username: ''">
+
+            <button (click)="UpdateStudent()">Azuriraj</button>
+        </div>
+        <div class="deo">
+            <label>Novi semestar</label>
+            <input (keyup)="textKeyUpSem($event)" type="number" placeholder="Novi broj semestra"
+                [value]="StudentToChange ? StudentToChange.semestar: ''">
+
+            <button (click)="UpdateStudentSemestar()">Azuriraj</button>
+        </div>
+        <div class="deo">
+            <label>Novi opis biografije</label>
+            <input (keyup)="textKeyUpBio($event)" type="text" placeholder="Novi opis biografije"
+                [value]="StudentToChange ? StudentToChange.bio: ''">
+
+            <button (click)="UpdateStudentModul()">Azuriraj</button>
+        </div>
+        <div class="deo">
+            <label>Novi modul</label>
+            <select *ngIf="StudentToChange" (change)="modulChange($event)" name="moduli" multiple>
+                <option *ngFor="let mod of moduli">
+                    {{mod.naziv}}
+                </option>
+            </select>
+            <button (click)="UpdateStudentModul()">Azuriraj</button>
+
+
+        </div>
+        <button (click)="zatvori()">Close</button>
+    </div>
 
 </div>
