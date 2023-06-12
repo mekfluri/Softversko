@@ -15,44 +15,44 @@
 
 @media (min-width: 500px) {
     .btnRegistrujSe {
-      margin-bottom: 200%;
     }
   
     .loginDiv {
-      width: 100%;
-      height: auto;
+        justify-content: center;
+        align-content: center;
+        width: 100%;
     }
-  }
-  
-  @media (max-width: 500px) {
+
+    .role {
+        width: 100px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .role {
+        width: 100px;
+    }
+
     .btnPrijaviSe {
-      width: 80%;
+        font-size: 10px;
+    }
+
+    .loginDiv {
+        flex-direction: column;
     }
   
     .toolbar img {
-      margin: 0 16px;
-      width: 200%;
-      margin-top: 10%;
-    
+        margin: 0 16px;
+        width: 200%;
+        margin-top: 10%;
     }
-    .zaglavlje {
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 50px;
-        margin-bottom:200px;
-      }
-    body{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+    .divLabel {
+        width: 60%;
     }
-  .meniDiv{
-    width: 600px;
-    display: flex;
-    justify-self: center;
-    margin-right: 20%;
-  }
-  }
+
+}
 
 .labelMenu:hover {
     text-decoration: underline;

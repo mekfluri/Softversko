@@ -28,7 +28,6 @@ export class OglasnaComponent implements OnInit {
   async retrieveAllNotes() {
     try {
       const response = await this.http.get<Note[]>('http://localhost:5006/note/vartiSveNotes').toPromise();
-      console.log(response);
 
       if (response) {
         const notesWithStudentPromises = response.map(async note => {
@@ -59,36 +58,30 @@ export class OglasnaComponent implements OnInit {
 
 
   dragOver(event: Event) {
-    console.log("dragOver");
     event.preventDefault();
     (event.target as HTMLElement).classList.add('drag-over');
     (event as DragEvent).dataTransfer!.dropEffect = "move";
   }
 
   dragEnter(event: Event) {
-    console.log("dragEnter");
     event.preventDefault();
     (event.target as HTMLElement).classList.add('drag-over');
   }
 
   dragLeave(event: Event) {
-    console.log("dragLevae");
     event.preventDefault();
     (event.target as HTMLElement).classList.remove('drag-over');
   }
 
   dragStart(event: Event) {
-    console.log("dragStart");
     (event.target as HTMLElement).classList.add("dragging");
   }
 
   dragEnd(event: Event) {
-    console.log("dragEnd");
     (event.target as HTMLElement).classList.remove("dragging");
   }
 
   drop(event: Event) {
-    console.log("drop");
     let eventTarget = event.target as HTMLElement;
     event.preventDefault();
 
@@ -114,7 +107,6 @@ export class OglasnaComponent implements OnInit {
 
   async dodajNote() {
     let newNote: Note = new Note(this.notes.length);
-    console.log(newNote);
     this.notes.push(newNote);
     this.currentNote = newNote;
   }
@@ -132,12 +124,9 @@ export class OglasnaComponent implements OnInit {
       try {
   
         const response = await this.userService.addNote(this.currentNote.text,this.AuthService.currentUserId());
-        console.log(this.currentNote.text);
-        console.log(response);
 
         if (response?.id) {
           this.currentNote.id = response.id;
-          console.log(this.currentNote.id);
         }
 
         window.location.reload();
@@ -148,8 +137,6 @@ export class OglasnaComponent implements OnInit {
   }
 
   async deleteNote(currentNote: Note) {
-    console.log("TU");
-    console.log(currentNote);
     if (currentNote) {
       const index = this.notes.findIndex(note => note.id === currentNote.id);
       if (index !== -1) {
@@ -157,7 +144,6 @@ export class OglasnaComponent implements OnInit {
 
         try {
           const response = await this.http.delete(`http://localhost:5006/note/obrisiNotes/${currentNote.id}`).toPromise();
-          console.log(response);
         } catch (error) {
           console.error(error);
         }

@@ -35,7 +35,6 @@ export class ZahteviComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.zahtevi = await this.literaturaService.getForMentor(this.authService.currentUserId());
-    console.log(this.zahtevi);
   }
 
   async odobriLiteraturu(ev: Event) {

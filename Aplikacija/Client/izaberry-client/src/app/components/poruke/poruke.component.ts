@@ -38,7 +38,6 @@ export class PorukeComponent implements OnInit {
     const studentId = this.route.snapshot.paramMap.get('studentId');
     if (studentId) {
       const userId = parseInt(studentId);
-      console.log("zovem");
 
     }
   }
@@ -63,10 +62,8 @@ export class PorukeComponent implements OnInit {
           response.forEach(element => {
             if (element.student.id != this.userId) {
               this.poruke?.push(element);
-              console.log(element);
 
             }
-            console.log(this.poruke);
 
           });
 
@@ -116,7 +113,6 @@ export class PorukeComponent implements OnInit {
       .subscribe(
         (response) => {
           this.svePoruke = response;
-          console.log(this.svePoruke);
           this.createDiv();
 
         },
@@ -133,7 +129,6 @@ export class PorukeComponent implements OnInit {
       await this.http.put(`${environment.backend}/chat/PromeniStatus/${poruka.id}`, {})
     .subscribe(
       (response: any) => {
-        console.log(response);
       
          
       },
@@ -154,14 +149,11 @@ export class PorukeComponent implements OnInit {
   async kreirajPoruku() {
     await this.PorukaService.KreirajPoruku(this.authService.currentUserId(), this.text)
       .then((rezultat) => {
-        console.log(rezultat.id);
         this.idporuke = rezultat.id;
       });
   
-    console.log(this.idporuke);
     await this.PorukaService.PosaljiPoruku(this.currentChatId, this.idporuke)
       .then((rezultat) => {
-        console.log(rezultat);
       })
       .catch((error) => {
         console.error('Error calling PosaljiPoruku:', error);
@@ -169,7 +161,6 @@ export class PorukeComponent implements OnInit {
       .finally(async () => {
         try {
           const poruka: Poruka = await this.PorukaService.VratiPoslednjuDodatuPoruku();
-          console.log(poruka);
           this.provera=true;
           this.odgovori(poruka);
           this.text = '';
@@ -187,7 +178,6 @@ export class PorukeComponent implements OnInit {
     await this.http.delete(`${environment.backend}/chat/ObrisiPoruku/${poruka.id}`, {})
       .subscribe(
         (response: any) => {
-          console.log(response);
 
 
         },

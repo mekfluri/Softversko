@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MentorRequestPreview } from 'src/app/models/mentor-req-backend.model';
+import { Mentor } from 'src/app/models/mentor.model';
 import { MessageResponse } from 'src/app/models/response.model';
 import { MentorService } from 'src/app/services/mentor.service';
 
@@ -12,12 +13,25 @@ import { MentorService } from 'src/app/services/mentor.service';
 export class MentorOperationsComponent implements OnInit{
   mentorId: number = 0;
   zahtevi: MentorRequestPreview[] | null = null;
+  mentori: Mentor[] | null = null;
   response: MessageResponse = new MessageResponse();
   constructor(private mentorService: MentorService, private router: Router){}
 
   async ngOnInit(): Promise<void> {
     this.zahtevi = await this.mentorService.getRequests();
     console.log(this.zahtevi);
+  }
+
+  async sviMentori() {
+    this.mentori = await this.mentorService.getAll();
+  }
+
+  async showAll() {
+    await this.sviMentori();
+  }
+
+  clearAll() {
+    this.mentori = null;
   }
 
   async obrisiMentora() {

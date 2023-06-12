@@ -53,7 +53,6 @@ export class PredmetiComponent implements OnInit{
   }
   async pretrazi() {
     this.predmeti = await this.predmetiService.search(this.predmetSearch);
-    console.log(this.predmeti);
   }
   isLoggedIn(): boolean {
     return localStorage.getItem("authToken") !== null;

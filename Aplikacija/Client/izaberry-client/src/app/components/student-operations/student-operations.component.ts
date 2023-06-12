@@ -31,6 +31,7 @@ export class StudentOperationsComponent implements OnInit {
 
   async getStudenti(){
     this.studentiArray = await this.StudentService.getAll();
+    console.log(this.studentiArray);
   
   }
 
@@ -45,12 +46,11 @@ export class StudentOperationsComponent implements OnInit {
       this.currentStudent = this.studenti?.find(p => p.id == id)!;
     }
     catch(err: any) {
-      console.error(err);
     }
   }
 
   async deleteStudent(){
-    console.log(await this.StudentService.deleteStudent(this.currentStudent!.id));
+    await this.StudentService.deleteStudent(this.currentStudent!.id);
   }
 
   async idChange(event: Event){
@@ -87,6 +87,7 @@ export class StudentOperationsComponent implements OnInit {
    }
    async UpdateStudentBiografija(){
     let response = await this.StudentService.updateStudentBiografija(this.StudentToChange!.bio, this.StudentToChange!.id);
+    console.log(response);
    }
 
    async modulChange(event:Event){

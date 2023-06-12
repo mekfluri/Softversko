@@ -37,6 +37,10 @@ export class MentorService {
     return (await firstValueFrom(resp$));
   }
 
+  async getAll(): Promise<Mentor[]> {
+    return (await firstValueFrom(this.http.get<Mentor[]>(`${environment.backend}/mentor/vratiMentore`)));
+  }
+
   async getPredmeti(id: number): Promise<any> {
     let resp$ = this.http.get(`${environment.backend}/mentor/predmeti/${id}`);
     return (await firstValueFrom(resp$));

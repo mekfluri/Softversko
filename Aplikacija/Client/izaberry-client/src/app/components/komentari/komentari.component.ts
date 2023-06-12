@@ -39,7 +39,6 @@ export class KomentariComponent implements OnInit {
 
   async getKomentari() {
       this.komentariArray = await this.KomentarService.getAllComments();
-      console.log(this.komentariArray);
   }
 
   async UpdateKomentar() {
@@ -47,16 +46,14 @@ export class KomentariComponent implements OnInit {
   }
 
   async deleteKomentar() {
-      console.log(await this.KomentarService.deleteComment(this.currentKomentar!.id));
+      await this.KomentarService.deleteComment(this.currentKomentar!.id);
   }
   async komentariPredmeta()
   {
    
     let response = await this.KomentarService.Predmetkomentari(this.predmet!.id);
-    console.log(response);
 
     this.komentariArray = Object.values(response);
-    console.log(this.komentariArray);
 
   }
 
@@ -65,10 +62,8 @@ export class KomentariComponent implements OnInit {
   {
    
     let response = await this.KomentarService.Studentkomentari(this.student!.id);
-    console.log(response);
 
     this.komentariArray = Object.values(response);
-    console.log(this.komentariArray);
 
   }
 

@@ -104,7 +104,6 @@ export class PredmetOperationsComponent implements OnInit{
     let target = event.target as HTMLSelectElement;
     let naziv = target.options[target.selectedIndex].value;
     this.selectedPredmet = this.predmeti?.find(p => p.naziv == naziv);
-    console.log(this.selectedPredmet);
   }
 
   deletionKeyUp(event: Event) {
