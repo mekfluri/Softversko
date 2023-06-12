@@ -14,10 +14,9 @@
 }
 
 @media (min-width: 500px) {
-
     .btnRegistrujSe {
     }
-
+  
     .loginDiv {
         justify-content: center;
         align-content: center;
@@ -42,7 +41,7 @@
     .loginDiv {
         flex-direction: column;
     }
-
+  
     .toolbar img {
         margin: 0 16px;
         width: 200%;

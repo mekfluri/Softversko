@@ -1,34 +1,32 @@
 .body {
-    height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(150deg, #fb7784, #29082b);
     font-family: 'PT Serif', serif;
     position: relative;
-    
-}
+    overflow: hidden; 
 
 .module-container {
     padding: 20px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-}
-button{
+    overflow-y: auto; }
+
+
+button {
     cursor: pointer;
-  }
-.lblPROFIL
-{
-   
-     color: white;
-     background-color: transparent;
-     border: none;
+}
+
+.lblPROFIL {
+    color: white;
+    background-color: transparent;
+    border: none;
     padding: 10px 50px;
     width: auto;
     font-size: 90%;
-   display: flex;
-   flex-direction: row;
-   gap: 10%;
- 
-
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
 }
 
 .module {
@@ -44,7 +42,7 @@ button{
 }
 
 .search-container {
-    display:flex;
+    display: flex;
     justify-content: center;
     padding: 20px;
 }
@@ -65,8 +63,7 @@ button{
     font-weight: 600;
     display: flex;
     justify-content: space-between;
-    z-index: 1; 
-
+    z-index: 1;
 }
 
 .tool-right {
@@ -74,27 +71,24 @@ button{
     justify-content: flex-end;
     gap: 50%;
     margin-right: 12%;
-
 }
 
 .toolbar img {
     margin: 0 16px;
     width: 8%;
     float: left;
-
 }
 
 .labelMenu:hover {
     text-decoration: underline;
 }
 
-.labelMenu
-{
+.labelMenu {
     color: white;
     text-decoration: dotted;
     font-size: 100%;
     margin-top: 4%;
-    padding:inherit;
+    padding: inherit;
 }
 
 .btnLOGIN {
@@ -106,5 +100,104 @@ button{
     font-size: 90%;
     box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.3);
     margin-right: 2%;
+}
 
+@media (max-width: 500px) {
+    .predmet-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .toolbar {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
+    }
+    .tool-right {
+        justify-content: center;
+        margin-right: 0;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+    .toolbar img {
+        width: 50px;
+        height: 50px;
+    }
+    .labelMenu {
+        margin-top: 10px;
+        padding: 0;
+    }
+    .btnLOGIN {
+        margin-top: 10px;
+        margin-right: 0;
+    }
+    .body {
+        padding-top: 70px;
+    }
+    .module {
+        margin: 10px;
+    }
+    .search-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+}
+
+select {
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 90%;
+    color: #000;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #e2496a;
+}
+
+/* Customize the dropdown arrow */
+select::-ms-expand {
+    display: none;
+}
+
+select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+@media (max-width: 500px) {
+    select {
+        width: 100%;
+        margin-top: 10px;
+    }
+    body{
+        display: flex;
+        height: fit-content;
+    }
+}
+
+button {
+    background-color: #e2496a;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 90%;
+    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #d03e5c;
+}
 }

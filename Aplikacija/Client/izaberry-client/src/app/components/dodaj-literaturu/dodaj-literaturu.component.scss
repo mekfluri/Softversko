@@ -79,4 +79,25 @@ input{
 button{
   cursor: pointer;
 }
+@media (max-width: 768px) {
+  .toolbar {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .labelMenu,
+  .lblPROFIL {
+    padding: 10px;
+  }
+
+  input {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  button {
+    width: fit-content;
+    margin-top: 10px;
+  }
+}
 
