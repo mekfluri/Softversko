@@ -89,7 +89,7 @@
                         <li (click)="show()" routerLink="literatura-user"
                             [class.user-literatura]="isActiveLink('literatura-user')"
                             [class.active]="isActiveLink('literatura-user')">Literatura</li>
-                        <li (click)="show()" routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')"
+                        <li  *ngIf="localId == userId" (click)="show()" routerLink="kalendar" [class.user-kalendar]="isActiveLink('kalendar')"
                             [class.active]="isActiveLink('kalendar')">Kalendar</li>
                         <li (click)="show()" routerLink="komentari-user"
                             [class.user-komentar]="isActiveLink('komentari-user')"
@@ -107,9 +107,13 @@
                     <label class="labela">Editovanje profilne fotografije:</label>
                     <br>
                     <label>1.korak:</label>
+                    <br>
                     <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+                    <div class = "upload">
                     <label>2.korak:</label>
+                    
                     <button type="button" class="btn btn-primary" (click)="onCreate()">Update photo</button>
+                    </div>
                 </div>
 
                 <div *ngIf="prikaziPoruku" >
