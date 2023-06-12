@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit {
   idporuke: number = 0;
   prikaziPoruku: boolean = false;
   text: string = "";
-  unreadMessageCount: number=0;
+  unreadMessageCount: number = 0;
   isLoggedIn: boolean = false;
 
 
@@ -70,7 +70,6 @@ export class UserProfileComponent implements OnInit {
         this.unreadMessageCount = response.length;
       },
       (error) => {
-        console.log('Error retrieving unread message count:', error);
       }
     );
   }
@@ -97,16 +96,12 @@ export class UserProfileComponent implements OnInit {
 
   async PostaviSliku() {
     var rez = this.StudentiService.VratiSliku(this.student!.id);
-    console.log(rez);
     if (rez != null) {
       rez
         .then((odgovor) => {
           this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
-          console.log(this.rezultat);
-          console.log(odgovor);
         })
         .catch((error) => {
-          console.error('Greška prilikom dohvatanja slike:', error);
         });
     }
 
@@ -125,9 +120,7 @@ export class UserProfileComponent implements OnInit {
           this.student.bio,
           this.student.id
         );
-        console.log("Bio saved successfully");
       } catch (error) {
-        console.error("Failed to save bio:", error);
       }
     }
   }
@@ -148,7 +141,6 @@ export class UserProfileComponent implements OnInit {
               student.email.toLowerCase().startsWith(this.searchTerm.toLowerCase())
             );
           });
-          console.log(filteredStudents);
           this.searchResults = filteredStudents.map((student: any) => {
             const modul = student.modul ? new Modul(student.modul.id, student.modul.naziv) : null;
             return new Student(
@@ -164,19 +156,15 @@ export class UserProfileComponent implements OnInit {
           });
         },
         (error) => {
-          console.error('Error fetching users:', error);
         }
       );
-    console.log(this.searchResults);
   }
 
 
 
   selectUser(event: Event): void {
     let id = parseInt((event.target as HTMLElement).id);
-    console.log(id);
     const profileUrl = `/profile/${id}`;
-    console.log(profileUrl);
     this.router.navigate([profileUrl]).then(() => {
       location.reload();
     });
@@ -241,14 +229,11 @@ export class UserProfileComponent implements OnInit {
 
   uploadFinished = (event: { dbPath: "" }) => {
     this.response = event;
-    console.log(this.response);
   };
 
   async onCreate() {
     this.student!.ProfilePhotoURL = this.response.dbPath;
-    console.log(this.student!.ProfilePhotoURL);
     var kodiraj = encodeURIComponent(this.student!.ProfilePhotoURL);
-    console.log(kodiraj);
     let updatovano = await this.StudentiService.UpdatePhoto(
       this.student!.id,
       kodiraj
@@ -258,11 +243,8 @@ export class UserProfileComponent implements OnInit {
     rez
       .then((odgovor) => {
         this.rezultat = odgovor.replace('Client\\izaberry-client\\src', '..');
-        console.log(this.rezultat);
-        console.log(odgovor);
       })
       .catch((error) => {
-        console.error('Greška prilikom dohvatanja slike:', error);
       });
   }
 
@@ -277,10 +259,8 @@ export class UserProfileComponent implements OnInit {
     this.prikaziPoruku = true;
     try {
       const rezultat = await this.PorukaService.Provera(this.userId, this.localId);
-      console.log(rezultat);
       this.idchata = rezultat.id;
     } catch (error) {
-      console.error('Greška prilikom poziva funkcije Provera:', error);
     };
   }
 
@@ -288,24 +268,19 @@ export class UserProfileComponent implements OnInit {
   async kreirajPoruku() {
     try {
       const rezultat = await this.PorukaService.KreirajPoruku(this.localId, this.text);
-      console.log(rezultat.id);
       this.idporuke = rezultat.id;
     } catch (error) {
-      console.error('Greška prilikom poziva funkcije KreirajPoruku:', error);
     } finally {
       this.text = '';
     }
-  
-    console.log(this.idporuke);
-    
+
+
     try {
       const rezultat = await this.PorukaService.PosaljiPoruku(this.idchata, this.idporuke);
-      console.log(rezultat);
     } catch (error) {
-      console.error('Greška prilikom poziva funkcije PosaljiPoruku:', error);
     }
   }
-  
+
 
 }
 
