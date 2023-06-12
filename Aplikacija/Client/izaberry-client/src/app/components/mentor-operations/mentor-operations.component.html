@@ -23,7 +23,20 @@
 
     </div>
     <div class="mentor-op mentor-preview">
-        <button>Izlistaj mentore </button>
-        <button>Ocisti listu</button>
+        <button (click)="showAll()">Izlistaj mentore </button>
+        <button (click)="clearAll()">Ocisti listu</button>
+    </div>
+</div>
+
+<div *ngIf="mentori" class="mentor-container">
+    <div *ngFor="let kom of mentori">
+        <p>ID: {{kom.id}}</p>
+        <p>Username: {{kom.username}}</p>
+        <p>Semestar: {{kom.semestar}}</p>
+        <p>Biografija: {{kom.bio}}</p>
+        <p *ngIf="kom.modul">Modul: {{kom.modul.naziv}}</p>
+    </div>
+    <div class="dugme">
+        <button (click)="clearAll()">Close</button>
     </div>
 </div>
