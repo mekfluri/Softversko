@@ -1,37 +1,38 @@
-
 <div class="operations-container">
     <div class="literatura-op literatura-list">
         <input (keyup)="idKeyUp($event)" type="number" placeholder="Id studneta">
-        <button (click)="LiteraturaStudenta()" >Izlistaj literaturu studenta</button>
+        <button (click)="LiteraturaStudenta()">Izlistaj literaturu studenta</button>
     </div>
 
     <div class="literatura-op literatura-list">
-        <input  (keyup)="idKeyUpPredmeta($event)" type="number" placeholder="Id predmeta">
-        <button  (click)="LiteraturaPredmeta()">Izlistaj literaturu predmeta</button>
+        <input (keyup)="idKeyUpPredmeta($event)" type="number" placeholder="Id predmeta">
+        <button (click)="LiteraturaPredmeta()">Izlistaj literaturu predmeta</button>
 
     </div>
 
- 
-   
+
+
 
     <div class="literatura-op literatura-deletion">
         <input (keyup)="deletionKeyUp($event)" type="number" placeholder="Id literature za brisanje">
-        <button (click)="deleteLiteratura()" >Obrisi literaturu</button>
+        <button (click)="deleteLiteratura()">Obrisi literaturu</button>
     </div>
     <div class="literatura-op literatura-preview">
         <button (click)="getLiteartura()">Izlistaj literaturu</button>
-        <button (click)="cleanList()" >Ocisti listu</button>
-    </div> 
-       
+        <button (click)="cleanList()">Ocisti listu</button>
+    </div>
+
 
 </div>
 
 <div class="lista">
     <div *ngIf="litearturaArray" class="literatura-container">
-        <div *ngFor="let lit of litearturaArray">
-            <p>{{lit.id}} | {{ lit.filePath}}  </p>
+        <div *ngFor="let lit of litearturaArray" class="lit">
+            <p>ID: {{lit.id}}</p>
+            <p>Naziv: {{lit.naziv}}</p>
+            <a [href]="lit.filePath" target="_blank">Link ka literaturi</a>
         </div>
-        <button (click)="cleanList()" >Close</button>
+        <button (click)="cleanList()">Close</button>
     </div>
-    
-    </div>
+
+</div>

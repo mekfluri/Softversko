@@ -27,23 +27,23 @@
 
 
     <div class="search-container">
-      <input type="text" name="naziv" placeholder="Naziv predmeta za pretragu">
-      <select name="tag">
+      <input [(ngModel)]="predmetSearch.naziv" type="text" name="naziv" placeholder="Naziv predmeta za pretragu">
+      <select (change)="searchTagChange($event)" name="tag">
         <option disabled selected>Izaberi tag</option>
-        <option *ngFor="let tag of tagovi" [value]="tag">{{tag.naziv}}</option>
+        <option *ngFor="let tag of tagovi" [value]="tag.naziv" [id]="tag.id">{{tag.naziv}}</option>
       </select>
-      <select name="semestar">
+      <select (change)="searchSemestarChange($event)" name="semestar">
         <option disabled selected>Izaberi semestar</option>
         <option value="1">1</option>
-        <option value="1">2</option>
-        <option value="1">3</option>
-        <option value="1">4</option>
-        <option value="1">5</option>
-        <option value="1">6</option>
-        <option value="1">7</option>
-        <option value="1">8</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
       </select>
-      <button>Pretrazi</button>
+      <button (click)="pretrazi()">Pretrazi</button>
     </div>
     <div class="predmet-container" *ngIf="predmeti">
       <div (click)="predmetClick($event)" class="predmet module" *ngFor="let predmet of predmeti" [id]="predmet.id">

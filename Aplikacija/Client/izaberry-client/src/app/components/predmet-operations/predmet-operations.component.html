@@ -109,12 +109,6 @@
         <label>Novi opis</label>
         <input (keyup)="opisKeyUp($event)" type="text" placeholder="Opis"
             [value]="predmetToChange ? predmetToChange.opis : null">
-        <label>Novi tag</label>
-        <select *ngIf="predmetToChange" (change)="tagChange($event)" name="tagovi" multiple>
-            <option *ngFor="let tag of tagovi">
-                {{tag.naziv}}
-            </option>
-        </select>
         <button (click)="updatePredmet()">Azuriraj predmet</button>
          <button (click)="close()"> Zatovri </button>
     </div>

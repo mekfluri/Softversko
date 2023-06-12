@@ -39,6 +39,7 @@ export class KomentariComponent implements OnInit {
 
   async getKomentari() {
       this.komentariArray = await this.KomentarService.getAllComments();
+      console.log(this.komentariArray);
   }
 
   async UpdateKomentar() {

@@ -45,4 +45,8 @@ export class MentorService {
   async addMentorPredmet(mentorId: number, predmetId: number){
     await this.http.get(`${environment.backend}/mentor/addpred/${mentorId}/${predmetId}`);
   }
+  
+  async removeMentor(mentorId: number){
+    await this.http.delete(`${environment.backend}/mentor/obrisi/${mentorId}`);
+  }
 }

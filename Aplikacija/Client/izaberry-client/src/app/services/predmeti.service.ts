@@ -8,6 +8,7 @@ import { Modul } from '../models/modul.model';
 import { Komentar } from '../models/komentar.model';
 import { Literatura } from '../models/literatura.model';
 import { Ocena } from '../models/ocena.model';
+import { PredmetSearch } from '../models/predmet-search.model';
 
 type NoIDOcena = Omit<Ocena, "id">;
 
@@ -101,6 +102,10 @@ export class PredmetiService {
     return await firstValueFrom(ocena$);
   }
 
+  async search(options: PredmetSearch): Promise<Predmet[]> {
+    let resp$ = this.http.post<Predmet[]>(`${environment.backend}/predmeti/search`, options);
+    return (await firstValueFrom(resp$));
+  }
   async create(predmet: PredmetDto) {
     console.log(predmet);
     let resp$ = this.http.post(`${environment.backend}/predmeti/dodajPredmet`, predmet, {

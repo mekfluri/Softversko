@@ -10,6 +10,7 @@ import { MentorService } from 'src/app/services/mentor.service';
   styleUrls: ['./mentor-operations.component.scss']
 })
 export class MentorOperationsComponent implements OnInit{
+  mentorId: number = 0;
   zahtevi: MentorRequestPreview[] | null = null;
   response: MessageResponse = new MessageResponse();
   constructor(private mentorService: MentorService, private router: Router){}
@@ -17,6 +18,12 @@ export class MentorOperationsComponent implements OnInit{
   async ngOnInit(): Promise<void> {
     this.zahtevi = await this.mentorService.getRequests();
     console.log(this.zahtevi);
+  }
+
+  async obrisiMentora() {
+    if(this.mentorId == 0) return;
+    await this.mentorService.removeMentor(this.mentorId);
+
   }
 
   private removeZahtev(id: number) {
