@@ -77,7 +77,6 @@ export class KalendarComponent implements OnInit {
       this.http.get<any>('http://localhost:5006/kalendar/vartiKalendar')
          .subscribe(
           p => {
-            console.log(p);
            
             
            
@@ -98,13 +97,9 @@ export class KalendarComponent implements OnInit {
   logPorukuIDatum() {
     this.initializeFullCalendar();
     this.markiraniDatumi1.forEach(item => {
-      console.log('Poruka:', item.poruka);
-      console.log(item.id);
-      console.log(item);
       
       const dateonly = item.oznacenDatum.split('T')[0];
       
-      console.log('Datum:', dateonly);
       this.events.push({ title: item.poruka, date: dateonly, color: '#0000FF' , id: item.id});
    
     });
@@ -115,7 +110,6 @@ export class KalendarComponent implements OnInit {
 
 addEventToDatabase() {
   const { title, date, color } = this.newEvent;
-  console.log(date);
   this.events.push({ title, date, color});
   this.updateCalendarEvents();
 
@@ -125,7 +119,6 @@ addEventToDatabase() {
    this.http.post("http://localhost:5006/datum/dodajdatum/"+ this.newEvent.title+"/"+this.newEvent.date, this.newEvent)
      .subscribe(
        response => {
-         console.log('Događaj spremljen u bazu:', response);
          //response mi je id ali kako ja da ga zapamtim sad???
          this.newEvent.id = response;
          
@@ -149,7 +142,6 @@ updateCalendarEvents() {
 
 deleteEvent(event: any)
 {
-  console.log("kliknuli smo");
   const confirmation = window.confirm('Jeste li sigurni da želite izbrisati događaj?');
   if (confirmation) {
     const id = event.event.id; 
@@ -158,17 +150,10 @@ deleteEvent(event: any)
     
     const date1 = dateObj.toISOString().substring(0, 10);
 
-    console.log(date1);
-    console.log(id);
     const index = this.events.findIndex((e: any) => {
  
-      console.log("Comparing:", e.title, e.date, event.event.title, date1);
-      console.log("Are dates equal?", new Date(e.date).getTime() === new Date(date1).getTime());
-      console.log(new Date(e.date).getTime());
-      console.log(new Date(date1).getTime());
       return e.title === event.event.title && new Date(e.date).getTime() === new Date(date1).getTime();
     });
-    console.log(index);
     
     if (index !== -1) {
       this.events.splice(index, 1);
@@ -179,7 +164,6 @@ deleteEvent(event: any)
       this.http.delete("http://localhost:5006/datum/obrisiDatum/"+ id)
         .subscribe(
           response=> {
-            console.log('Događaj izbrisan iz baze:', response);
           }
         );
 

@@ -30,14 +30,10 @@ export class KomentariUserComponent implements OnInit {
 
   async getUserComments(userId: number) {
     try {
-      console.log("usosam");
       const response = await this.http.get<any>(`${environment.backend}/komentar/byStudent/` + userId).toPromise();
 
       this.komentari = response;
 
-      this.komentari?.forEach(element => {
-        console.log(element);
-      });
 
     } catch (error) {
       console.error('Error fetching user comments:', error);

@@ -14,30 +14,43 @@
 }
 
 @media (min-width: 500px) {
-
     .btnRegistrujSe {
-        margin-bottom: 200%;
+    }
+  
+    .loginDiv {
+        justify-content: center;
+        align-content: center;
+        width: 100%;
     }
 
-    .loginDiv {
-        width: 100%;
+    .role {
+        width: 100px;
     }
 }
 
 @media (max-width: 500px) {
 
-    .btnPrijaviSe {
-        width: 80%;
+    .role {
+        width: 100px;
     }
 
+    .btnPrijaviSe {
+        font-size: 10px;
+    }
+
+    .loginDiv {
+        flex-direction: column;
+    }
+  
     .toolbar img {
         margin: 0 16px;
         width: 200%;
         margin-top: 10%;
-
-
     }
 
+    .divLabel {
+        width: 60%;
+    }
 
 }
 

@@ -52,7 +52,6 @@ export class QuizComponent implements OnInit {
   }
 
   saveNewPreferences() {
-    console.log(this.preference);
   }
 
 }

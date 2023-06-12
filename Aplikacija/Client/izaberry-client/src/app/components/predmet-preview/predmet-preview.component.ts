@@ -59,7 +59,6 @@ export class PredmetPreviewComponent implements OnInit {
   }
   async dodajKomentar() {
     let komentar = await this.predmetiService.addComment(this.userService.user!.id, this.predmetId, this.commentBox);
-    console.log(komentar);
     this.predmet?.komentari.push(new Komentar(komentar.id, this.userService.user!, this.predmet, this.commentBox));
   }
 

@@ -171,3 +171,15 @@ button{
     color:white;
     text-align: center;
 }
+
+@media(max-width:500px){
+
+    .loginDiv {
+        padding: 20px;
+    }
+    .loginDivYellow{
+        padding: 15px;
+        font-size:10px;
+        flex-direction: column;
+    }
+}
