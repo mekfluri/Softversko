@@ -30,6 +30,7 @@ export class PorukeComponent implements OnInit {
   poruka: Poruka | null = null;
   prikazicet: boolean = false;
   currentChatId: number = 0;
+  provera:boolean=false;
 
 
 
@@ -126,8 +127,10 @@ export class PorukeComponent implements OnInit {
       );
 
 
-    //ova funkcija radi kako treba al mene nervira jer svaki put mi izbrise procitanuy poruku tako da sam je zakomentarisala da mi ne brise
-    await this.http.put(`${environment.backend}/chat/PromeniStatus/${poruka.id}`, {})
+    
+      //ova funkcija radi kako treba al mene nervira jer svaki put mi izbrise procitanuy poruku tako da sam je zakomentarisala da mi ne brise
+       if(this.provera==false){
+      await this.http.put(`${environment.backend}/chat/PromeniStatus/${poruka.id}`, {})
     .subscribe(
       (response: any) => {
         console.log(response);
@@ -137,7 +140,8 @@ export class PorukeComponent implements OnInit {
       (error) => {
         console.error('Greška prilikom slanja poruke:', error);
       }
-    );
+    );}
+    this.provera=false;
 
 
   }
@@ -166,6 +170,7 @@ export class PorukeComponent implements OnInit {
         try {
           const poruka: Poruka = await this.PorukaService.VratiPoslednjuDodatuPoruku();
           console.log(poruka);
+          this.provera=true;
           this.odgovori(poruka);
           this.text = '';
         } catch (error) {
