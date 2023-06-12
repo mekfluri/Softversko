@@ -14,7 +14,7 @@
         <input (keyup)="idChange($event)" type="text" placeholder="Id komanetara">
 
 
-        <button (click)="UpdateKomentar()">Azuriraj</button>
+       
 
 
     </div>
@@ -42,6 +42,6 @@
         <input (keyup)="textKeyUp($event)" type="text" placeholder="Novi komentar"
             [value]="komentarToChange ? komentarToChange.text : ''">
 
-
+            <button (click)="UpdateKomentar()">Azuriraj</button>
     </div>
 </div>

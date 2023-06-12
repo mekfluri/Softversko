@@ -79,6 +79,7 @@ export class LiteraturaOperationsComponent implements OnInit{
 
    async getLiteartura(){
     this.litearturaArray = await this.LiteraturaService.getAll();
+    console.log(this.litearturaArray);
    }
    
    async cleanList(){

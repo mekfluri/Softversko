@@ -26,6 +26,7 @@ public class KomentarController : ControllerBase
                 return BadRequest();
             }
             var komentar = await Context.Komentari
+            .Include(k => k.Student)
             .Include(k => k.Predmet)
             .Where(k => k.Student.Id == id)
             .ToListAsync();
@@ -33,6 +34,7 @@ public class KomentarController : ControllerBase
             {
                 id = k.Id,
                 text = k.Text,
+                student = k.Student,
                 predmet = new
                 {
                     id = k.Predmet.Id,
@@ -59,7 +61,23 @@ public class KomentarController : ControllerBase
             {
                 return BadRequest();
             }
-            var komentari = await Context.Komentari.Where(k => k.Predmet.Id == id).ToListAsync();
+           var komentar = await Context.Komentari
+            .Include(k => k.Student)
+            .Include(k => k.Predmet)
+            .Where(k => k.Predmet.Id == id)
+            .ToListAsync();
+            var komentari = komentar.Select(k => new
+            {
+                id = k.Id,
+                text = k.Text,
+                student = k.Student,
+                predmet = new
+                {
+                    id = k.Predmet.Id,
+                    naziv = k.Predmet.Naziv
+                }
+            });
+
             return Ok(komentari);
         }
         catch (Exception ex)

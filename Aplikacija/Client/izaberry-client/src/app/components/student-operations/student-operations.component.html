@@ -34,11 +34,11 @@
             modul: {{kom.modul.naziv}}
           </p>
           <br>
-         <div class="dugme">
-          <button  (click)="cleanList()">Close</button>
-         </div>
+         
   </div>
-    
+  <div class="dugme">
+    <button  (click)="cleanList()">Close</button>
+   </div>
   </div>
   <div *ngIf="StudentToChange" class="change-container">
     <div class="deo">        
@@ -60,7 +60,7 @@
     <input (keyup)="textKeyUpBio($event)" type="text" placeholder="Novi opis biografije"
     [value]="StudentToChange ? StudentToChange.bio: ''">
    
-    <button (click)="UpdateStudentModul()">Azuriraj</button>
+    <button (click)="UpdateStudentBiografija()">Azuriraj</button>
     </div>
   <div class="deo">
     <label>Novi modul</label>

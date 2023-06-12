@@ -87,6 +87,7 @@ export class StudentOperationsComponent implements OnInit {
    }
    async UpdateStudentBiografija(){
     let response = await this.StudentService.updateStudentBiografija(this.StudentToChange!.bio, this.StudentToChange!.id);
+    console.log(response);
    }
 
    async modulChange(event:Event){
