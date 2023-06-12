@@ -355,6 +355,7 @@ input{
     font-family: "Poppins", sans-serif;
     margin-left: 10px;
     z-index: 99;
+    gap:10%;
 }
 
 .profile-side p {
@@ -533,6 +534,7 @@ button.chatbtn i {
         text-align: center;
         padding: 20px;
         margin: 5px 0;
+        margin-left: 10%;
     }
 
     .profile-nav-info .address {
@@ -546,7 +548,18 @@ button.chatbtn i {
 
 @media (max-width: 400px) {
 
-
+    .nav {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        font-size: 78%;
+      }
+      .zaglavlje{
+        display: flex;
+        flex-direction: column;
+      }
+      .nav li {
+        margin-right: 10px;
+      }
 
     .profile-option {
         width: 30px;
@@ -572,6 +585,9 @@ button.chatbtn i {
     .profile-nav-info .address p,
     .profile-nav-info .address span {
         font-size: 0.7rem;
+    }
+    .zaglavlje{
+        margin-bottom: 20px;
     }
 }
 
