@@ -127,7 +127,8 @@ public class KomentarController : ControllerBase
                 {
                     id = k.Predmet.Id,
                     naziv = k.Predmet.Naziv
-                }
+                },
+                text = k.Text
             });
 
             return Ok(komentari);

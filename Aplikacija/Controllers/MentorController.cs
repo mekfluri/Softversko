@@ -123,7 +123,7 @@ public class MentorController : ControllerBase
         }
     }
 
-    [HttpDelete("obrisiMentora/{id}")]
+    [HttpDelete("obrisi/{id}")]
     public async Task<ActionResult> obrisiMentora(int id)
     {
 

@@ -60,5 +60,4 @@ public class ModulController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
-
 }

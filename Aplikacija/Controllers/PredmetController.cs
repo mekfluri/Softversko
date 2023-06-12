@@ -15,6 +15,22 @@ public class PredmetController : ControllerBase
         Context = context;
     }
 
+    [AllowAnonymous]
+    [HttpPost("search")]
+    public async Task<ActionResult> Pretrazi([FromBody] PredmetSearch options){
+        try {
+            var predmeti = await Context.Predmeti.Include(p => p.Tagovi)
+            .Where(p => options.Naziv != null ? p.Naziv.Contains(options.Naziv) : false ||
+            options.Semestar != null ? p.Semestar == options.Semestar : false ||
+            options.Tag != null ? p.Tagovi.Any(t => t.Id == options.Tag.Id) : false
+            ).ToListAsync();
+            return Ok(predmeti);
+        }
+        catch(Exception ex){ 
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
     [HttpPost("dodajPredmet")]
     public async Task<ActionResult> dodajPredmet([FromBody] PredmetDto predmetDto)
     {

@@ -9,6 +9,7 @@ import { PredmetiService } from 'src/app/services/predmeti.service';
 import { TagService } from 'src/app/services/tag.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
+import { PredmetSearch } from 'src/app/models/predmet-search.model';
 
 @Component({
   selector: 'app-predmeti',
@@ -19,6 +20,7 @@ export class PredmetiComponent implements OnInit{
   predmeti: Predmet[] | null = null;
   moduli: string[] | null = null;
   tagovi: Tag[] | null = null;
+  predmetSearch: PredmetSearch = new PredmetSearch();
 
   constructor(private http: HttpClient, private predmetiService: PredmetiService,
      private router: Router, private tagService: TagService,private autthService:AuthService) {}
@@ -36,6 +38,22 @@ export class PredmetiComponent implements OnInit{
   async modulClick(event: Event) {
     let modul = (event.target as HTMLDivElement).innerText;
     this.predmeti = await this.predmetiService.getByModule(modul);
+  }
+
+  searchTagChange(ev: Event){
+    let target = ev.target as HTMLSelectElement;
+    let option = target.options[target.selectedIndex];
+    this.predmetSearch.tag = new Tag(parseInt(option.id), option.value);
+  }
+
+  searchSemestarChange(ev: Event){
+    let target = ev.target as HTMLSelectElement;
+    let option = target.options[target.selectedIndex];
+    this.predmetSearch.semestar = parseInt(option.value);
+  }
+  async pretrazi() {
+    this.predmeti = await this.predmetiService.search(this.predmetSearch);
+    console.log(this.predmeti);
   }
   isLoggedIn(): boolean {
     return localStorage.getItem("authToken") !== null;

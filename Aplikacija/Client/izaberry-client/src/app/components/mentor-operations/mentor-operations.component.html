@@ -13,12 +13,9 @@
     </div>
 </div>
 <div class="operations-container">
-    <div class="mentor-op mentor-insertion">
-        <button>Dodaj mentora</button>
-    </div>
     <div class="mentor-op mentor-deletion">
-        <input type="number" placeholder="Id mentora za brisanje">
-        <button>Obrisi mentora</button>
+        <input [(ngModel)]="mentorId" type="number" placeholder="Id mentora za brisanje">
+        <button (click)="obrisiMentora()">Obrisi mentora</button>
     </div>
     <div class="mentor-op mentor-update">
         <label>Azuriranje mentora:</label>
