@@ -5,7 +5,7 @@
 </head><div class="body">
   <div class="board">
     <div class="toolbar">
-      <button class="btnDodaj" (click)="dodajNote()">Dodaj stiker</button>
+      <button *ngIf="isLoggedIn" class="btnDodaj" (click)="dodajNote()">Dodaj stiker</button>
     </div>
     <div class="drop" (drop)="drop($event)" (dragover)="dragOver($event)" (dragenter)="dragEnter($event)" (dragleave)="dragLeave($event)">
       <div class="note-container">

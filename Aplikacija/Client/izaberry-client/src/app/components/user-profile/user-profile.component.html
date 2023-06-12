@@ -79,7 +79,7 @@
                          
                     </div>
                   
-                    <div > <button  *ngIf="localId != userId" class="dm" (click)="posaljiPoruku()"> Posalji poruku </button>  </div>
+                    <div > <button  *ngIf="isLoggedIn && (localId != userId)" class="dm" (click)="posaljiPoruku()"> Posalji poruku </button>  </div>
                 </div>
                    
             </div>

@@ -39,11 +39,21 @@ export class ZahteviComponent implements OnInit {
   }
 
   async odobriLiteraturu(ev: Event) {
-    await this.literaturaService.odobriZahtev(parseInt((ev.target as HTMLButtonElement).id), this.authService.currentUserId());
+    let zahtevId = parseInt((ev.target as HTMLButtonElement).id);
+    await this.literaturaService.odobriZahtev(zahtevId, this.authService.currentUserId());
+    this.removeZahtev(zahtevId);
   }
 
   async odbijLiteraturu(ev: Event){
+    let zahtevId = parseInt((ev.target as HTMLButtonElement).id);
     await this.literaturaService.odbijZahtev(parseInt((ev.target as HTMLButtonElement).id));
+    this.removeZahtev(zahtevId);
+  }
+
+  private removeZahtev(id: number) {
+    let zahtev = this.zahtevi?.find(zahtev => zahtev.id == id);
+    let idx = this.zahtevi?.indexOf(zahtev!);
+    this.zahtevi?.splice(idx!, 1);
   }
 
   redirectToLogin() {

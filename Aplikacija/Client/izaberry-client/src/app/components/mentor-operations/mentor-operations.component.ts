@@ -32,7 +32,9 @@ export class MentorOperationsComponent implements OnInit{
   async odobriMentorstvo(ev: Event) {
     try {
       let zahtevId = parseInt((ev.target as HTMLButtonElement).id);
-      await this.mentorService.acceptRequest(zahtevId);
+      let mentor = await this.mentorService.acceptRequest(zahtevId);
+      let zahtev = this.zahtevi?.find(zahtev => zahtev.id == zahtevId);
+      this.mentorService.addMentorPredmet(mentor.id, zahtev?.predmet!.id!);
       this.response.message = "Uspesno odobreno mentorstvo!";
       this.response.showResponse();
       this.removeZahtev(zahtevId);

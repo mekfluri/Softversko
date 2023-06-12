@@ -3,8 +3,8 @@
     <div *ngFor="let zahtev of zahtevi" class="mentor-request-preview">
         <p (click)="studentProfile($event)" [id]="zahtev.student!.id">Student: {{zahtev.student!.username}}</p>
         <p>Predmet: {{zahtev.predmet!.naziv}}</p>
-        <img [src]="zahtev.indeksPhoto" width="100px">
-        <img [src]="zahtev.predmetPhoto" width="100px"><br>
+        <a [href]="zahtev.indeksPhoto" target="_blank"><img [src]="zahtev.indeksPhoto" width="100px"></a>
+        <a [href]="zahtev.predmetPhoto" target="_blank"><img [src]="zahtev.predmetPhoto" width="100px"></a><br>
         <button (click)="odobriMentorstvo($event)" [id]="zahtev.id">Odobri</button>
         <button (click)="odbijMentorstvo($event)" [id]="zahtev.id">Odbij</button>
         <div *ngIf="response.message" [class.error]="response.isError">

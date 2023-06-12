@@ -70,7 +70,6 @@
 }
 
 select {
-
     width: 200px; /* Podesite željenu širinu */
     height: 30px; /* Podesite željenu visinu */
     font-size: 16px; /* Opciono: podesite željenu veličinu fonta */
@@ -88,15 +87,14 @@ select {
     flex-direction: column;
     background: linear-gradient(#ffe187, #e89d58);
     width: 85%;
-    height: 85%;
+    height: 90%;
     align-self: center;
     border-radius: 25px;
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 5%;
     margin-bottom: 5%;
-    gap: 10%;
-
+    gap: 3%;
 }
 
 .divLabel {

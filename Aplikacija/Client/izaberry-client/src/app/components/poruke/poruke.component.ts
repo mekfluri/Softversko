@@ -50,14 +50,10 @@ export class PorukeComponent implements OnInit {
     } else {
       this.userId = this.authService.currentUserId();
     }
-
-
-
     this.getUserComments();
   }
 
   async getUserComments() {
-  console.log("uso");
     this.prikazicet = true;
     this.http
       .get<Poruka[]>(`${environment.backend}/chat/VratiNeprocitanePorukeStudenta/${this.userId}`)
